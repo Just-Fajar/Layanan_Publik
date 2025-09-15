@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: ./docker/php
+    container_name: laravel_app
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+      # (opsional) tambahkan php.ini kustom kalau punya:
+      # - ./docker/php/php.ini:/usr/local/etc/php/conf.d/99-overrides.ini:ro
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      # DB env untuk artisan saat container jalan
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: layanan_publik
+      DB_USERNAME: root
+      DB_PASSWORD: fjr123
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    image: nginx:1.27-alpine
+    container_name: laravel_web
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./storage/app/public:/var/www/html/public/storage
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: laravel_mysql
+    environment:
+      MYSQL_DATABASE: layanan_publik
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysqldata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --password=$$MYSQL_ROOT_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mysqldata:

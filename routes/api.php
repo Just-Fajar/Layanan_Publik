@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\VisitorController;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
+|
+*/
+
+// Public routes
+Route::post('/visitors', [VisitorController::class, 'store']);
+
+// Auth routes
+Route::prefix('auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/profile', [AuthController::class, 'profile']);
+});
+
+// Admin protected routes (simple token validation)
+Route::middleware(['api'])->group(function () {
+    Route::get('/visitors', [VisitorController::class, 'index']);
+    Route::get('/visitors/{id}', [VisitorController::class, 'show']);
+    Route::put('/visitors/{id}', [VisitorController::class, 'update']);
+    Route::delete('/visitors/{id}', [VisitorController::class, 'destroy']);
+    Route::get('/statistics', [VisitorController::class, 'statistics']);
+    Route::get('/export/pdf', [VisitorController::class, 'exportPdf']);
+});
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
