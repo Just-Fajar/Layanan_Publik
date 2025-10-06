@@ -5,170 +5,258 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin - Buku Tamu Digital</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        /* =============================================
+         * 1. VARIABLES & RESET
+         * ============================================= */
+        :root {
+            --primary-color: #3B82F6;
+            --primary-hover: #2563EB;
+            --background-color: #F3F4F6;
+            --surface-color: #FFFFFF;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --border-color: #D1D5DB;
+            --border-focus: var(--primary-color);
+            --font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        /* =============================================
+         * 2. LAYOUT & TYPOGRAPHY
+         * ============================================= */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #fffefe); 
-            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
             padding: 20px;
+            font-family: var(--font-family);
+            background-color: var(--background-color);
         }
 
         .login-container {
-            background: #fff;
-            border-radius: 25px;
-            border: 4px solid #e1e5e9;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            padding: 40px;
-            max-width: 400px;
             width: 100%;
+            max-width: 420px;
+            padding: 48px;
+            background: var(--surface-color);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, .1);
+            animation: fadeIn .7s ease-out;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
+        }
+
+        .brand-logo {
+            height: 64px;
+            margin-bottom: 16px;
         }
 
         .header h1 {
-            color: #0072ff;
+            margin-bottom: 8px;
+            color: var(--text-primary);
             font-size: 2rem;
-            margin-bottom: 10px;
             font-weight: 700;
         }
 
         .header p {
-            color: #666;
+            color: var(--text-secondary);
             font-size: 1rem;
         }
 
+        /* =============================================
+         * 3. FORM ELEMENTS
+         * ============================================= */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: #333;
+            color: var(--text-primary);
+            font-size: .95rem;
             font-weight: 600;
         }
 
-        .form-group input {
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper .icon {
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            width: 20px;
+            height: 20px;
+            color: var(--text-secondary);
+            pointer-events: none;
+            transform: translateY(-50%);
+        }
+
+        .form-control {
             width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e1e5e9;
+            padding: 14px 18px 14px 48px;
+            font-family: var(--font-family);
+            font-size: 1rem;
+            background: #F9FAFB;
+            border: 2px solid var(--border-color);
             border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
+            transition: all .3s ease;
         }
 
-        .form-group input:focus {
+        .form-control:focus {
             outline: none;
-            border-color: #dbe2e4;
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(229, 233, 235, 0.15);
+            background: var(--surface-color);
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, .15);
         }
 
+        .form-control:focus+.icon {
+            color: var(--primary-color);
+        }
+
+        /* =============================================
+         * 4. BUTTONS & LINKS
+         * ============================================= */
         .login-btn {
             width: 100%;
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 20px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
             margin-top: 10px;
-            box-shadow: 0 6px 20px rgba(0,114,255,0.3);
+            padding: 16px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, .2);
+            cursor: pointer;
+            transition: all .3s ease;
         }
 
         .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,114,255,0.4);
+            background: var(--primary-hover);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, .3);
+            transform: translateY(-3px);
         }
 
         .login-btn:disabled {
-            opacity: 0.6;
+            opacity: .6;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
-
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #00c6ff;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
+        
         .back-link {
+            margin-top: 32px;
             text-align: center;
-            margin-top: 25px;
         }
 
         .back-link a {
-            color: #0072ff;
+            color: var(--primary-color);
+            font-weight: 500;
             text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
+            transition: color .3s ease;
         }
 
         .back-link a:hover {
-            color: #0056cc;
+            color: var(--primary-hover);
+            text-decoration: underline;
         }
 
-        @media (max-width: 768px) {
-            .login-container {
-                padding: 25px;
-            }
+        /* =============================================
+         * 5. ALERTS & LOADERS
+         * ============================================= */
+        .alert {
+            padding: 16px;
+            margin-bottom: 24px;
+            font-weight: 500;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            animation: fadeIn .3s;
+        }
 
-            .header h1 {
-                font-size: 1.6rem;
-            }
+        .alert-success { background: #D1FAE5; color: #065F46; border-color: #A7F3D0; }
+        .alert-error { background: #FEE2E2; color: #991B1B; border-color: #FECACA; }
+
+        .loading {
+            display: none;
+            margin-top: 16px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            margin: 0 auto 8px auto;
+            border: 3px solid #E5E7EB;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* =============================================
+         * 6. ANIMATIONS & RESPONSIVE
+         * ============================================= */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(.95) }
+            to { opacity: 1; transform: scale(1) }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg) }
+            to { transform: rotate(360deg) }
+        }
+
+        @media (max-width: 480px) {
+            .login-container { padding: 24px; }
+            .header h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <div class="header">
-            <h1>Login Admin</h1>
-            <p>Masuk ke dashboard admin</p>
-        </div>
+        <header class="header">
+            <img class="brand-logo" src="{{ asset('images/logo-diskominfo.png') }}" alt="Logo Instansi" loading="lazy">
+            <h1>Admin Panel</h1>
+            <p>Silakan masuk untuk mengelola buku tamu.</p>
+        </header>
 
         <div id="alert-container"></div>
 
         <form id="loginForm">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+                <div class="input-wrapper">
+                    <input type="text" id="username" name="username" class="form-control" required placeholder="Masukkan username" autocomplete="username">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <div class="input-wrapper">
+                    <input type="password" id="password" name="password" class="form-control" required placeholder="Masukkan password" autocomplete="current-password">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                    </svg>
+                </div>
             </div>
 
             <div class="loading" id="loading">
@@ -180,66 +268,74 @@
         </form>
 
         <div class="back-link">
-            <a href="/">← Kembali ke Buku Tamu</a>
+            <a href="/">← Kembali ke Homepage</a>
         </div>
     </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const data = {
-                username: formData.get('username'),
-                password: formData.get('password')
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Element Selectors ---
+            const elements = {
+                loginForm: document.getElementById('loginForm'),
+                loadingIndicator: document.getElementById('loading'),
+                submitBtn: document.querySelector('.login-btn'),
+                alertContainer: document.getElementById('alert-container'),
+                csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             };
 
-            // Show loading
-            document.getElementById('loading').style.display = 'block';
-            document.querySelector('.login-btn').disabled = true;
+            // --- Utility Functions ---
+            const showAlert = (message, type = 'error') => {
+                const alertClass = type === 'success' ? 'alert-success' : 'alert-error';
+                elements.alertContainer.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
+                setTimeout(() => {
+                    elements.alertContainer.innerHTML = '';
+                }, 5000);
+            };
 
-            try {
-                const response = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify(data)
-                });
+            const toggleLoading = (isLoading) => {
+                elements.loadingIndicator.style.display = isLoading ? 'block' : 'none';
+                elements.submitBtn.disabled = isLoading;
+            };
 
-                const result = await response.json();
+            // --- Event Listener ---
+            elements.loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                toggleLoading(true);
 
-                if (result.success) {
-                    // Store token in localStorage
-                    localStorage.setItem('admin_token', result.data.token);
-                    localStorage.setItem('admin_data', JSON.stringify(result.data.admin));
-                    
-                    // Redirect to dashboard dengan path yang benar
-                    window.location.href = '/buku-tamu/admin/dashboard';
-                } else {
-                    showAlert('❌ ' + (result.message || 'Username atau password salah'), 'error');
+                const formData = new FormData(this);
+                const payload = Object.fromEntries(formData.entries());
+
+                try {
+                    const response = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': elements.csrfToken,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        localStorage.setItem('admin_token', result.data.token);
+                        localStorage.setItem('admin_data', JSON.stringify(result.data.admin));
+                        showAlert('✅ Login berhasil! Mengarahkan ke dashboard...', 'success');
+                        setTimeout(() => {
+                            window.location.href = '/buku-tamu/admin/dashboard';
+                        }, 1500);
+                    } else {
+                        showAlert('❌ ' + (result.message || 'Username atau password salah.'), 'error');
+                        toggleLoading(false);
+                    }
+                } catch (error) {
+                    console.error('Login Error:', error);
+                    showAlert('❌ Terjadi kesalahan koneksi. Silakan coba lagi.', 'error');
+                    toggleLoading(false);
                 }
-            } catch (error) {
-                showAlert('❌ Terjadi kesalahan koneksi. Silakan coba lagi.', 'error');
-            } finally {
-                document.getElementById('loading').style.display = 'none';
-                document.querySelector('.login-btn').disabled = false;
-            }
+            });
         });
-
-        function showAlert(message, type) {
-            const alertContainer = document.getElementById('alert-container');
-            const alertClass = type === 'error' ? 'alert-error' : 'alert-success';
-            
-            alertContainer.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
-            
-            // Auto hide after 5 seconds
-            setTimeout(() => {
-                alertContainer.innerHTML = '';
-            }, 5000);
-        }
     </script>
 </body>
 </html>
-

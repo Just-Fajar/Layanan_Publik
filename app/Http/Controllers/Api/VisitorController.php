@@ -62,7 +62,7 @@ class VisitorController extends Controller
             'asal_daerah' => 'required|string|max:255',
             'purpose'     => 'required|in:sekretariat,aplikasi_informatika,persandian_keamanan_informasi,informasi_komunikasi_publik,statistik',
             'notes'       => 'required|string',
-            'photo'       => 'nullable|string', // base64 dataURL: data:image/jpeg;base64,...
+            'photo'       => 'required|string', // base64 dataURL: data:image/jpeg;base64,...
         ]);
 
         if ($validator->fails()) {

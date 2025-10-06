@@ -274,7 +274,7 @@
 
     <div class="footer">
         <p>Laporan ini disusun secara otomatis oleh Sistem Buku Tamu Digital</p>
-        <p>© {{ date('Y') }} DISKOMINFO KABUPATEN MADIUN</p>
+        <p>© {{ date('Y') }} Dinas Komunikasi dan Informatika Kabupaten Madiun</p>
     </div>
 </body>
 </html>

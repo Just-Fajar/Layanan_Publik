@@ -1,6 +1,6 @@
-const TARGET_LATITUDE = -7.632269349111827;
-const TARGET_LONGITUDE = 111.5301320107111;
-const MAX_DISTANCE_KM = 0.5; // 500 meters radius
+const TARGET_LATITUDE = -7.6844691;
+const TARGET_LONGITUDE = 111.4671122;
+const MAX_DISTANCE_KM = 0.1; // 100 meters radius
 
 function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // Earth's radius in kilometers
@@ -53,7 +53,7 @@ function updateLocationStatus(locationData) {
     const locationFields = document.getElementById('location-fields');
 
     if (locationData.isWithinRange) {
-        statusElement.innerHTML = '<div class="alert alert-success">Anda berada dalam area yang diizinkan</div>';
+        statusElement.innerHTML = '<div class="alert alert-success">Anda berada dalam area yang diizinkan, silahkan isi buku tamu</div>';
         submitButton.disabled = false;
         
         // Update hidden fields with location data

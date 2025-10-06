@@ -20,14 +20,6 @@ use App\Http\Controllers\Esport\Admin\NewsController as EsportAdminNews;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-// User Authentication routes
-Route::get('/login', [App\Http\Controllers\Web\UserAuthController::class, 'showLogin'])->name('user.login');
-Route::post('/login', [App\Http\Controllers\Web\UserAuthController::class, 'login'])->name('user.login.submit');
-Route::get('/register', [App\Http\Controllers\Web\UserAuthController::class, 'showRegister'])->name('user.register');
-Route::post('/register', [App\Http\Controllers\Web\UserAuthController::class, 'register'])->name('user.register.submit');
-Route::post('/logout', [App\Http\Controllers\Web\UserAuthController::class, 'logout'])->name('user.logout');
-
 // Homepage route
 Route::get('/', function () {
     return view('homepage.homepage');
@@ -93,3 +85,8 @@ Route::prefix('buku-tamu/admin/esport')
         Route::put('/news/{news}', [EsportAdminNews::class, 'update'])->name('news.update');
         Route::delete('/news/{news}', [EsportAdminNews::class, 'destroy'])->name('news.destroy');
     });
+
+    // Tambah 1 baris:
+Route::view('/ekspresi', 'ekspresi');  // buka di http://localhost:8000/ekspresi
+Route::post('/ekspresi', [VisitorController::class, 'store'])->name('ekspresi.store');
+
