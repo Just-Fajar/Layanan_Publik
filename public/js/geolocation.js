@@ -1,5 +1,5 @@
-const TARGET_LATITUDE = -7.6844691;
-const TARGET_LONGITUDE = 111.4671122;
+const TARGET_LATITUDE = -7.610064 //-7.631619 //-7.6844691; -
+const TARGET_LONGITUDE = 111.520117 //111.542231 //111.4671122;
 const MAX_DISTANCE_KM = 0.1; // 100 meters radius
 
 function calculateDistance(lat1, lon1, lat2, lon2) {

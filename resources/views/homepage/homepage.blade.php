@@ -400,7 +400,7 @@
                     <p class="text-muted fs-5">Layanan digital unggulan dari Diskominfo Kabupaten Madiun.</p>
                 </div>
                 <div class="row justify-content-center g-4">
-                    <div class="col-md-5" data-aos="fade-up" data-aos-delay="100">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                         <a href="{{ route('buku-tamu') }}" class="feature-link h-100">
                             <img src="{{ asset('images/logo-buku.png') }}" alt="Logo Buku Tamu" width="60" height="60" class="me-3">
                             <div>
@@ -409,11 +409,20 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-md-5" data-aos="fade-up" data-aos-delay="200">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                         <a href="{{ route('esport.home') }}" class="feature-link h-100">
                             <img src="{{ asset('images/logo-mgen.png') }}" alt="Logo Madiun Esport" width="60" height="60" class="me-3">
                             <div>
                                 <h5 class="mb-1 fw-bold text-dark">Madiun Esport (M-GEN)</h5>
+                                <p class="mb-0 text-muted">Lihat Selengkapnya &raquo;</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <a href="#" class="feature-link h-100">
+                            <img src="{{ asset('images/logo-web-event-madiun.jpg') }}" alt="Logo Kalender Event" width="60" height="60" class="me-3">
+                            <div>
+                                <h5 class="mb-1 fw-bold text-dark">Kalender Event</h5>
                                 <p class="mb-0 text-muted">Lihat Selengkapnya &raquo;</p>
                             </div>
                         </a>
