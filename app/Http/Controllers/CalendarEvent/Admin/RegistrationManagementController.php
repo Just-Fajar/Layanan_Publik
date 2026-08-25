@@ -70,6 +70,10 @@ class RegistrationManagementController extends Controller
             return back()->with('error', 'Registrasi yang sudah dibatalkan tidak dapat diverifikasi kehadirannya.');
         }
 
+        if ($registration->status === 'attended') {
+            return back()->with('error', 'Peserta ini sudah diverifikasi kehadirannya sebelumnya.');
+        }
+
         $registration->markAttended();
 
         return back()->with('success', 'Kehadiran peserta berhasil diverifikasi.');

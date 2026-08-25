@@ -37,19 +37,13 @@
                     <a href="{{ route('calendar.index') }}" class="text-white hover:text-gray-200 transition">
                         <i class="fas fa-calendar-alt mr-1"></i> Events
                     </a>
-                    <a href="{{ route('calendar.news') }}" class="text-white hover:text-gray-200 transition">
-                        <i class="fas fa-newspaper mr-1"></i> News
-                    </a>
-                    <a href="{{ route('calendar.about') }}" class="text-white hover:text-gray-200 transition">
-                        <i class="fas fa-info-circle mr-1"></i> About
-                    </a>
 
-                    @auth('calendar_user')
+                    @auth
                         <!-- User Dropdown -->
                         <div class="relative group">
                             <button class="flex items-center space-x-2 text-white hover:text-gray-200 transition">
                                 <i class="fas fa-user-circle text-2xl"></i>
-                                <span>{{ auth('calendar_user')->user()->username }}</span>
+                                <span>{{ auth()->user()->name ?? auth()->user()->username }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </button>
                             
@@ -98,14 +92,8 @@
                     <a href="{{ route('calendar.index') }}" class="text-white hover:text-gray-200 transition py-2">
                         <i class="fas fa-calendar-alt mr-2"></i> Events
                     </a>
-                    <a href="{{ route('calendar.news') }}" class="text-white hover:text-gray-200 transition py-2">
-                        <i class="fas fa-newspaper mr-2"></i> News
-                    </a>
-                    <a href="{{ route('calendar.about') }}" class="text-white hover:text-gray-200 transition py-2">
-                        <i class="fas fa-info-circle mr-2"></i> About
-                    </a>
                     
-                    @auth('calendar_user')
+                    @auth
                         <div class="border-t border-white border-opacity-20 mt-2 pt-2">
                             <a href="{{ route('calendar.user.dashboard') }}" class="text-white hover:text-gray-200 transition py-2 block">
                                 <i class="fas fa-home mr-2"></i> Dashboard
@@ -155,8 +143,6 @@
                     <h4 class="font-bold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
                         <li><a href="{{ route('calendar.index') }}" class="text-gray-400 hover:text-white transition">Events</a></li>
-                        <li><a href="{{ route('calendar.news') }}" class="text-gray-400 hover:text-white transition">News</a></li>
-                        <li><a href="{{ route('calendar.about') }}" class="text-gray-400 hover:text-white transition">About</a></li>
                     </ul>
                 </div>
                 <div>

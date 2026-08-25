@@ -134,6 +134,14 @@ class EventRegistration extends Model
     }
 
     /**
+     * Set QR code representation/attendance code.
+     */
+    public function setQrCodeAttribute($value): void
+    {
+        $this->attributes['attendance_code'] = $value;
+    }
+
+    /**
      * Mark as attended.
      */
     public function markAttended()

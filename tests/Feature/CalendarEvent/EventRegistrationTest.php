@@ -24,8 +24,8 @@ class EventRegistrationTest extends TestCase
         $this->event = Event::factory()->create([
             'title' => 'Test Event',
             'description' => 'Test event description',
-            'date' => now()->addDays(7),
-            'time' => '10:00:00',
+            'start_date' => now()->addDays(7)->setTime(10, 0),
+            'end_date' => now()->addDays(7)->setTime(12, 0),
             'location' => 'Test Location',
             'max_participants' => 100,
         ]);

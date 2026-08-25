@@ -96,7 +96,7 @@
                                             {{ $registration->event->title }}
                                         </h3>
                                         <div class="flex flex-wrap gap-4 text-sm text-gray-600">
-                                            <span><i class="fas fa-calendar mr-2"></i>{{ \Carbon\Carbon::parse($registration->event->event_date)->format('d M Y, H:i') }}</span>
+                                            <span><i class="fas fa-calendar mr-2"></i>{{ \Carbon\Carbon::parse($registration->event->start_date ?? $registration->event->date ?? now())->format('d M Y, H:i') }}</span>
                                             <span><i class="fas fa-map-marker-alt mr-2"></i>{{ $registration->event->location }}</span>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
 
                                 <!-- Actions -->
                                 <div class="mt-4 flex gap-2">
-                                    <a href="{{ route('calendar.events.show', $registration->event->slug) }}" 
+                                    <a href="{{ route('calendar.show', $registration->event) }}" 
                                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition">
                                         <i class="fas fa-eye mr-1"></i> View Event
                                     </a>

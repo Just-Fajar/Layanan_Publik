@@ -5,7 +5,12 @@ use App\Http\Controllers\CalendarEvent\Admin\DashboardController as CalendarAdmi
 use App\Http\Controllers\CalendarEvent\Admin\EventController as CalendarAdminEvent;
 use App\Http\Controllers\CalendarEvent\Admin\RegistrationManagementController as CalendarAdminRegistration;
 use App\Http\Controllers\CalendarEvent\Admin\UserManagementController as CalendarAdminUser;
+use App\Http\Controllers\CalendarEvent\Auth\LoginController as CalendarUserLogin;
+use App\Http\Controllers\CalendarEvent\Auth\RegisterController as CalendarUserRegister;
 use App\Http\Controllers\CalendarEvent\EventController as CalendarEventController;
+use App\Http\Controllers\CalendarEvent\User\DashboardController as CalendarUserDashboard;
+use App\Http\Controllers\CalendarEvent\User\EventRegistrationController as CalendarUserEventRegistration;
+use App\Http\Controllers\CalendarEvent\User\ProfileController as CalendarUserProfile;
 use App\Http\Controllers\Esport\Admin\DashboardController as EsportAdminDashboard;
 use App\Http\Controllers\Esport\Admin\NewsController as EsportAdminNews;
 use App\Http\Controllers\Esport\Admin\RegistrationManagementController as EsportAdminRegistration;
@@ -148,6 +153,41 @@ Route::prefix('buku-tamu/admin/esport')
         Route::get('/users', [EsportAdminUser::class, 'index'])->name('users.index');
         Route::get('/users/{user}', [EsportAdminUser::class, 'show'])->name('users.show');
     });
+
+/*
+|--------------------------------------------------------------------------
+| Calendar User Authentication
+|--------------------------------------------------------------------------
+*/
+Route::prefix('calendar')->name('calendar.auth.')->group(function () {
+    Route::middleware('guest')->group(function () {
+        Route::get('/login', [CalendarUserLogin::class, 'showLogin'])->name('login');
+        Route::post('/login', [CalendarUserLogin::class, 'login']);
+        Route::get('/register', [CalendarUserRegister::class, 'showRegister'])->name('register');
+        Route::post('/register', [CalendarUserRegister::class, 'register']);
+    });
+    Route::post('/logout', [CalendarUserLogin::class, 'logout'])->name('logout')->middleware('auth');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Calendar User Portal (Authenticated Users)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('calendar/user')->name('calendar.user.')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [CalendarUserDashboard::class, 'index'])->name('dashboard');
+
+    // Events & Registrations
+    Route::get('/events', [CalendarUserEventRegistration::class, 'index'])->name('events.index');
+    Route::get('/events/{registration}', [CalendarUserEventRegistration::class, 'show'])->name('events.show');
+    Route::post('/events/{event}/register', [CalendarUserEventRegistration::class, 'register'])->name('events.register');
+    Route::delete('/events/{registration}/cancel', [CalendarUserEventRegistration::class, 'cancel'])->name('events.cancel');
+
+    // Profile
+    Route::get('/profile', [CalendarUserProfile::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [CalendarUserProfile::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [CalendarUserProfile::class, 'updatePassword'])->name('profile.password');
+});
 
 /*
 |--------------------------------------------------------------------------
