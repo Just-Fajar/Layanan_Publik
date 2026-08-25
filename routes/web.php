@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\VisitorController;
+use App\Http\Controllers\CalendarEvent\Admin\EventController as CalendarAdminEvent;
+use App\Http\Controllers\CalendarEvent\EventController as CalendarEventController;
 use App\Http\Controllers\Esport\Admin\NewsController as EsportAdminNews;
 use App\Http\Controllers\Esport\Admin\TournamentController as EsportAdminTournament;
 use App\Http\Controllers\Esport\NewsController as EsportNews;
@@ -20,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 // Homepage route
 Route::get('/', function () {
     return view('homepage.homepage');
@@ -86,8 +89,39 @@ Route::prefix('buku-tamu/admin/esport')
         Route::delete('/news/{news}', [EsportAdminNews::class, 'destroy'])->name('news.destroy');
     });
 
-// Tambah 1 baris:
-Route::view('/ekspresi', 'ekspresi');  // buka di http://localhost:8000/ekspresi
+/*
+|--------------------------------------------------------------------------
+| Public Calendar Event
+|--------------------------------------------------------------------------
+*/
+Route::prefix('calendar')->name('calendar.')->group(function () {
+    Route::get('/', [CalendarEventController::class, 'index'])->name('index');
+    Route::get('/view/month', [CalendarEventController::class, 'calendar'])->name('view');
+    Route::get('/{event}', [CalendarEventController::class, 'show'])->name('show');
+});
+Route::get('/calendar-view', [CalendarEventController::class, 'calendar'])->name('calendar.view.legacy');
+
+/*
+|--------------------------------------------------------------------------
+| Admin Calendar Event (RBAC Protected)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('buku-tamu/admin/calendar')
+    ->name('calendar.admin.')
+    ->middleware(['admin.role:module,calendar'])
+    ->group(function () {
+        Route::get('/events', [CalendarAdminEvent::class, 'index'])->name('events.index');
+        Route::get('/events/create', [CalendarAdminEvent::class, 'create'])->name('events.create');
+        Route::post('/events', [CalendarAdminEvent::class, 'store'])->name('events.store');
+        Route::get('/events/{event}', [CalendarAdminEvent::class, 'show'])->name('events.show');
+        Route::get('/events/{event}/edit', [CalendarAdminEvent::class, 'edit'])->name('events.edit');
+        Route::put('/events/{event}', [CalendarAdminEvent::class, 'update'])->name('events.update');
+        Route::delete('/events/{event}', [CalendarAdminEvent::class, 'destroy'])->name('events.destroy');
+        Route::post('/events/bulk', [CalendarAdminEvent::class, 'bulkAction'])->name('events.bulk');
+    });
+
+// Ekspresi Wajah route
+Route::view('/ekspresi', 'ekspresi');
 Route::post('/ekspresi', [VisitorController::class, 'store'])->name('ekspresi.store');
 
 require __DIR__ . '/auth.php';
