@@ -29,7 +29,7 @@ class LoginController extends Controller
 
         // Check if login is email or username
         $loginField = $request->input('username') ?? $request->input('login');
-        
+
         if (filter_var($loginField, FILTER_VALIDATE_EMAIL)) {
             $credentials['email'] = $loginField;
         } else {

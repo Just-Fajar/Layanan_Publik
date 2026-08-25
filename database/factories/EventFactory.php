@@ -11,46 +11,60 @@ class EventFactory extends Factory
 
     public function definition(): array
     {
-        $date = fake()->dateTimeBetween('+1 week', '+3 months');
+        $startDate = fake()->dateTimeBetween('+1 week', '+3 months');
+        $endDate = (clone $startDate)->modify('+2 hours');
 
         return [
             'title' => fake()->sentence(4),
             'description' => fake()->paragraph(3),
-            'date' => $date->format('Y-m-d'),
-            'time' => fake()->time('H:i:s'),
+            'start_date' => $startDate,
+            'end_date' => $endDate,
             'location' => fake()->address(),
             'max_participants' => fake()->numberBetween(50, 500),
-            'category' => fake()->randomElement(['Workshop', 'Seminar', 'Conference', 'Webinar', 'Training', 'Meeting']),
+            'category' => fake()->randomElement(['workshop', 'seminar', 'training', 'conference', 'competition', 'exhibition', 'other']),
             'organizer' => fake()->company(),
             'contact_email' => fake()->companyEmail(),
             'contact_phone' => fake()->phoneNumber(),
-            'registration_deadline' => $date->modify('-3 days')->format('Y-m-d'),
-            'status' => 'upcoming',
-            'banner_image' => 'events/default-banner.jpg',
+            'registration_deadline' => (clone $startDate)->modify('-3 days'),
+            'status' => 'published',
+            'image' => 'events/default-banner.jpg',
+            'is_public' => true,
         ];
+    }
+
+    public function published(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => 'published',
+        ]);
+    }
+
+    public function draft(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => 'draft',
+        ]);
     }
 
     public function upcoming(): static
     {
-        return $this->state(fn (array $attributes) => [
-            'status' => 'upcoming',
-            'date' => now()->addDays(fake()->numberBetween(1, 30))->format('Y-m-d'),
-        ]);
-    }
+        $startDate = now()->addDays(fake()->numberBetween(1, 30));
 
-    public function ongoing(): static
-    {
         return $this->state(fn (array $attributes) => [
-            'status' => 'ongoing',
-            'date' => now()->format('Y-m-d'),
+            'status' => 'published',
+            'start_date' => $startDate,
+            'end_date' => (clone $startDate)->modify('+2 hours'),
         ]);
     }
 
     public function completed(): static
     {
+        $startDate = now()->subDays(fake()->numberBetween(1, 30));
+
         return $this->state(fn (array $attributes) => [
             'status' => 'completed',
-            'date' => now()->subDays(fake()->numberBetween(1, 30))->format('Y-m-d'),
+            'start_date' => $startDate,
+            'end_date' => (clone $startDate)->modify('+2 hours'),
         ]);
     }
 }

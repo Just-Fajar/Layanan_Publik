@@ -62,15 +62,15 @@ class EventRegistrationService
             'status' => 'attended',
             'attended_at' => now(),
         ];
-        
+
         if ($adminId) {
             $data['attended_by'] = $adminId;
         }
-        
+
         if ($notes) {
             $data['attendance_notes'] = $notes;
         }
-        
+
         $registration->update($data);
 
         // TODO: Send attendance confirmation

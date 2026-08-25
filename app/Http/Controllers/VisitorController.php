@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Visitor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
 
 class VisitorController extends Controller
 {
     // Target coordinates
     private const TARGET_LATITUDE = -7.632269349111827;
+
     private const TARGET_LONGITUDE = 111.5301320107111;
+
     private const MAX_DISTANCE_KM = 0.5; // 500 meters radius
 
     /**
@@ -20,10 +22,10 @@ class VisitorController extends Controller
     public function store(Request $request)
     {
         // Validate coordinates first
-        if (!$this->isWithinRange($request->latitude, $request->longitude)) {
+        if (! $this->isWithinRange($request->latitude, $request->longitude)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Maaf, Anda berada di luar area yang diizinkan. Silahkan datang ke lokasi untuk mengisi buku tamu.'
+                'message' => 'Maaf, Anda berada di luar area yang diizinkan. Silahkan datang ke lokasi untuk mengisi buku tamu.',
             ], 403);
         }
 
@@ -37,7 +39,7 @@ class VisitorController extends Controller
             'notes' => 'required|string',
             'photo' => 'required|string',
             'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric'
+            'longitude' => 'required|numeric',
         ]);
 
         try {
@@ -45,7 +47,7 @@ class VisitorController extends Controller
             $photo = $request->photo;
             $photo = str_replace('data:image/jpeg;base64,', '', $photo);
             $photo = str_replace(' ', '+', $photo);
-            
+
             $imageName = time() . '_' . uniqid() . '.jpg';
             Storage::disk('public')->put('visitors/' . $imageName, base64_decode($photo));
 
@@ -60,19 +62,18 @@ class VisitorController extends Controller
                 'photo_path' => 'visitors/' . $imageName,
                 'visit_date' => Carbon::now(),
                 'latitude' => $request->latitude,
-                'longitude' => $request->longitude
+                'longitude' => $request->longitude,
             ]);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Data kunjungan berhasil disimpan.',
-                'data' => $visitor
+                'data' => $visitor,
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(),
             ], 500);
         }
     }
@@ -82,7 +83,7 @@ class VisitorController extends Controller
      */
     private function isWithinRange($latitude, $longitude)
     {
-        if (!$latitude || !$longitude) {
+        if (! $latitude || ! $longitude) {
             return false;
         }
 

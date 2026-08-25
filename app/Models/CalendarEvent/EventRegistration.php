@@ -11,6 +11,11 @@ class EventRegistration extends Model
 {
     use HasFactory;
 
+    protected static function newFactory()
+    {
+        return \Database\Factories\EventRegistrationFactory::new();
+    }
+
     /**
      * The table associated with the model.
      *

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Esport;
 
-use App\Models\Tournament;
 use App\Models\Esport\TournamentRegistration;
+use App\Models\Tournament;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -13,6 +13,7 @@ class TournamentRegistrationTest extends TestCase
     use RefreshDatabase;
 
     protected User $user;
+
     protected Tournament $tournament;
 
     protected function setUp(): void

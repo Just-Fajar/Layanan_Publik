@@ -3,8 +3,8 @@
 namespace Tests\Feature\CalendarEvent\Admin;
 
 use App\Models\Admin;
-use App\Models\Event;
 use App\Models\CalendarEvent\EventRegistration;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,8 +14,11 @@ class AttendanceManagementTest extends TestCase
     use RefreshDatabase;
 
     protected Admin $admin;
+
     protected User $user;
+
     protected Event $event;
+
     protected EventRegistration $registration;
 
     protected function setUp(): void

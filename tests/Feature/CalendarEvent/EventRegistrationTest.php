@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\CalendarEvent;
 
-use App\Models\Event;
 use App\Models\CalendarEvent\EventRegistration;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -13,6 +13,7 @@ class EventRegistrationTest extends TestCase
     use RefreshDatabase;
 
     protected User $user;
+
     protected Event $event;
 
     protected function setUp(): void

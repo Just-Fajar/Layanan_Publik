@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Visitor;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class VisitorController extends Controller
 {
@@ -27,7 +27,7 @@ class VisitorController extends Controller
         // Filter by month and year
         if ($request->filled('month') && $request->filled('year')) {
             $query->whereMonth('visit_date', $request->month)
-                  ->whereYear('visit_date', $request->year);
+                ->whereYear('visit_date', $request->year);
         }
 
         // Filter by purpose
@@ -35,18 +35,17 @@ class VisitorController extends Controller
             $query->where('purpose', $request->purpose);
         }
 
-           if ($request->filled('name')) {
-        $name = $request->name;
-        $query->where('name', 'like', "%{$name}%");
-    }
+        if ($request->filled('name')) {
+            $name = $request->name;
+            $query->where('name', 'like', "%{$name}%");
+        }
 
         $visitors = $query->orderBy('visit_date', 'desc')->paginate(10);
 
         return response()->json([
             'success' => true,
-            'data'    => $visitors, // setiap item sudah menyertakan photo_url dari $appends di Model
+            'data' => $visitors, // setiap item sudah menyertakan photo_url dari $appends di Model
         ]);
-
     }
 
     /**
@@ -56,20 +55,20 @@ class VisitorController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'        => 'required|string|max:255',
-            'email'       => 'required|email|max:255',
-            'phone'       => 'required|string|max:20',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
             'asal_daerah' => 'required|string|max:255',
-            'purpose'     => 'required|in:sekretariat,aplikasi_informatika,persandian_keamanan_informasi,informasi_komunikasi_publik,statistik',
-            'notes'       => 'required|string',
-            'photo'       => 'required|string', // base64 dataURL: data:image/jpeg;base64,...
+            'purpose' => 'required|in:sekretariat,aplikasi_informatika,persandian_keamanan_informasi,informasi_komunikasi_publik,statistik',
+            'notes' => 'required|string',
+            'photo' => 'required|string', // base64 dataURL: data:image/jpeg;base64,...
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Validation error',
-                'errors'  => $validator->errors(),
+                'errors' => $validator->errors(),
             ], 422);
         }
 
@@ -96,7 +95,7 @@ class VisitorController extends Controller
             }
 
             // Simpan rapi per tahun/bulan
-            $dir = 'photos/' . date('Y/m/') ;
+            $dir = 'photos/' . date('Y/m/');
             $photoName = 'visitor_' . uniqid() . '.' . $ext;
             $photoPath = $dir . $photoName;
 
@@ -115,7 +114,7 @@ class VisitorController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Visitor registered successfully',
-            'data'    => $visitor->fresh(), // akan menyertakan photo_url dari accessor Model
+            'data' => $visitor->fresh(), // akan menyertakan photo_url dari accessor Model
         ], 201);
     }
 
@@ -126,7 +125,7 @@ class VisitorController extends Controller
     {
         $visitor = Visitor::find($id);
 
-        if (!$visitor) {
+        if (! $visitor) {
             return response()->json([
                 'success' => false,
                 'message' => 'Visitor not found',
@@ -135,7 +134,7 @@ class VisitorController extends Controller
 
         return response()->json([
             'success' => true,
-            'data'    => $visitor, // sudah ada photo_url
+            'data' => $visitor, // sudah ada photo_url
         ]);
     }
 
@@ -147,7 +146,7 @@ class VisitorController extends Controller
     {
         $visitor = Visitor::find($id);
 
-        if (!$visitor) {
+        if (! $visitor) {
             return response()->json([
                 'success' => false,
                 'message' => 'Visitor not found',
@@ -155,20 +154,20 @@ class VisitorController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name'        => 'sometimes|required|string|max:255',
-            'email'       => 'nullable|email|max:255',
-            'phone'       => 'nullable|string|max:20',
+            'name' => 'sometimes|required|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:20',
             'institution' => 'nullable|string|max:255',
-            'purpose'     => 'required|in:sekretariat,aplikasi_informatika,persandian_keamanan_informasi,informasi_komunikasi_publik,statistik',
-            'notes'       => 'nullable|string',
-            'visit_date'  => 'nullable|date',
+            'purpose' => 'required|in:sekretariat,aplikasi_informatika,persandian_keamanan_informasi,informasi_komunikasi_publik,statistik',
+            'notes' => 'nullable|string',
+            'visit_date' => 'nullable|date',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Validation error',
-                'errors'  => $validator->errors(),
+                'errors' => $validator->errors(),
             ], 422);
         }
 
@@ -177,7 +176,7 @@ class VisitorController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Visitor updated successfully',
-            'data'    => $visitor->fresh(),
+            'data' => $visitor->fresh(),
         ]);
     }
 
@@ -188,7 +187,7 @@ class VisitorController extends Controller
     {
         $visitor = Visitor::find($id);
 
-        if (!$visitor) {
+        if (! $visitor) {
             return response()->json([
                 'success' => false,
                 'message' => 'Visitor not found',
@@ -215,13 +214,13 @@ class VisitorController extends Controller
     public function statistics(Request $request)
     {
         $month = (int) $request->get('month'); // untuk donut
-        $year  = (int) $request->get('year');  // untuk donut & trend tahunan
+        $year = (int) $request->get('year');  // untuk donut & trend tahunan
 
         // Kartu default
-        $total     = Visitor::count();
-        $today     = Visitor::whereDate('visit_date', now()->toDateString())->count();
+        $total = Visitor::count();
+        $today = Visitor::whereDate('visit_date', now()->toDateString())->count();
         $thisMonth = Visitor::whereMonth('visit_date', now()->month)
-                            ->whereYear('visit_date', now()->year)->count();
+            ->whereYear('visit_date', now()->year)->count();
 
         // Donut purpose (ikut filter bila ada)
         $purposeBase = Visitor::query();
@@ -237,15 +236,15 @@ class VisitorController extends Controller
         if ($year) {
             $monthlyStats = Visitor::selectRaw('YEAR(visit_date) as year, MONTH(visit_date) as month, COUNT(*) as count')
                 ->whereYear('visit_date', $year)
-                ->groupBy('year','month')
-                ->orderBy('month','asc')
+                ->groupBy('year', 'month')
+                ->orderBy('month', 'asc')
                 ->get();
         } else {
             // rolling 12 bulan terakhir
             $monthlyStats = Visitor::selectRaw('YEAR(visit_date) as year, MONTH(visit_date) as month, COUNT(*) as count')
                 ->where('visit_date', '>=', now()->subMonths(11)->startOfMonth())
-                ->groupBy('year','month')
-                ->orderBy('year','desc')->orderBy('month','desc')
+                ->groupBy('year', 'month')
+                ->orderBy('year', 'desc')->orderBy('month', 'desc')
                 ->limit(12)
                 ->get();
         }
@@ -253,12 +252,12 @@ class VisitorController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'total'         => $total,
-                'today'         => $today,
-                'this_month'    => $thisMonth,
+                'total' => $total,
+                'today' => $today,
+                'this_month' => $thisMonth,
                 'purpose_stats' => $purposeStats,
                 'monthly_stats' => $monthlyStats,
-            ]
+            ],
         ]);
     }
 
@@ -276,7 +275,7 @@ class VisitorController extends Controller
 
         if ($request->filled('month') && $request->filled('year')) {
             $query->whereMonth('visit_date', $request->month)
-                  ->whereYear('visit_date', $request->year);
+                ->whereYear('visit_date', $request->year);
         }
 
         $visitors = $query->orderBy('visit_date', 'desc')->get();
@@ -288,10 +287,10 @@ class VisitorController extends Controller
         $allowedFormats = ['a4', 'f4', 'letter', 'legal'];
         $allowedOrientations = ['portrait', 'landscape'];
 
-        if (!in_array($paperFormat, $allowedFormats)) {
+        if (! in_array($paperFormat, $allowedFormats)) {
             $paperFormat = 'a4';
         }
-        if (!in_array($orientation, $allowedOrientations)) {
+        if (! in_array($orientation, $allowedOrientations)) {
             $orientation = 'portrait';
         }
 
@@ -304,5 +303,4 @@ class VisitorController extends Controller
         // Stream PDF in browser (not auto-download)
         return $pdf->stream($filename);
     }
-    
 }

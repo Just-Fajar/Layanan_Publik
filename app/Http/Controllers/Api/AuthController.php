@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,16 +24,16 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Validation error',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 422);
         }
 
         $admin = Admin::where('username', $request->username)->first();
 
-        if (!$admin || !Hash::check($request->password, $admin->password)) {
+        if (! $admin || ! Hash::check($request->password, $admin->password)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid credentials'
+                'message' => 'Invalid credentials',
             ], 401);
         }
 
@@ -49,10 +48,10 @@ class AuthController extends Controller
                     'id' => $admin->id,
                     'name' => $admin->name,
                     'email' => $admin->email,
-                    'username' => $admin->username
+                    'username' => $admin->username,
                 ],
-                'token' => $token
-            ]
+                'token' => $token,
+            ],
         ]);
     }
 
@@ -63,7 +62,7 @@ class AuthController extends Controller
     {
         return response()->json([
             'success' => true,
-            'message' => 'Logout successful'
+            'message' => 'Logout successful',
         ]);
     }
 
@@ -74,11 +73,11 @@ class AuthController extends Controller
     {
         // Simple token validation (in production, use proper middleware)
         $token = $request->bearerToken();
-        
-        if (!$token) {
+
+        if (! $token) {
             return response()->json([
                 'success' => false,
-                'message' => 'Token not provided'
+                'message' => 'Token not provided',
             ], 401);
         }
 
@@ -86,13 +85,13 @@ class AuthController extends Controller
             $decoded = base64_decode($token);
             $parts = explode(':', $decoded);
             $adminId = $parts[0];
-            
+
             $admin = Admin::find($adminId);
-            
-            if (!$admin) {
+
+            if (! $admin) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Invalid token'
+                    'message' => 'Invalid token',
                 ], 401);
             }
 
@@ -102,13 +101,13 @@ class AuthController extends Controller
                     'id' => $admin->id,
                     'name' => $admin->name,
                     'email' => $admin->email,
-                    'username' => $admin->username
-                ]
+                    'username' => $admin->username,
+                ],
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid token'
+                'message' => 'Invalid token',
             ], 401);
         }
     }

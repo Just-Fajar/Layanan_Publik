@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('visitors', function (Blueprint $table) {
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
+        Schema::table('admins', function (Blueprint $table) {
+            $table->string('role', 50)->default('admin_buku_tamu')->after('password');
+            $table->index('role');
         });
     }
 
@@ -22,8 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('visitors', function (Blueprint $table) {
-            $table->dropColumn(['latitude', 'longitude']);
+        Schema::table('admins', function (Blueprint $table) {
+            $table->dropIndex(['role']);
+            $table->dropColumn('role');
         });
     }
 };

@@ -10,6 +10,8 @@ use App\Models\Tournament as BaseTournament;
  */
 class Tournament extends BaseTournament
 {
-    // This class simply extends the base Tournament model
-    // All functionality is inherited from App\Models\Tournament
+    protected static function newFactory()
+    {
+        return \Database\Factories\TournamentFactory::new();
+    }
 }

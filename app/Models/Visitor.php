@@ -11,8 +11,8 @@ class Visitor extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','email','phone','asal_daerah','purpose','notes',
-        'photo_path','Institution','visit_date'
+        'name', 'email', 'phone', 'asal_daerah', 'purpose', 'notes',
+        'photo_path', 'Institution', 'visit_date',
     ];
 
     protected $casts = ['visit_date' => 'datetime'];
@@ -22,21 +22,20 @@ class Visitor extends Model
 
     public function getPhotoUrlAttribute()
     {
-        if (!$this->photo_path) {
+        if (! $this->photo_path) {
             return null;
         }
-        
+
         // Pastikan storage link sudah dibuat
         // php artisan storage:link
         return asset('storage/' . $this->photo_path);
     }
 
-    const PURPOSE_OPTIONS = [
-    'sekretariat' => 'Sekretariat',
-    'aplikasi_informatika' => 'Aplikasi Informatika',
-    'persandian_keamanan_informasi' => 'Persandian & Keamanan Informasi',
-    'informasi_komunikasi_publik' => 'Informasi dan Komunikasi Publik',
-    'statistik' => 'Statistik',
-];
-
+    public const PURPOSE_OPTIONS = [
+        'sekretariat' => 'Sekretariat',
+        'aplikasi_informatika' => 'Aplikasi Informatika',
+        'persandian_keamanan_informasi' => 'Persandian & Keamanan Informasi',
+        'informasi_komunikasi_publik' => 'Informasi dan Komunikasi Publik',
+        'statistik' => 'Statistik',
+    ];
 }

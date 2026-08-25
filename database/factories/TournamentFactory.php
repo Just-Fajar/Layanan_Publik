@@ -12,23 +12,30 @@ class TournamentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->sentence(3),
-            'game' => fake()->randomElement(['Mobile Legends', 'PUBG Mobile', 'Free Fire', 'Valorant', 'Call of Duty Mobile']),
-            'description' => fake()->paragraph(),
-            'tournament_type' => fake()->randomElement(['solo', 'team']),
-            'max_participants' => fake()->numberBetween(16, 128),
-            'prize_pool' => fake()->numberBetween(1000000, 50000000),
-            'rules' => fake()->text(500),
-            'registration_start' => now()->subDays(7),
-            'registration_end' => now()->addDays(7),
-            'tournament_start' => now()->addDays(14),
-            'tournament_end' => now()->addDays(16),
+            'title' => fake()->sentence(3),
+            'game' => fake()->randomElement(['Mobile Legends', 'PUBG Mobile', 'Free Fire', 'Valorant', 'Dota 2', 'CS:GO']),
+            'date' => fake()->dateTimeBetween('+1 week', '+2 months')->format('Y-m-d'),
             'location' => fake()->city(),
-            'organizer' => fake()->company(),
-            'contact_email' => fake()->email(),
-            'contact_phone' => fake()->phoneNumber(),
+            'description' => fake()->paragraph(),
+            'image' => 'tournaments/default-banner.jpg',
             'status' => 'upcoming',
-            'banner_image' => 'tournaments/default-banner.jpg',
+            'organizer_contact' => fake()->phoneNumber(),
         ];
+    }
+
+    public function ongoing(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => 'ongoing',
+            'date' => now()->format('Y-m-d'),
+        ]);
+    }
+
+    public function finished(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => 'finished',
+            'date' => now()->subDays(fake()->numberBetween(1, 30))->format('Y-m-d'),
+        ]);
     }
 }
