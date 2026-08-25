@@ -21,11 +21,14 @@ class TournamentRegistrationRequest extends FormRequest
      */
     public function rules(): array
     {
+        $tournament = $this->route('tournament');
+        $isTeam = ! $tournament || ($tournament->tournament_type ?? null) === 'team' || ! isset($tournament->tournament_type);
+
         return [
-            'team_name' => ['nullable', 'string', 'max:255'],
+            'team_name' => [$isTeam ? 'required' : 'nullable', 'string', 'max:255'],
             'team_members' => ['nullable', 'array'],
             'team_members.*' => ['string', 'max:255'],
-            'in_game_id' => ['nullable', 'string', 'max:255'],
+            'in_game_id' => ['required', 'string', 'max:255'],
             'notes' => ['nullable', 'string', 'max:1000'],
         ];
     }
@@ -36,6 +39,8 @@ class TournamentRegistrationRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'team_name.required' => 'Nama tim wajib diisi.',
+            'in_game_id.required' => 'In-game ID wajib diisi.',
             'team_members.array' => 'Team members harus berupa array.',
             'team_members.*.string' => 'Setiap team member harus berupa string.',
         ];

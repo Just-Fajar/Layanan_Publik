@@ -11,9 +11,14 @@ use App\Http\Controllers\Esport\Admin\NewsController as EsportAdminNews;
 use App\Http\Controllers\Esport\Admin\RegistrationManagementController as EsportAdminRegistration;
 use App\Http\Controllers\Esport\Admin\TournamentController as EsportAdminTournament;
 use App\Http\Controllers\Esport\Admin\UserManagementController as EsportAdminUser;
+use App\Http\Controllers\Esport\Auth\LoginController as EsportUserLogin;
+use App\Http\Controllers\Esport\Auth\RegisterController as EsportUserRegister;
 use App\Http\Controllers\Esport\NewsController as EsportNews;
 use App\Http\Controllers\Esport\PageController as EsportPage;
 use App\Http\Controllers\Esport\TournamentController as EsportTournament;
+use App\Http\Controllers\Esport\User\DashboardController as EsportUserDashboard;
+use App\Http\Controllers\Esport\User\ProfileController as EsportUserProfile;
+use App\Http\Controllers\Esport\User\TournamentRegistrationController as EsportUserTournamentRegistration;
 use App\Http\Controllers\QRCodeController;
 use App\Http\Controllers\Web\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +74,40 @@ Route::prefix('esport')->name('esport.')->group(function () {
 
     Route::get('/news', [EsportNews::class, 'index'])->name('news.index');
     Route::get('/news/{news}', [EsportNews::class, 'show'])->name('news.show');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Esport User Authentication
+|--------------------------------------------------------------------------
+*/
+Route::prefix('esport')->name('esport.auth.')->group(function () {
+    Route::middleware('guest')->group(function () {
+        Route::get('/login', [EsportUserLogin::class, 'showLogin'])->name('login');
+        Route::post('/login', [EsportUserLogin::class, 'login']);
+        Route::get('/register', [EsportUserRegister::class, 'showRegister'])->name('register');
+        Route::post('/register', [EsportUserRegister::class, 'register']);
+    });
+    Route::post('/logout', [EsportUserLogin::class, 'logout'])->name('logout')->middleware('auth');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Esport User Portal (Authenticated Users)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('esport/user')->name('esport.user.')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [EsportUserDashboard::class, 'index'])->name('dashboard');
+
+    // Tournaments & Registrations
+    Route::get('/tournaments', [EsportUserTournamentRegistration::class, 'index'])->name('tournaments.index');
+    Route::post('/tournaments/{tournament}/register', [EsportUserTournamentRegistration::class, 'register'])->name('tournaments.register');
+    Route::delete('/tournaments/{registration}/cancel', [EsportUserTournamentRegistration::class, 'cancel'])->name('tournaments.cancel');
+
+    // Profile
+    Route::get('/profile', [EsportUserProfile::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [EsportUserProfile::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [EsportUserProfile::class, 'updatePassword'])->name('profile.password');
 });
 
 /*

@@ -23,7 +23,9 @@ class TournamentRegistrationController extends Controller
      */
     public function index(Request $request)
     {
-        return view('esport.user.tournaments.index');
+        $registrations = $this->registrationService->getUserRegistrations(auth()->user());
+
+        return view('esport.user.tournaments.index', compact('registrations'));
     }
 
     /**
@@ -57,10 +59,11 @@ class TournamentRegistrationController extends Controller
      */
     public function cancel(TournamentRegistration $registration)
     {
-        try {
-            // Authorization check via policy
-            $this->authorize('cancel', $registration);
+        if (auth()->id() !== $registration->user_id) {
+            abort(403);
+        }
 
+        try {
             $this->registrationService->cancel($registration);
 
             return back()->with('success', 'Registration cancelled successfully.');

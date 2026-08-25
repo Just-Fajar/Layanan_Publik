@@ -22,13 +22,10 @@ class TournamentRegistrationTest extends TestCase
 
         $this->user = User::factory()->create();
         $this->tournament = Tournament::factory()->create([
-            'name' => 'Test Tournament',
+            'title' => 'Test Tournament',
             'game' => 'Mobile Legends',
-            'tournament_type' => 'team',
-            'max_participants' => 100,
-            'registration_start' => now()->subDays(1),
-            'registration_end' => now()->addDays(7),
-            'tournament_start' => now()->addDays(10),
+            'date' => now()->addDays(10),
+            'status' => 'upcoming',
         ]);
     }
 
