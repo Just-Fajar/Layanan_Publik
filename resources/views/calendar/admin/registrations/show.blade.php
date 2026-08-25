@@ -40,7 +40,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 mb-1">Date & Time</p>
-                        <p class="font-medium text-gray-900">{{ \Carbon\Carbon::parse($registration->event->event_date)->format('d F Y, H:i') }}</p>
+                        <p class="font-medium text-gray-900">{{ $registration->event->start_date ? $registration->event->start_date->format('d F Y, H:i') : '-' }}</p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 mb-1">Location</p>
