@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\VisitorController;
 use App\Http\Controllers\CalendarEvent\Admin\DashboardController as CalendarAdminDashboard;
 use App\Http\Controllers\CalendarEvent\Admin\EventController as CalendarAdminEvent;
 use App\Http\Controllers\CalendarEvent\Admin\RegistrationManagementController as CalendarAdminRegistration;
@@ -24,7 +23,6 @@ use App\Http\Controllers\Esport\TournamentController as EsportTournament;
 use App\Http\Controllers\Esport\User\DashboardController as EsportUserDashboard;
 use App\Http\Controllers\Esport\User\ProfileController as EsportUserProfile;
 use App\Http\Controllers\Esport\User\TournamentRegistrationController as EsportUserTournamentRegistration;
-use App\Http\Controllers\QRCodeController;
 use App\Http\Controllers\Web\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,9 +56,6 @@ Route::prefix('buku-tamu/admin')->group(function () {
     Route::middleware(['admin.role:module,buku_tamu'])->group(function () {
         Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/dashboard/calendar', [AuthController::class, 'calendar'])->name('admin.calendar');
-        Route::get('/dashboard/qrcode', [QRCodeController::class, 'showQRPage'])->name('admin.qrcode');
-        Route::get('/dashboard/qrcode/visitor', [QRCodeController::class, 'generateVisitorQR'])->name('qr.visitor');
-        Route::get('/dashboard/qrcode/download', [QRCodeController::class, 'downloadQR'])->name('qr.download');
     });
 });
 
@@ -234,8 +229,14 @@ Route::prefix('buku-tamu/admin/calendar')
         Route::get('/users/{user}', [CalendarAdminUser::class, 'show'])->name('users.show');
     });
 
-// Ekspresi Wajah route
-Route::view('/ekspresi', 'ekspresi');
-Route::post('/ekspresi', [VisitorController::class, 'store'])->name('ekspresi.store');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [\App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 require __DIR__ . '/auth.php';

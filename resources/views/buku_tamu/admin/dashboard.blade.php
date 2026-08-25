@@ -887,7 +887,6 @@
                     <h3>Data Kunjungan</h3>
                     <div class="filters">
                         <button class="btn btn-success" onclick="showExportModal()">Export PDF</button>
-                        <a href="/buku-tamu/admin/dashboard/qrcode" class="btn btn-secondary" target="_blank">QR Code</a>
                         <a href="/buku-tamu/admin/dashboard/calendar" class="btn btn-warning" target="_blank">Kalender</a>
                     </div>
                 </div>
