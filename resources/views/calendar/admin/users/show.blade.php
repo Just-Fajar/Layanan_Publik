@@ -81,7 +81,7 @@
                                         <h4 class="font-semibold text-gray-800">{{ $registration->event->title }}</h4>
                                         <p class="text-sm text-gray-600 mt-1">
                                             <i class="fas fa-calendar mr-1"></i>
-                                            {{ \Carbon\Carbon::parse($registration->event->event_date)->format('d M Y, H:i') }}
+                                            {{ $registration->event->start_date ? $registration->event->start_date->format('d M Y, H:i') : '-' }}
                                         </p>
                                         <p class="text-sm text-gray-600 mt-1">
                                             <i class="fas fa-map-marker-alt mr-1"></i>

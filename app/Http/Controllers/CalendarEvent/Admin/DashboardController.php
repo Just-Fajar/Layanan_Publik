@@ -24,7 +24,6 @@ class DashboardController extends Controller
         ];
 
         // Calculate attendance rate
-        $total_completed_events = EventRegistration::whereNotNull('attended_at')->count();
         $statistics['attendance_rate'] = $statistics['total_registrations'] > 0
             ? round(($statistics['attended'] / $statistics['total_registrations']) * 100, 2)
             : 0;
@@ -39,10 +38,10 @@ class DashboardController extends Controller
         $recent_users = User::latest()->take(5)->get();
 
         // Upcoming events
-        $upcoming_events = Event::where('event_date', '>=', now())
-            ->where('is_active', true)
+        $upcoming_events = Event::published()
+            ->where('start_date', '>=', now())
             ->withCount('registrations')
-            ->orderBy('event_date', 'asc')
+            ->orderBy('start_date', 'asc')
             ->take(5)
             ->get();
 

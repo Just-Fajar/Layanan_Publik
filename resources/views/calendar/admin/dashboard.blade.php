@@ -168,7 +168,7 @@
                             <div class="flex justify-between items-center text-sm">
                                 <span class="text-gray-600">
                                     <i class="fas fa-calendar mr-1"></i>
-                                    {{ \Carbon\Carbon::parse($event->event_date)->format('d M Y, H:i') }}
+                                    {{ $event->start_date ? $event->start_date->format('d M Y, H:i') : '-' }}
                                 </span>
                                 <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">
                                     {{ $event->registrations_count }} registered

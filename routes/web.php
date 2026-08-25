@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\VisitorController;
+use App\Http\Controllers\CalendarEvent\Admin\DashboardController as CalendarAdminDashboard;
 use App\Http\Controllers\CalendarEvent\Admin\EventController as CalendarAdminEvent;
+use App\Http\Controllers\CalendarEvent\Admin\RegistrationManagementController as CalendarAdminRegistration;
+use App\Http\Controllers\CalendarEvent\Admin\UserManagementController as CalendarAdminUser;
 use App\Http\Controllers\CalendarEvent\EventController as CalendarEventController;
 use App\Http\Controllers\Esport\Admin\NewsController as EsportAdminNews;
 use App\Http\Controllers\Esport\Admin\TournamentController as EsportAdminTournament;
@@ -110,6 +113,10 @@ Route::prefix('buku-tamu/admin/calendar')
     ->name('calendar.admin.')
     ->middleware(['admin.role:module,calendar'])
     ->group(function () {
+        // Dashboard
+        Route::get('/dashboard', [CalendarAdminDashboard::class, 'index'])->name('dashboard');
+
+        // Events CRUD
         Route::get('/events', [CalendarAdminEvent::class, 'index'])->name('events.index');
         Route::get('/events/create', [CalendarAdminEvent::class, 'create'])->name('events.create');
         Route::post('/events', [CalendarAdminEvent::class, 'store'])->name('events.store');
@@ -118,6 +125,16 @@ Route::prefix('buku-tamu/admin/calendar')
         Route::put('/events/{event}', [CalendarAdminEvent::class, 'update'])->name('events.update');
         Route::delete('/events/{event}', [CalendarAdminEvent::class, 'destroy'])->name('events.destroy');
         Route::post('/events/bulk', [CalendarAdminEvent::class, 'bulkAction'])->name('events.bulk');
+
+        // Registrations Management
+        Route::get('/registrations', [CalendarAdminRegistration::class, 'index'])->name('registrations.index');
+        Route::get('/registrations/{registration}', [CalendarAdminRegistration::class, 'show'])->name('registrations.show');
+        Route::post('/registrations/{registration}/attend', [CalendarAdminRegistration::class, 'attend'])->name('registrations.attend');
+        Route::post('/registrations/{registration}/cancel', [CalendarAdminRegistration::class, 'cancel'])->name('registrations.cancel');
+
+        // User Management
+        Route::get('/users', [CalendarAdminUser::class, 'index'])->name('users.index');
+        Route::get('/users/{user}', [CalendarAdminUser::class, 'show'])->name('users.show');
     });
 
 // Ekspresi Wajah route
