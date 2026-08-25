@@ -18,3 +18,16 @@ yarn-error.log
 /.idea
 /.vscode
 .env.example
+
+# Project documentation (local only)
+PRD.md
+Architecture.md
+DB.md
+Roadmap_Task.md
+UI_Flow.md
+rule_ai.md
+
+# Junk / log files
+*.log
+*error_log*
+*.cache
