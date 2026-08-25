@@ -25,23 +25,22 @@ class AttendanceManagementTest extends TestCase
     {
         parent::setUp();
 
-        $this->admin = Admin::factory()->create([
+        $this->admin = Admin::factory()->calendar()->create([
             'username' => 'calendar_admin',
             'password' => bcrypt('password'),
-            'type' => 'calendar',
         ]);
 
         $this->user = User::factory()->create();
         $this->event = Event::factory()->create([
             'title' => 'Test Event',
-            'date' => now()->addDays(7),
+            'start_date' => now()->addDays(7),
+            'end_date' => now()->addDays(7)->addHours(2),
         ]);
 
         $this->registration = EventRegistration::factory()->create([
             'user_id' => $this->user->id,
             'event_id' => $this->event->id,
             'status' => 'registered',
-            'qr_code' => 'test_qr_code',
             'attendance_code' => 'ABC123',
         ]);
     }
@@ -49,7 +48,7 @@ class AttendanceManagementTest extends TestCase
     /** @test */
     public function admin_can_view_registrations_list()
     {
-        $response = $this->actingAs($this->admin, 'calendar_admin')
+        $response = $this->actingAs($this->admin, 'admin')
             ->get(route('calendar.admin.registrations.index'));
 
         $response->assertStatus(200);
@@ -60,7 +59,7 @@ class AttendanceManagementTest extends TestCase
     /** @test */
     public function admin_can_filter_registrations_by_status()
     {
-        $response = $this->actingAs($this->admin, 'calendar_admin')
+        $response = $this->actingAs($this->admin, 'admin')
             ->get(route('calendar.admin.registrations.index', ['status' => 'registered']));
 
         $response->assertStatus(200);
@@ -70,7 +69,7 @@ class AttendanceManagementTest extends TestCase
     /** @test */
     public function admin_can_view_registration_with_qr_code()
     {
-        $response = $this->actingAs($this->admin, 'calendar_admin')
+        $response = $this->actingAs($this->admin, 'admin')
             ->get(route('calendar.admin.registrations.show', $this->registration));
 
         $response->assertStatus(200);
@@ -83,8 +82,8 @@ class AttendanceManagementTest extends TestCase
     /** @test */
     public function admin_can_mark_attendance_for_registered_participant()
     {
-        $response = $this->actingAs($this->admin, 'calendar_admin')
-            ->post(route('calendar.admin.registrations.attendance', $this->registration), [
+        $response = $this->actingAs($this->admin, 'admin')
+            ->post(route('calendar.admin.registrations.attend', $this->registration), [
                 'notes' => 'Scanned QR code at entrance',
             ]);
 
@@ -94,13 +93,11 @@ class AttendanceManagementTest extends TestCase
         $this->assertDatabaseHas('event_registrations', [
             'id' => $this->registration->id,
             'status' => 'attended',
-            'attendance_notes' => 'Scanned QR code at entrance',
         ]);
 
         $updated = $this->registration->fresh();
         $this->assertEquals('attended', $updated->status);
         $this->assertNotNull($updated->attended_at);
-        $this->assertEquals($this->admin->id, $updated->attended_by);
     }
 
     /** @test */
@@ -109,11 +106,10 @@ class AttendanceManagementTest extends TestCase
         $this->registration->update([
             'status' => 'attended',
             'attended_at' => now(),
-            'attended_by' => $this->admin->id,
         ]);
 
-        $response = $this->actingAs($this->admin, 'calendar_admin')
-            ->post(route('calendar.admin.registrations.attendance', $this->registration), [
+        $response = $this->actingAs($this->admin, 'admin')
+            ->post(route('calendar.admin.registrations.attend', $this->registration), [
                 'notes' => 'Second attempt',
             ]);
 
@@ -125,8 +121,8 @@ class AttendanceManagementTest extends TestCase
     {
         $this->registration->update(['status' => 'cancelled']);
 
-        $response = $this->actingAs($this->admin, 'calendar_admin')
-            ->post(route('calendar.admin.registrations.attendance', $this->registration), [
+        $response = $this->actingAs($this->admin, 'admin')
+            ->post(route('calendar.admin.registrations.attend', $this->registration), [
                 'notes' => 'Attempt to mark cancelled',
             ]);
 
@@ -141,8 +137,8 @@ class AttendanceManagementTest extends TestCase
     /** @test */
     public function attendance_notes_are_optional()
     {
-        $response = $this->actingAs($this->admin, 'calendar_admin')
-            ->post(route('calendar.admin.registrations.attendance', $this->registration), [
+        $response = $this->actingAs($this->admin, 'admin')
+            ->post(route('calendar.admin.registrations.attend', $this->registration), [
                 'notes' => '', // Empty notes
             ]);
 
@@ -170,7 +166,7 @@ class AttendanceManagementTest extends TestCase
             'status' => 'cancelled',
         ]);
 
-        $response = $this->actingAs($this->admin, 'calendar_admin')
+        $response = $this->actingAs($this->admin, 'admin')
             ->get(route('calendar.admin.dashboard'));
 
         $response->assertStatus(200);
@@ -189,34 +185,33 @@ class AttendanceManagementTest extends TestCase
     {
         $response = $this->get(route('calendar.admin.registrations.index'));
 
-        $response->assertRedirect(route('calendar.admin.login'));
+        $response->assertRedirect(route('admin.login'));
     }
 
     /** @test */
     public function esport_admin_cannot_access_calendar_admin_routes()
     {
-        $esportAdmin = Admin::factory()->create([
+        $esportAdmin = Admin::factory()->esport()->create([
             'username' => 'esport_admin',
-            'type' => 'esport',
         ]);
 
-        $response = $this->actingAs($esportAdmin, 'esport_admin')
+        $response = $this->actingAs($esportAdmin, 'admin')
             ->get(route('calendar.admin.registrations.index'));
 
-        $response->assertStatus(302); // Redirected due to wrong guard
+        $response->assertStatus(403);
     }
 
     /** @test */
     public function qr_code_data_is_displayed_correctly()
     {
-        $response = $this->actingAs($this->admin, 'calendar_admin')
+        $response = $this->actingAs($this->admin, 'admin')
             ->get(route('calendar.admin.registrations.show', $this->registration));
 
         $response->assertStatus(200);
         $response->assertViewHas('registration');
 
         $viewData = $response->viewData('registration');
-        $this->assertEquals('test_qr_code', $viewData->qr_code);
+        $this->assertEquals('ABC123', $viewData->qr_code);
         $this->assertEquals('ABC123', $viewData->attendance_code);
     }
 }

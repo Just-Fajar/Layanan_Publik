@@ -24,7 +24,7 @@
                 <div class="bg-blue-50 rounded-lg p-4 mb-6">
                     <h2 class="font-bold text-gray-800 mb-2">{{ $registration->event->title }}</h2>
                     <div class="text-sm text-gray-600 space-y-1">
-                        <div><i class="fas fa-calendar mr-2"></i>{{ \Carbon\Carbon::parse($registration->event->event_date)->format('d F Y, H:i') }}</div>
+                        <div><i class="fas fa-calendar mr-2"></i>{{ \Carbon\Carbon::parse($registration->event->start_date ?? $registration->event->date ?? now())->format('d F Y, H:i') }}</div>
                         <div><i class="fas fa-map-marker-alt mr-2"></i>{{ $registration->event->location }}</div>
                         <div>
                             <i class="fas fa-user mr-2"></i>{{ auth()->user()->name }}
@@ -35,9 +35,12 @@
                 <!-- QR Code Display -->
                 <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-8 mb-6">
                     <div class="flex justify-center">
-                        @if($registration->qr_code)
-                            <div class="bg-white p-4 rounded-lg shadow-lg">
-                                {!! $registration->qr_code !!}
+                        @if($registration->attendance_code)
+                            <div class="bg-white p-4 rounded-lg shadow-lg text-center">
+                                <div class="font-mono text-2xl font-bold tracking-wider text-blue-700 mb-2">
+                                    {{ $registration->attendance_code }}
+                                </div>
+                                <p class="text-xs text-gray-500">Attendance Code</p>
                             </div>
                         @else
                             <div class="text-center text-gray-500">
@@ -89,14 +92,14 @@
 
                 <!-- Action Buttons -->
                 <div class="mt-6 flex gap-3">
-                    <a href="{{ route('calendar.events.show', $registration->event->slug) }}" 
+                    <a href="{{ route('calendar.show', $registration->event) }}" 
                        class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-center px-4 py-3 rounded-lg transition">
                         <i class="fas fa-eye mr-2"></i> View Event Details
                     </a>
-                    @if($registration->qr_code)
+                    @if($registration->attendance_code)
                         <button onclick="window.print()" 
                                 class="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg transition">
-                            <i class="fas fa-print mr-2"></i> Print QR Code
+                            <i class="fas fa-print mr-2"></i> Print Ticket
                         </button>
                     @endif
                 </div>
@@ -112,7 +115,7 @@
                         <h3 class="text-sm font-medium text-yellow-800">Important Notes:</h3>
                         <div class="mt-2 text-sm text-yellow-700">
                             <ul class="list-disc list-inside space-y-1">
-                                <li>Please show this QR code at the event entrance</li>
+                                <li>Please show this code / ticket at the event entrance</li>
                                 <li>You can print or save a screenshot of this page</li>
                                 <li>Make sure your registration status is "Registered"</li>
                                 <li>Arrive early to avoid queues</li>

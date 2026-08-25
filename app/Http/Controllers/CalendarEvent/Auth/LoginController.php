@@ -4,8 +4,10 @@ namespace App\Http\Controllers\CalendarEvent\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\UserLoginRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\View\View;
 
 class LoginController extends Controller
@@ -40,6 +42,10 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
+
+            if ($remember) {
+                Cookie::queue('remember_web_' . sha1(User::class), Auth::user()->getRememberToken(), 60 * 24 * 365);
+            }
 
             return redirect()->intended(route('calendar.user.dashboard'))
                 ->with('success', 'Selamat datang, ' . Auth::user()->name . '!');
