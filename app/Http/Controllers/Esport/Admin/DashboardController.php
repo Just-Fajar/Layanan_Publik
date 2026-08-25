@@ -35,9 +35,9 @@ class DashboardController extends Controller
         $recent_users = User::latest()->take(5)->get();
 
         // Active tournaments
-        $active_tournaments = Tournament::where('end_date', '>=', now())
-            ->where('is_active', true)
+        $active_tournaments = Tournament::whereIn('status', ['upcoming', 'ongoing'])
             ->withCount('registrations')
+            ->orderBy('date', 'asc')
             ->take(5)
             ->get();
 

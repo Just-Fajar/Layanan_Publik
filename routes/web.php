@@ -6,8 +6,11 @@ use App\Http\Controllers\CalendarEvent\Admin\EventController as CalendarAdminEve
 use App\Http\Controllers\CalendarEvent\Admin\RegistrationManagementController as CalendarAdminRegistration;
 use App\Http\Controllers\CalendarEvent\Admin\UserManagementController as CalendarAdminUser;
 use App\Http\Controllers\CalendarEvent\EventController as CalendarEventController;
+use App\Http\Controllers\Esport\Admin\DashboardController as EsportAdminDashboard;
 use App\Http\Controllers\Esport\Admin\NewsController as EsportAdminNews;
+use App\Http\Controllers\Esport\Admin\RegistrationManagementController as EsportAdminRegistration;
 use App\Http\Controllers\Esport\Admin\TournamentController as EsportAdminTournament;
+use App\Http\Controllers\Esport\Admin\UserManagementController as EsportAdminUser;
 use App\Http\Controllers\Esport\NewsController as EsportNews;
 use App\Http\Controllers\Esport\PageController as EsportPage;
 use App\Http\Controllers\Esport\TournamentController as EsportTournament;
@@ -77,6 +80,10 @@ Route::prefix('buku-tamu/admin/esport')
     ->name('esport.admin.')
     ->middleware(['admin.role:module,esport'])
     ->group(function () {
+        // Dashboard
+        Route::get('/dashboard', [EsportAdminDashboard::class, 'index'])->name('dashboard');
+
+        // Tournaments CRUD
         Route::get('/tournaments', [EsportAdminTournament::class, 'index'])->name('tournaments.index');
         Route::get('/tournaments/create', [EsportAdminTournament::class, 'create'])->name('tournaments.create');
         Route::post('/tournaments', [EsportAdminTournament::class, 'store'])->name('tournaments.store');
@@ -84,12 +91,23 @@ Route::prefix('buku-tamu/admin/esport')
         Route::put('/tournaments/{tournament}', [EsportAdminTournament::class, 'update'])->name('tournaments.update');
         Route::delete('/tournaments/{tournament}', [EsportAdminTournament::class, 'destroy'])->name('tournaments.destroy');
 
+        // News CRUD
         Route::get('/news', [EsportAdminNews::class, 'index'])->name('news.index');
         Route::get('/news/create', [EsportAdminNews::class, 'create'])->name('news.create');
         Route::post('/news', [EsportAdminNews::class, 'store'])->name('news.store');
         Route::get('/news/{news}/edit', [EsportAdminNews::class, 'edit'])->name('news.edit');
         Route::put('/news/{news}', [EsportAdminNews::class, 'update'])->name('news.update');
         Route::delete('/news/{news}', [EsportAdminNews::class, 'destroy'])->name('news.destroy');
+
+        // Registrations Management
+        Route::get('/registrations', [EsportAdminRegistration::class, 'index'])->name('registrations.index');
+        Route::get('/registrations/{registration}', [EsportAdminRegistration::class, 'show'])->name('registrations.show');
+        Route::post('/registrations/{registration}/approve', [EsportAdminRegistration::class, 'approve'])->name('registrations.approve');
+        Route::post('/registrations/{registration}/reject', [EsportAdminRegistration::class, 'reject'])->name('registrations.reject');
+
+        // User Management
+        Route::get('/users', [EsportAdminUser::class, 'index'])->name('users.index');
+        Route::get('/users/{user}', [EsportAdminUser::class, 'show'])->name('users.show');
     });
 
 /*
