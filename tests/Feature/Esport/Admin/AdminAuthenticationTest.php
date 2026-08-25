@@ -16,74 +16,69 @@ class AdminAuthenticationTest extends TestCase
     {
         parent::setUp();
 
-        $this->admin = Admin::factory()->create([
+        $this->admin = Admin::factory()->esport()->create([
             'username' => 'esport_admin',
             'password' => bcrypt('password'),
-            'type' => 'esport',
         ]);
     }
 
     /** @test */
     public function admin_can_view_login_page()
     {
-        $response = $this->get(route('esport.admin.login'));
+        $response = $this->get(route('admin.login'));
 
         $response->assertStatus(200);
-        $response->assertViewIs('esport.admin.auth.login');
+        $response->assertViewIs('buku_tamu.admin.login');
     }
 
     /** @test */
     public function admin_can_login_with_valid_credentials()
     {
-        $response = $this->post(route('esport.admin.login'), [
+        $response = $this->post(route('admin.login.submit'), [
             'username' => 'esport_admin',
             'password' => 'password',
             'remember' => false,
         ]);
 
-        $response->assertRedirect(route('esport.admin.dashboard'));
-        $this->assertAuthenticatedAs($this->admin, 'esport_admin');
+        $response->assertRedirect(route('esport.admin.tournaments.index'));
+        $this->assertAuthenticatedAs($this->admin, 'admin');
     }
 
     /** @test */
     public function admin_login_fails_with_wrong_password()
     {
-        $response = $this->post(route('esport.admin.login'), [
+        $response = $this->post(route('admin.login.submit'), [
             'username' => 'esport_admin',
             'password' => 'wrongpassword',
         ]);
 
         $response->assertSessionHasErrors();
-        $this->assertGuest('esport_admin');
+        $this->assertGuest('admin');
     }
 
     /** @test */
-    public function calendar_admin_cannot_login_to_esport_admin()
+    public function calendar_admin_cannot_access_esport_admin_dashboard()
     {
-        $calendarAdmin = Admin::factory()->create([
+        $calendarAdmin = Admin::factory()->calendar()->create([
             'username' => 'calendar_admin',
             'password' => bcrypt('password'),
-            'type' => 'calendar',
         ]);
 
-        $response = $this->post(route('esport.admin.login'), [
-            'username' => 'calendar_admin',
-            'password' => 'password',
-        ]);
+        $response = $this->actingAs($calendarAdmin, 'admin')
+            ->get(route('esport.admin.dashboard'));
 
-        $response->assertSessionHasErrors();
-        $this->assertGuest('esport_admin');
+        $response->assertStatus(403);
     }
 
     /** @test */
     public function admin_can_logout()
     {
-        $this->actingAs($this->admin, 'esport_admin');
+        $this->actingAs($this->admin, 'admin');
 
-        $response = $this->post(route('esport.admin.logout'));
+        $response = $this->post(route('admin.logout'));
 
-        $response->assertRedirect(route('esport.admin.login'));
-        $this->assertGuest('esport_admin');
+        $response->assertRedirect(route('admin.login'));
+        $this->assertGuest('admin');
     }
 
     /** @test */
@@ -91,13 +86,13 @@ class AdminAuthenticationTest extends TestCase
     {
         $response = $this->get(route('esport.admin.dashboard'));
 
-        $response->assertRedirect(route('esport.admin.login'));
+        $response->assertRedirect(route('admin.login'));
     }
 
     /** @test */
     public function authenticated_admin_can_access_dashboard()
     {
-        $response = $this->actingAs($this->admin, 'esport_admin')
+        $response = $this->actingAs($this->admin, 'admin')
             ->get(route('esport.admin.dashboard'));
 
         $response->assertStatus(200);

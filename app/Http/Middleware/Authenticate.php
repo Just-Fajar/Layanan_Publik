@@ -12,6 +12,22 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        return $request->expectsJson() ? null : route('login');
+        if ($request->expectsJson()) {
+            return null;
+        }
+
+        if ($request->is('esport/*') || $request->is('esport')) {
+            return route('esport.auth.login');
+        }
+
+        if ($request->is('calendar/*') || $request->is('calendar')) {
+            return route('calendar.auth.login');
+        }
+
+        if ($request->is('buku-tamu/admin/*') || $request->is('buku-tamu/admin')) {
+            return route('admin.login');
+        }
+
+        return route('login');
     }
 }
