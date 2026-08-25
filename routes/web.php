@@ -30,19 +30,17 @@ Route::get('/buku-tamu', function () {
     return view('buku_tamu.visitor');
 })->name('buku-tamu');
 
-// Admin routes
+// Admin routes (Buku Tamu)
 Route::prefix('buku-tamu/admin')->group(function () {
     Route::get('/', [AuthController::class, 'showLogin'])->name('admin.login');
-    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/dashboard/calendar', [AuthController::class, 'calendar'])->name('admin.calendar');
-    Route::get('/dashboard/qrcode', [QRCodeController::class, 'showQRPage'])->name('admin.qrcode');
-});
 
-// QR Code routes
-Route::prefix('buku-tamu/admin')->group(function () {
-    Route::get('/dashboard/qrcode', [QRCodeController::class, 'showQRPage'])->name('qr.admin');
-    Route::get('/dashboard/qrcode/visitor', [QRCodeController::class, 'generateVisitorQR'])->name('qr.visitor');
-    Route::get('/dashboard/qrcode/download', [QRCodeController::class, 'downloadQR'])->name('qr.download');
+    Route::middleware(['admin.role:module,buku_tamu'])->group(function () {
+        Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/dashboard/calendar', [AuthController::class, 'calendar'])->name('admin.calendar');
+        Route::get('/dashboard/qrcode', [QRCodeController::class, 'showQRPage'])->name('admin.qrcode');
+        Route::get('/dashboard/qrcode/visitor', [QRCodeController::class, 'generateVisitorQR'])->name('qr.visitor');
+        Route::get('/dashboard/qrcode/download', [QRCodeController::class, 'downloadQR'])->name('qr.download');
+    });
 });
 
 /*
@@ -64,12 +62,12 @@ Route::prefix('esport')->name('esport.')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Admin Esport (pakai admin yang sudah ada)
+| Admin Esport (RBAC Protected)
 |--------------------------------------------------------------------------
 */
 Route::prefix('buku-tamu/admin/esport')
     ->name('esport.admin.')
-    ->middleware(['admin.auth']) // sesuaikan jika alias middleware-mu beda
+    ->middleware(['admin.role:module,esport'])
     ->group(function () {
         Route::get('/tournaments', [EsportAdminTournament::class, 'index'])->name('tournaments.index');
         Route::get('/tournaments/create', [EsportAdminTournament::class, 'create'])->name('tournaments.create');
