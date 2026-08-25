@@ -56,11 +56,13 @@ class VisitorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'nullable|email|max:255',
             'phone' => 'required|string|max:20',
             'asal_daerah' => 'required|string|max:255',
             'purpose' => 'required|in:sekretariat,aplikasi_informatika,persandian_keamanan_informasi,informasi_komunikasi_publik,statistik',
-            'notes' => 'required|string',
+            'notes' => 'nullable|string',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
             'photo' => 'required|string', // base64 dataURL: data:image/jpeg;base64,...
         ]);
 
@@ -157,7 +159,7 @@ class VisitorController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
-            'institution' => 'nullable|string|max:255',
+            'asal_daerah' => 'nullable|string|max:255',
             'purpose' => 'required|in:sekretariat,aplikasi_informatika,persandian_keamanan_informasi,informasi_komunikasi_publik,statistik',
             'notes' => 'nullable|string',
             'visit_date' => 'nullable|date',
@@ -232,16 +234,22 @@ class VisitorController extends Controller
             ->groupBy('purpose')
             ->get();
 
+        // Driver-aware raw expression for Year & Month extraction
+        $driver = \Illuminate\Support\Facades\DB::getDriverName();
+        $rawYearMonth = $driver === 'sqlite'
+            ? "strftime('%Y', visit_date) as year, CAST(strftime('%m', visit_date) as integer) as month, COUNT(*) as count"
+            : 'YEAR(visit_date) as year, MONTH(visit_date) as month, COUNT(*) as count';
+
         // Line chart
         if ($year) {
-            $monthlyStats = Visitor::selectRaw('YEAR(visit_date) as year, MONTH(visit_date) as month, COUNT(*) as count')
+            $monthlyStats = Visitor::selectRaw($rawYearMonth)
                 ->whereYear('visit_date', $year)
                 ->groupBy('year', 'month')
                 ->orderBy('month', 'asc')
                 ->get();
         } else {
             // rolling 12 bulan terakhir
-            $monthlyStats = Visitor::selectRaw('YEAR(visit_date) as year, MONTH(visit_date) as month, COUNT(*) as count')
+            $monthlyStats = Visitor::selectRaw($rawYearMonth)
                 ->where('visit_date', '>=', now()->subMonths(11)->startOfMonth())
                 ->groupBy('year', 'month')
                 ->orderBy('year', 'desc')->orderBy('month', 'desc')

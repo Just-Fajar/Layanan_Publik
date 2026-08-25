@@ -16,8 +16,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->string('asal_daerah')->nullable();
-            $table->enum('purpose', ['aplikasi', 'persandian', 'statistik']);
+            $table->enum('purpose', [
+                'sekretariat',
+                'aplikasi_informatika',
+                'persandian_keamanan_informasi',
+                'informasi_komunikasi_publik',
+                'statistik',
+            ]);
             $table->text('notes')->nullable();
             $table->string('photo_path')->nullable();
             $table->timestamp('visit_date');
