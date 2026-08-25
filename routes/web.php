@@ -1,14 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\QRCodeController;
-use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Api\VisitorController;
+use App\Http\Controllers\Esport\Admin\NewsController as EsportAdminNews;
+use App\Http\Controllers\Esport\Admin\TournamentController as EsportAdminTournament;
+use App\Http\Controllers\Esport\NewsController as EsportNews;
 use App\Http\Controllers\Esport\PageController as EsportPage;
 use App\Http\Controllers\Esport\TournamentController as EsportTournament;
-use App\Http\Controllers\Esport\NewsController as EsportNews;
-use App\Http\Controllers\Esport\Admin\TournamentController as EsportAdminTournament;
-use App\Http\Controllers\Esport\Admin\NewsController as EsportAdminNews;
+use App\Http\Controllers\QRCodeController;
+use App\Http\Controllers\Web\AuthController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,7 +86,8 @@ Route::prefix('buku-tamu/admin/esport')
         Route::delete('/news/{news}', [EsportAdminNews::class, 'destroy'])->name('news.destroy');
     });
 
-    // Tambah 1 baris:
+// Tambah 1 baris:
 Route::view('/ekspresi', 'ekspresi');  // buka di http://localhost:8000/ekspresi
 Route::post('/ekspresi', [VisitorController::class, 'store'])->name('ekspresi.store');
 
+require __DIR__ . '/auth.php';

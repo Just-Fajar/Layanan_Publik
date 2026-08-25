@@ -13,15 +13,18 @@ class TournamentRegistrationPolicyTest extends TestCase
     use RefreshDatabase;
 
     protected TournamentRegistrationPolicy $policy;
+
     protected User $user;
+
     protected User $otherUser;
+
     protected TournamentRegistration $registration;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->policy = new TournamentRegistrationPolicy();
+        $this->policy = new TournamentRegistrationPolicy;
         $this->user = User::factory()->create();
         $this->otherUser = User::factory()->create();
 

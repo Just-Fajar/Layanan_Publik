@@ -13,15 +13,18 @@ class EventRegistrationPolicyTest extends TestCase
     use RefreshDatabase;
 
     protected EventRegistrationPolicy $policy;
+
     protected User $user;
+
     protected User $otherUser;
+
     protected EventRegistration $registration;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->policy = new EventRegistrationPolicy();
+        $this->policy = new EventRegistrationPolicy;
         $this->user = User::factory()->create();
         $this->otherUser = User::factory()->create();
 

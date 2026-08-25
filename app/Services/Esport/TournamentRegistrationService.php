@@ -2,8 +2,8 @@
 
 namespace App\Services\Esport;
 
-use App\Models\Esport\Tournament;
 use App\Models\Esport\TournamentRegistration;
+use App\Models\Tournament;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -53,11 +53,11 @@ class TournamentRegistrationService
             'status' => 'approved',
             'rejection_reason' => null,
         ];
-        
+
         if ($adminId) {
             $data['approved_by'] = $adminId;
         }
-        
+
         $registration->update($data);
 
         // TODO: Send approval notification to user
@@ -74,11 +74,11 @@ class TournamentRegistrationService
             'status' => 'rejected',
             'rejection_reason' => $reason,
         ];
-        
+
         if ($adminId) {
             $data['rejected_by'] = $adminId;
         }
-        
+
         $registration->update($data);
 
         // TODO: Send rejection notification to user
@@ -105,5 +105,20 @@ class TournamentRegistrationService
         return TournamentRegistration::where('user_id', $user->id)
             ->where('tournament_id', $tournament->id)
             ->exists();
+    }
+
+    /**
+     * Get tournament statistics.
+     */
+    public function getTournamentStatistics(Tournament $tournament): array
+    {
+        $registrations = TournamentRegistration::where('tournament_id', $tournament->id);
+
+        return [
+            'total' => $registrations->count(),
+            'pending' => $registrations->clone()->where('status', 'pending')->count(),
+            'approved' => $registrations->clone()->where('status', 'approved')->count(),
+            'rejected' => $registrations->clone()->where('status', 'rejected')->count(),
+        ];
     }
 }

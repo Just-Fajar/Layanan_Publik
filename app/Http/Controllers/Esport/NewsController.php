@@ -10,9 +10,10 @@ class NewsController extends Controller
 {
     public function index(Request $r)
     {
-        $filters = $r->only(['category','q']);
+        $filters = $r->only(['category', 'q']);
         $news = News::latest()->filter($filters)->paginate(9)->withQueryString();
-        return view('esport.news.index', compact('news','filters'));
+
+        return view('esport.news.index', compact('news', 'filters'));
     }
 
     public function show(News $news)
@@ -20,4 +21,3 @@ class NewsController extends Controller
         return view('esport.news.show', compact('news'));
     }
 }
-

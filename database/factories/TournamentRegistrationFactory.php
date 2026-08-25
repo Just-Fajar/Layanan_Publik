@@ -17,14 +17,11 @@ class TournamentRegistrationFactory extends Factory
             'user_id' => User::factory(),
             'tournament_id' => Tournament::factory(),
             'team_name' => fake()->words(2, true) . ' Team',
+            'team_members' => [fake()->name(), fake()->name(), fake()->name()],
             'in_game_id' => fake()->userName(),
-            'notes' => fake()->optional()->sentence(),
             'status' => 'pending',
-            'approved_at' => null,
-            'approved_by' => null,
-            'rejected_at' => null,
-            'rejected_by' => null,
             'rejection_reason' => null,
+            'notes' => fake()->optional()->sentence(),
         ];
     }
 
@@ -39,8 +36,6 @@ class TournamentRegistrationFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'status' => 'approved',
-            'approved_at' => now(),
-            'approved_by' => 1,
         ]);
     }
 
@@ -48,8 +43,6 @@ class TournamentRegistrationFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'status' => 'rejected',
-            'rejected_at' => now(),
-            'rejected_by' => 1,
             'rejection_reason' => 'Incomplete requirements',
         ]);
     }

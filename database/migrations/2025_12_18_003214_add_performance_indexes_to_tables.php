@@ -80,9 +80,20 @@ return new class extends Migration
      */
     private function createIndexIfNotExists(string $table, string|array $columns, string $indexName): void
     {
-        if (! $this->indexExists($table, $indexName)) {
-            $columns = is_array($columns) ? implode(',', $columns) : $columns;
-            DB::statement("CREATE INDEX {$indexName} ON {$table} ({$columns})");
+        if (DB::getDriverName() === 'mysql') {
+            if (! $this->indexExists($table, $indexName)) {
+                $columns = is_array($columns) ? implode(',', $columns) : $columns;
+                DB::statement("CREATE INDEX {$indexName} ON {$table} ({$columns})");
+            }
+        } else {
+            try {
+                $columns = is_array($columns) ? $columns : [$columns];
+                Schema::table($table, function (\Illuminate\Database\Schema\Blueprint $tableBlueprint) use ($columns, $indexName) {
+                    $tableBlueprint->index($columns, $indexName);
+                });
+            } catch (\Throwable $e) {
+                // Index might already exist
+            }
         }
     }
 
@@ -91,8 +102,18 @@ return new class extends Migration
      */
     private function dropIndexIfExists(string $table, string $indexName): void
     {
-        if ($this->indexExists($table, $indexName)) {
-            DB::statement("DROP INDEX {$indexName} ON {$table}");
+        if (DB::getDriverName() === 'mysql') {
+            if ($this->indexExists($table, $indexName)) {
+                DB::statement("DROP INDEX {$indexName} ON {$table}");
+            }
+        } else {
+            try {
+                Schema::table($table, function (\Illuminate\Database\Schema\Blueprint $tableBlueprint) use ($indexName) {
+                    $tableBlueprint->dropIndex($indexName);
+                });
+            } catch (\Throwable $e) {
+                // Index might not exist
+            }
         }
     }
 

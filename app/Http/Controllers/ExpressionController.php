@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\Expression;
 use Illuminate\Http\Request;
 
@@ -8,6 +10,7 @@ class ExpressionController extends Controller
     public function index()
     {
         $expressions = Expression::latest()->get();
+
         return response()->json(['success' => true, 'data' => $expressions]);
     }
 

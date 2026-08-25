@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,6 +15,7 @@ class UserAuthController extends Controller
         if (Auth::check()) {
             return redirect()->route('homepage');
         }
+
         return view('auth.user-login');
     }
 
@@ -23,6 +24,7 @@ class UserAuthController extends Controller
         if (Auth::check()) {
             return redirect()->route('homepage');
         }
+
         return view('auth.user-register');
     }
 
@@ -30,11 +32,11 @@ class UserAuthController extends Controller
     {
         $request->validate([
             'email' => 'required|email|ends_with:@gmail.com',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         $credentials = $request->only('email', 'password');
-        
+
         if (Auth::attempt($credentials)) {
             return redirect()->route('homepage')->with('success', 'Login berhasil!');
         }
@@ -64,6 +66,7 @@ class UserAuthController extends Controller
     public function logout()
     {
         Auth::logout();
+
         return redirect()->route('homepage');
     }
 }

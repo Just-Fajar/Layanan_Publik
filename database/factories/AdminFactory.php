@@ -18,29 +18,36 @@ class AdminFactory extends Factory
             'username' => fake()->unique()->userName(),
             'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('password'),
-            'type' => 'buku_tamu',
+            'role' => Admin::ROLE_BUKU_TAMU,
             'remember_token' => Str::random(10),
         ];
+    }
+
+    public function superAdmin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => Admin::ROLE_SUPER_ADMIN,
+        ]);
     }
 
     public function bukuTamu(): static
     {
         return $this->state(fn (array $attributes) => [
-            'type' => 'buku_tamu',
+            'role' => Admin::ROLE_BUKU_TAMU,
         ]);
     }
 
     public function esport(): static
     {
         return $this->state(fn (array $attributes) => [
-            'type' => 'esport',
+            'role' => Admin::ROLE_ESPORT,
         ]);
     }
 
     public function calendar(): static
     {
         return $this->state(fn (array $attributes) => [
-            'type' => 'calendar',
+            'role' => Admin::ROLE_CALENDAR,
         ]);
     }
 }

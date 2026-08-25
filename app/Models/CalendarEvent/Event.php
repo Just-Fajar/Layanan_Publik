@@ -10,6 +10,8 @@ use App\Models\Event as BaseEvent;
  */
 class Event extends BaseEvent
 {
-    // This class simply extends the base Event model
-    // All functionality is inherited from App\Models\Event
+    protected static function newFactory()
+    {
+        return \Database\Factories\EventFactory::new();
+    }
 }
