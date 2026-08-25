@@ -30,9 +30,11 @@ Route::get('/buku-tamu', function () {
     return view('buku_tamu.visitor');
 })->name('buku-tamu');
 
-// Admin routes (Buku Tamu)
+// Admin routes (Buku Tamu & Auth)
 Route::prefix('buku-tamu/admin')->group(function () {
     Route::get('/', [AuthController::class, 'showLogin'])->name('admin.login');
+    Route::post('/login', [AuthController::class, 'login'])->name('admin.login.submit');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
     Route::middleware(['admin.role:module,buku_tamu'])->group(function () {
         Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('admin.dashboard');
