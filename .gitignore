@@ -31,3 +31,6 @@ rule_ai.md
 *.log
 *error_log*
 *.cache
+/storage/framework/*.php
+/storage/framework/lsp-*.php
+
