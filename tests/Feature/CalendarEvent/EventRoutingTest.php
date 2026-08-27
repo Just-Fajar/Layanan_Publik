@@ -4,6 +4,7 @@ namespace Tests\Feature\CalendarEvent;
 
 use App\Models\Admin;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -211,5 +212,20 @@ class EventRoutingTest extends TestCase
         $response->assertRedirect(route('calendar.admin.events.index'));
         $this->assertEquals(Event::STATUS_PUBLISHED, $event1->fresh()->status);
         $this->assertEquals(Event::STATUS_PUBLISHED, $event2->fresh()->status);
+    }
+
+    /**
+     * Test authenticated user can access calendar user dashboard.
+     */
+    public function test_authenticated_user_can_access_calendar_user_dashboard(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('calendar.user.dashboard'));
+
+        $response->assertStatus(200);
+        $response->assertSee('My Registered Events');
+        $response->assertSee('Browse Events');
+        $response->assertSee('Edit Profile');
     }
 }
