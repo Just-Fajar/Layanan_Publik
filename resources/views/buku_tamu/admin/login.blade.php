@@ -238,7 +238,8 @@
 
         <div id="alert-container"></div>
 
-        <form id="loginForm">
+        <form id="loginForm" method="POST" action="{{ route('admin.login.submit') }}">
+            @csrf
             <div class="form-group">
                 <label for="username">Username</label>
                 <div class="input-wrapper">
@@ -306,32 +307,34 @@
                 const payload = Object.fromEntries(formData.entries());
 
                 try {
-                    const response = await fetch('/api/auth/login', {
+                    const response = await fetch('{{ route("admin.login.submit") }}', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': elements.csrfToken,
                             'Accept': 'application/json'
                         },
+                        credentials: 'same-origin',
                         body: JSON.stringify(payload)
                     });
 
                     const result = await response.json();
 
-                    if (result.success) {
-                        localStorage.setItem('admin_token', result.data.token);
-                        localStorage.setItem('admin_data', JSON.stringify(result.data.admin));
-                        showAlert('✅ Login berhasil! Mengarahkan ke dashboard...', 'success');
+                    if (response.ok && result.success) {
+                        if (result.data?.admin) {
+                            localStorage.setItem('admin_data', JSON.stringify(result.data.admin));
+                        }
+                        showAlert('Login berhasil! Mengarahkan ke dashboard...', 'success');
                         setTimeout(() => {
-                            window.location.href = '/buku-tamu/admin/dashboard';
-                        }, 1500);
+                            window.location.href = result.data?.redirect || '{{ route("admin.dashboard") }}';
+                        }, 1000);
                     } else {
-                        showAlert('❌ ' + (result.message || 'Username atau password salah.'), 'error');
+                        showAlert(result.message || 'Username atau password salah.', 'error');
                         toggleLoading(false);
                     }
                 } catch (error) {
                     console.error('Login Error:', error);
-                    showAlert('❌ Terjadi kesalahan koneksi. Silakan coba lagi.', 'error');
+                    showAlert('Terjadi kesalahan koneksi. Silakan coba lagi.', 'error');
                     toggleLoading(false);
                 }
             });

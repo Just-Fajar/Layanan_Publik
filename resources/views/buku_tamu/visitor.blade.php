@@ -369,27 +369,27 @@
 
             <div class="form-group">
                 <label for="name">Nama Lengkap <span style="color:red">*</span></label>
-                <input type="text" id="name" name="name" class="form-control" required placeholder="Masukkan nama lengkap Anda" />
+                <input type="text" id="name" name="name" class="form-control" required placeholder="Masukkan nama lengkap Anda" autocomplete="name" />
             </div>
 
             <div class="form-group">
                 <label for="email">Email (Opsional)</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="nama@email.com" />
+                <input type="email" id="email" name="email" class="form-control" placeholder="nama@email.com" autocomplete="email" />
             </div>
 
             <div class="form-group">
                 <label for="phone">Nomor Telepon <span style="color:red">*</span></label>
-                <input type="tel" id="phone" name="phone" class="form-control" required placeholder="08xxxxxxxxxx" />
+                <input type="tel" id="phone" name="phone" class="form-control" required placeholder="08xxxxxxxxxx" autocomplete="tel" />
             </div>
 
             <div class="form-group">
                 <label for="asal_daerah">Asal Instansi / Daerah <span style="color:red">*</span></label>
-                <input type="text" id="asal_daerah" name="asal_daerah" class="form-control" required placeholder="Contoh: Pemkab Madiun, Surabaya" />
+                <input type="text" id="asal_daerah" name="asal_daerah" class="form-control" required placeholder="Contoh: Pemkab Madiun, Surabaya" autocomplete="organization" />
             </div>
 
             <div class="form-group">
-                <label>Tujuan Kunjungan <span style="color:red">*</span></label>
-                <div class="purpose-grid">
+                <label id="purpose-label">Tujuan Kunjungan <span style="color:red">*</span></label>
+                <div class="purpose-grid" role="radiogroup" aria-labelledby="purpose-label">
                     <div class="purpose-option">
                         <input type="radio" id="sekretariat" name="purpose" value="sekretariat" required />
                         <label for="sekretariat">Sekretariat</label>
