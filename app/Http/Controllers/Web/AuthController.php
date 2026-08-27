@@ -130,6 +130,14 @@ class AuthController extends Controller
     }
 
     /**
+     * Show visitors management page.
+     */
+    public function visitors(): View
+    {
+        return view('buku_tamu.admin.visitors');
+    }
+
+    /**
      * Show calendar page.
      */
     public function calendar(): View

@@ -55,6 +55,7 @@ Route::prefix('buku-tamu/admin')->group(function () {
 
     Route::middleware(['admin.role:module,buku_tamu'])->group(function () {
         Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/visitors', [AuthController::class, 'visitors'])->name('admin.visitors');
         Route::get('/dashboard/calendar', [AuthController::class, 'calendar'])->name('admin.calendar');
     });
 });
