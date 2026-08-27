@@ -155,10 +155,10 @@
                 <p class="text-gray-600 text-sm">Update your information</p>
             </a>
 
-            <a href="{{ route('calendar.news') }}" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
-                <i class="fas fa-newspaper text-purple-600 text-3xl mb-3"></i>
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">Latest News</h3>
-                <p class="text-gray-600 text-sm">Stay updated with news</p>
+            <a href="{{ route('calendar.user.events.index') }}" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+                <i class="fas fa-ticket-alt text-purple-600 text-3xl mb-3"></i>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">My Registered Events</h3>
+                <p class="text-gray-600 text-sm">View your tickets and registrations</p>
             </a>
         </div>
     </div>
