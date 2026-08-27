@@ -31,10 +31,16 @@
 </head>
 <body class="bg-black text-white antialiased">
 
-  <nav class="bg-black sticky top-0 z-40">
+  <nav class="bg-black sticky top-0 z-40 border-b border-gray-800">
   <div class="container mx-auto px-4">
     <div class="flex justify-between items-center py-4">
-      <a href="{{ route('esport.home') }}" class="text-xl font-bold text-white">M-GEN</a>
+      <div class="flex items-center gap-4">
+        <a href="{{ route('homepage') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 text-xs font-semibold transition" title="Kembali ke Portal Utama Diskominfo">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Portal Utama</span>
+        </a>
+        <a href="{{ route('esport.home') }}" class="text-xl font-bold text-white tracking-wider">M-GEN</a>
+      </div>
       <div class="hidden sm:flex items-center gap-6">
         <a href="{{ route('esport.home') }}" class="text-white hover:text-gray-300">Home</a>
         <a href="{{ route('esport.tournaments.index') }}" class="text-white hover:text-gray-300">Tournaments</a>
