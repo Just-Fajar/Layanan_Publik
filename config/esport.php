@@ -32,12 +32,9 @@ return [
     */
     'news' => [
         'categories' => [
-            'announcement' => 'Announcement',
-            'tournament' => 'Tournament',
-            'event' => 'Event',
-            'update' => 'Update',
-            'tips' => 'Tips & Tricks',
-            'other' => 'Other',
+            'Pengumuman' => 'Pengumuman',
+            'Tournament Info' => 'Tournament Info',
+            'Esport News' => 'Esport News',
         ],
 
         'statuses' => [
@@ -64,5 +61,34 @@ return [
             'allowed_extensions' => ['jpg', 'jpeg', 'png', 'webp'],
             'storage_path' => 'news',
         ],
+    ],
+
+    'games' => [
+        'mobile_legends' => 'Mobile Legends',
+        'pubg_mobile' => 'PUBG Mobile',
+        'free_fire' => 'Free Fire',
+        'valorant' => 'Valorant',
+        'dota2' => 'Dota 2',
+        'csgo' => 'CS:GO',
+        'other' => 'Other',
+    ],
+
+    'tournament_statuses' => [
+        'upcoming' => 'Upcoming',
+        'ongoing' => 'Ongoing',
+        'completed' => 'Completed',
+        'cancelled' => 'Cancelled',
+    ],
+
+    'news_categories' => [
+        'Pengumuman' => 'Pengumuman',
+        'Tournament Info' => 'Tournament Info',
+        'Esport News' => 'Esport News',
+    ],
+
+    'news_statuses' => [
+        'draft' => 'Draft',
+        'published' => 'Published',
+        'archived' => 'Archived',
     ],
 ];
