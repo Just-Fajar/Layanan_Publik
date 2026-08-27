@@ -55,8 +55,8 @@
                 <div class="card-body">
                     <form method="GET" action="{{ route('calendar.index') }}" class="row g-3">
                         <div class="col-md-4">
-                            <label class="form-label">Kategori</label>
-                            <select name="category" class="form-select">
+                            <label for="category_filter" class="form-label">Kategori</label>
+                            <select id="category_filter" name="category" class="form-select" aria-label="Pilih Kategori Event">
                                 <option value="">Semua Kategori</option>
                                 @foreach($categories as $key => $label)
                                     <option value="{{ $key }}" {{ request('category') == $key ? 'selected' : '' }}>
@@ -66,14 +66,15 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Cari Event</label>
-                            <input type="text" name="search" class="form-control" 
+                            <label for="search_event" class="form-label">Cari Event</label>
+                            <input type="text" id="search_event" name="search" class="form-control" 
                                    placeholder="Cari berdasarkan judul atau lokasi..."
-                                   value="{{ request('search') }}">
+                                   value="{{ request('search') }}"
+                                   aria-label="Cari berdasarkan judul atau lokasi">
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label">&nbsp;</label>
-                            <button type="submit" class="btn btn-primary w-100">
+                            <label class="form-label d-none d-md-block">&nbsp;</label>
+                            <button type="submit" class="btn btn-primary w-100" aria-label="Tombol Cari Event">
                                 <i class="fas fa-search"></i> Cari
                             </button>
                         </div>
