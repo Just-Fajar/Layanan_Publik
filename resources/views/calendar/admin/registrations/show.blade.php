@@ -63,7 +63,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 mb-1">Username</p>
-                        <p class="font-medium text-gray-900">@{{ $registration->user->username }}</p>
+                        <p class="font-medium text-gray-900">{{ '@' . $registration->user->username }}</p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 mb-1">Email</p>

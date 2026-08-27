@@ -22,7 +22,7 @@
                         <i class="fas fa-user text-purple-600 text-4xl"></i>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-800">{{ $user->name }}</h2>
-                    <p class="text-gray-600">@{{ $user->username }}</p>
+                    <p class="text-gray-600">{{ '@' . $user->username }}</p>
                 </div>
 
                 <div class="border-t pt-4 space-y-3">
