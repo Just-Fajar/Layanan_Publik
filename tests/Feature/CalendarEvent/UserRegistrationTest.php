@@ -119,4 +119,29 @@ class UserRegistrationTest extends TestCase
         $this->assertAuthenticated();
         $this->assertEquals('testuser', auth()->user()->username);
     }
+
+    /** @test */
+    public function user_can_register_without_phone_number()
+    {
+        $userData = [
+            'name' => 'Calendar User No Phone',
+            'username' => 'calendar_nophone',
+            'email' => 'calendar_nophone@test.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+        ];
+
+        $response = $this->post(route('calendar.auth.register'), $userData);
+
+        $response->assertRedirect(route('calendar.user.dashboard'));
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('users', [
+            'username' => 'calendar_nophone',
+            'email' => 'calendar_nophone@test.com',
+            'phone' => null,
+        ]);
+
+        $this->assertAuthenticated();
+    }
 }

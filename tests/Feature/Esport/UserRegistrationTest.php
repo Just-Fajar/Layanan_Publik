@@ -143,7 +143,7 @@ class UserRegistrationTest extends TestCase
     {
         $response = $this->post(route('esport.auth.register'), []);
 
-        $response->assertSessionHasErrors(['name', 'username', 'email', 'phone', 'password']);
+        $response->assertSessionHasErrors(['name', 'username', 'email', 'password']);
         $this->assertGuest();
     }
 
@@ -163,5 +163,30 @@ class UserRegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $this->assertEquals('testuser', auth()->user()->username);
+    }
+
+    /** @test */
+    public function user_can_register_without_phone_number()
+    {
+        $userData = [
+            'name' => 'Esport User No Phone',
+            'username' => 'esport_nophone',
+            'email' => 'esport_nophone@test.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+        ];
+
+        $response = $this->post(route('esport.auth.register'), $userData);
+
+        $response->assertRedirect(route('esport.user.dashboard'));
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('users', [
+            'username' => 'esport_nophone',
+            'email' => 'esport_nophone@test.com',
+            'phone' => null,
+        ]);
+
+        $this->assertAuthenticated();
     }
 }
