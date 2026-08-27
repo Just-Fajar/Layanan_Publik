@@ -28,9 +28,8 @@
 
                 {{-- Gambar/Hero Illustration --}}
                 <div class="relative">
-                    <div class="aspect-[4/3] rounded-2xl bg-gradient-to-tr from-slate-900 to-slate-700 flex items-center justify-center shadow-2xl ring-1 ring-black/5">
-                        {{-- Ganti src di bawah dengan logo/ilustrasi kalian --}}
-                        <img src="/images/illustration-esport.png" alt="M-GEN" class="w-4/5 drop-shadow-xl">
+                    <div class="aspect-[4/3] rounded-2xl bg-gradient-to-tr from-slate-900 to-slate-700 flex items-center justify-center shadow-2xl ring-1 ring-black/5 p-8">
+                        <img src="{{ asset('images/logo-mgen.png') }}" alt="M-GEN Kabupaten Madiun" class="max-h-56 max-w-full object-contain drop-shadow-2xl">
                     </div>
                 </div>
             </div>

@@ -28,13 +28,13 @@
                 @method('PUT')
                 <div class="row g-3">
                     <div class="col-md-8">
-                        <label class="form-label fw-bold">Judul Event <span class="text-danger">*</span></label>
-                        <input type="text" name="title" class="form-control" value="{{ old('title', $event->title) }}" required>
+                        <label for="title" class="form-label fw-bold">Judul Event <span class="text-danger">*</span></label>
+                        <input type="text" id="title" name="title" class="form-control" value="{{ old('title', $event->title) }}" required>
                     </div>
 
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">Kategori <span class="text-danger">*</span></label>
-                        <select name="category" class="form-select" required>
+                        <label for="category" class="form-label fw-bold">Kategori <span class="text-danger">*</span></label>
+                        <select id="category" name="category" class="form-select" required>
                             @foreach($categories as $key => $label)
                                 <option value="{{ $key }}" {{ old('category', $event->category) == $key ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
@@ -42,23 +42,23 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">Tanggal & Waktu Mulai <span class="text-danger">*</span></label>
-                        <input type="datetime-local" name="start_date" class="form-control" value="{{ old('start_date', $event->start_date ? $event->start_date->format('Y-m-d\TH:i') : '') }}" required>
+                        <label for="start_date" class="form-label fw-bold">Tanggal & Waktu Mulai <span class="text-danger">*</span></label>
+                        <input type="datetime-local" id="start_date" name="start_date" class="form-control" value="{{ old('start_date', $event->start_date ? $event->start_date->format('Y-m-d\TH:i') : '') }}" required>
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">Tanggal & Waktu Selesai <span class="text-danger">*</span></label>
-                        <input type="datetime-local" name="end_date" class="form-control" value="{{ old('end_date', $event->end_date ? $event->end_date->format('Y-m-d\TH:i') : '') }}" required>
+                        <label for="end_date" class="form-label fw-bold">Tanggal & Waktu Selesai <span class="text-danger">*</span></label>
+                        <input type="datetime-local" id="end_date" name="end_date" class="form-control" value="{{ old('end_date', $event->end_date ? $event->end_date->format('Y-m-d\TH:i') : '') }}" required>
                     </div>
 
                     <div class="col-md-8">
-                        <label class="form-label fw-bold">Lokasi Pelaksanaan</label>
-                        <input type="text" name="location" class="form-control" value="{{ old('location', $event->location) }}">
+                        <label for="location" class="form-label fw-bold">Lokasi Pelaksanaan</label>
+                        <input type="text" id="location" name="location" class="form-control" value="{{ old('location', $event->location) }}">
                     </div>
 
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">Status Publikasi <span class="text-danger">*</span></label>
-                        <select name="status" class="form-select" required>
+                        <label for="status" class="form-label fw-bold">Status Publikasi <span class="text-danger">*</span></label>
+                        <select id="status" name="status" class="form-select" required>
                             <option value="draft" {{ old('status', $event->status) == 'draft' ? 'selected' : '' }}>Draft</option>
                             <option value="published" {{ old('status', $event->status) == 'published' ? 'selected' : '' }}>Published</option>
                             <option value="cancelled" {{ old('status', $event->status) == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
@@ -67,18 +67,18 @@
                     </div>
 
                     <div class="col-12">
-                        <label class="form-label fw-bold">Deskripsi Event <span class="text-danger">*</span></label>
-                        <textarea name="description" class="form-control" rows="5" required>{{ old('description', $event->description) }}</textarea>
+                        <label for="description" class="form-label fw-bold">Deskripsi Event <span class="text-danger">*</span></label>
+                        <textarea id="description" name="description" class="form-control" rows="5" required>{{ old('description', $event->description) }}</textarea>
                     </div>
 
                     <div class="col-12">
-                        <label class="form-label fw-bold">Ganti Banner / Gambar Event</label>
+                        <label for="image" class="form-label fw-bold">Ganti Banner / Gambar Event</label>
                         @if($event->image_url)
                             <div class="mb-2">
                                 <img src="{{ $event->image_url }}" alt="Event Banner" style="max-height: 120px;" class="rounded border">
                             </div>
                         @endif
-                        <input type="file" name="image" class="form-control" accept="image/*">
+                        <input type="file" id="image" name="image" class="form-control" accept="image/*">
                     </div>
 
                     <div class="col-12 text-end mt-4">

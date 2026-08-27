@@ -94,7 +94,7 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm font-medium text-gray-900">{{ $registration->user->name }}</div>
-                                <div class="text-sm text-gray-500">{{ $registration->user->email }} (@{{ $registration->user->username }})</div>
+                                <div class="text-sm text-gray-500">{{ $registration->user->email }} ({{ '@' . $registration->user->username }})</div>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm font-medium text-gray-900">{{ $registration->event->title }}</div>
