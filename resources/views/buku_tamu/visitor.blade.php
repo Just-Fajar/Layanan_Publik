@@ -3,31 +3,29 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Buku Tamu DISKOMINFO Kabupaten Madiun</title>
+    <title>Buku Tamu Digital - Diskominfo Kabupaten Madiun</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
         :root {
-            --primary-color: #3B82F6;
-            --primary-hover: #2563EB;
-            --secondary-color: #10B981;
-            --secondary-hover: #059669;
-            --danger-color: #EF4444;
-            --warning-bg: #fff3cd;
-            --warning-text: #856404;
-            --warning-border: #ffeeba;
-            --background-color: #F3F4F6;
-            --surface-color: #FFFFFF;
-            --text-primary: #1F2937;
-            --text-secondary: #6B7280;
-            --border-color: #D1D5DB;
-            --border-focus: var(--primary-color);
-            --font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --primary: #0284c7;
+            --primary-hover: #0369a1;
+            --primary-light: #f0f9ff;
+            --primary-border: #bae6fd;
+            --slate-dark: #0f172a;
+            --slate-body: #334155;
+            --slate-muted: #64748b;
+            --slate-light: #f8fafc;
+            --border-color: #e2e8f0;
+            --success: #059669;
+            --danger: #dc2626;
         }
 
         * {
@@ -37,90 +35,141 @@
         }
 
         body {
-            font-family: var(--font-family);
-            background-color: var(--background-color);
+            font-family: var(--font-body);
+            background: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
+            color: var(--slate-body);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            padding: 24px;
-            color: var(--text-primary);
+            justify-content: center;
+            padding: 32px 16px;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            background: var(--surface-color);
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-            border: 1px solid #E5E7EB;
-            padding: 48px;
-            max-width: 650px;
+        .top-nav {
             width: 100%;
-            animation: fadeIn .7s ease-out;
+            max-width: 680px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .header {
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--slate-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font-heading);
+            padding: 8px 14px;
+            border-radius: 10px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+            border-color: var(--primary-border);
+            transform: translateX(-2px);
+        }
+
+        .form-container {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 20px 25px -5px rgba(15, 23, 42, 0.04);
+            padding: 40px;
+            max-width: 680px;
+            width: 100%;
+        }
+
+        .header-box {
             text-align: center;
             margin-bottom: 32px;
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
+        .header-logo {
+            max-height: 48px;
+            width: auto;
             margin-bottom: 16px;
         }
 
-        .brand-logo {
-            height: 72px;
-        }
-
-        .header h1 {
-            font-size: 2.3rem;
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid var(--primary-border);
+            font-size: 0.78rem;
             font-weight: 700;
-            margin-bottom: 8px;
-            background: linear-gradient(120deg, var(--primary-color), var(--primary-hover));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            margin-bottom: 12px;
         }
 
-        .header p {
-            color: var(--text-secondary);
-            font-size: 1rem;
+        .header-title {
+            font-family: var(--font-heading);
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--slate-dark);
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .header-desc {
+            font-size: 0.95rem;
+            color: var(--slate-muted);
             line-height: 1.6;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
-        .form-group label {
+        .form-label {
             display: block;
-            margin-bottom: 8px;
+            font-family: var(--font-heading);
+            font-size: 0.88rem;
             font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--text-primary);
+            color: var(--slate-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-label .req {
+            color: var(--danger);
         }
 
         .form-control {
             width: 100%;
-            padding: 14px 16px;
+            padding: 12px 16px;
             border: 1.5px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: var(--font-family);
-            background-color: #FAFAFA;
-            transition: all 0.3s ease;
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--slate-dark);
+            background: #ffffff;
+            transition: all 0.2s ease;
         }
 
         .form-control:focus {
             outline: none;
-            border-color: var(--border-focus);
-            background-color: var(--surface-color);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
         }
 
+        .form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        /* Purpose Radio Grid */
         .purpose-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -134,233 +183,290 @@
         .purpose-option input[type="radio"] {
             position: absolute;
             opacity: 0;
+            width: 0;
+            height: 0;
         }
 
-        .purpose-option label {
+        .purpose-label {
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 12px 14px;
+            gap: 8px;
+            padding: 11px 14px;
+            background: var(--slate-light);
             border: 1.5px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 10px;
+            cursor: pointer;
             font-size: 0.88rem;
             font-weight: 500;
-            cursor: pointer;
-            background-color: #FAFAFA;
+            color: var(--slate-body);
             transition: all 0.2s ease;
-            height: 100%;
         }
 
-        .purpose-option input[type="radio"]:checked + label {
-            border-color: var(--primary-color);
-            background-color: rgba(59, 130, 246, 0.08);
-            color: var(--primary-color);
+        .purpose-label:hover {
+            border-color: #cbd5e1;
+            background: #ffffff;
+        }
+
+        .purpose-option input[type="radio"]:checked + .purpose-label {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
             font-weight: 600;
         }
 
         /* Camera Section */
-        .camera-section {
-            background-color: #F9FAFB;
-            border: 1.5px dashed var(--border-color);
-            border-radius: 16px;
-            padding: 24px;
-            margin: 24px 0;
-            text-align: center;
+        .camera-card {
+            background: var(--slate-light);
+            border: 1.5px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 24px;
         }
 
-        .camera-section h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-primary);
+        .camera-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
         }
 
-        .camera-instructions {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
+        .camera-title {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--slate-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .camera-container {
+        .camera-viewport {
             position: relative;
             width: 100%;
             max-width: 360px;
             height: 270px;
-            margin: 0 auto 16px auto;
-            background-color: #1F2937;
+            margin: 0 auto 16px;
+            background: #0f172a;
             border-radius: 14px;
             overflow: hidden;
+            border: 2px solid #cbd5e1;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        #video {
+        .camera-viewport video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        #canvas {
+        .camera-placeholder {
+            text-align: center;
+            color: #94a3b8;
+            padding: 20px;
+        }
+
+        .camera-placeholder i {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .photo-preview-box {
+            text-align: center;
             display: none;
+            margin-bottom: 16px;
         }
 
-        .photo-preview {
-            margin: 12px auto;
-            max-width: 320px;
-        }
-
-        .photo-preview img {
+        .photo-preview-box img {
+            max-width: 360px;
             width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            border: 2px solid var(--secondary-color);
+            height: 270px;
+            object-fit: cover;
+            border-radius: 14px;
+            border: 2.5px solid var(--success);
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.15);
         }
 
-        .camera-controls {
+        .camera-actions {
             display: flex;
             gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
-        .btn {
-            border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-size: 0.95rem;
+        .btn-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
             font-weight: 600;
-            font-family: var(--font-family);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary-custom {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-success-custom {
+            background-color: var(--success);
+            color: #ffffff;
+        }
+
+        .btn-success-custom:hover {
+            background-color: #047857;
+        }
+
+        .btn-secondary-custom {
+            background-color: #64748b;
+            color: #ffffff;
+        }
+
+        .btn-secondary-custom:hover {
+            background-color: #475569;
+        }
+
+        .btn-submit-main {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            background-color: var(--primary);
+            color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+            border: none;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
         }
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: #FFFFFF;
-        }
-
-        .btn-primary:hover {
+        .btn-submit-main:hover {
             background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
         }
 
-        .btn-secondary {
-            background-color: #6B7280;
-            color: #FFFFFF;
-        }
-
-        .btn-secondary:hover {
-            background-color: #4B5563;
-        }
-
-        .btn-success {
-            background-color: var(--secondary-color);
-            color: #FFFFFF;
-        }
-
-        .btn-success:hover {
-            background-color: var(--secondary-hover);
-        }
-
-        .btn-submit {
-            width: 100%;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-            color: #FFFFFF;
-            padding: 16px;
-            border-radius: 14px;
-            font-size: 1.05rem;
-            margin-top: 16px;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
-        }
-
-        .btn:disabled, .btn-submit:disabled {
-            opacity: 0.6;
+        .btn-submit-main:disabled {
+            opacity: 0.65;
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
         }
 
-        .alert {
-            padding: 14px 16px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
+        /* Alert notifications */
+        .alert-box {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
             font-weight: 500;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .alert-success {
-            background-color: #D1FAE5; color: #065F46; border: 1px solid #A7F3D0;
-        }
+        .alert-info-soft { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+        .alert-success-soft { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+        .alert-danger-soft { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
 
-        .alert-error {
-            background-color: #FEE2E2; color: #991B1B; border: 1px solid #FECACA;
-        }
-
-        .alert-warning {
-            background: var(--warning-bg); color: var(--warning-text); border: 1px solid var(--warning-border);
-        }
-
-        #loading {
+        /* Success Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
             display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1050;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: 20px;
+            max-width: 480px;
+            width: 100%;
+            padding: 32px;
             text-align: center;
-            margin: 20px 0;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .spinner {
-            border: 4px solid #E5E7EB;
-            border-top: 4px solid var(--primary-color);
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-icon-success {
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 8px auto;
+            background: #dcfce7;
+            color: var(--success);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 16px;
         }
 
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 16px; }
-            .container { padding: 24px; }
-            .header h1 { font-size: 1.8rem; }
-            .purpose-grid { grid-template-columns: 1fr; }
+        @media (max-width: 640px) {
+            .form-container {
+                padding: 24px 18px;
+            }
+            .header-title {
+                font-size: 1.5rem;
+            }
+            .purpose-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="brand">
-                <img class="brand-logo" src="{{ asset('images/logo-diskominfo.png') }}" alt="Logo Diskominfo Kabupaten Madiun">
+    <div class="top-nav">
+        <a href="{{ route('homepage') }}" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+        </a>
+    </div>
+
+    <div class="form-container">
+        <header class="header-box">
+            <img class="header-logo" src="{{ asset('images/logo-diskominfo.png') }}" alt="Diskominfo Kabupaten Madiun">
+            <br>
+            <div class="header-badge">
+                <i class="fa-solid fa-clipboard-user"></i> Presensi Tamu
             </div>
-            <h1>Buku Tamu</h1>
-            <p>Selamat datang di Dinas Komunikasi dan Informatika Kabupaten Madiun. Silakan isi data kunjungan Anda.</p>
+            <h1 class="header-title">Buku Tamu Digital</h1>
+            <p class="header-desc">Selamat datang di Dinas Komunikasi dan Informatika Kabupaten Madiun. Mohon lengkapi formulir kunjungan Anda di bawah ini.</p>
         </header>
 
         <div id="alert-container"></div>
-        <div id="location-status">
-            <div class="alert alert-warning"><i class="fas fa-map-marker-alt mr-2"></i> Memeriksa lokasi Anda...</div>
+        <div id="location-status" class="alert-box alert-info-soft">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Memverifikasi status lokasi kunjungan...</span>
         </div>
 
         <form id="visitorForm">
@@ -368,243 +474,271 @@
             <input type="hidden" id="longitude" name="longitude">
 
             <div class="form-group">
-                <label for="name">Nama Lengkap <span style="color:red">*</span></label>
-                <input type="text" id="name" name="name" class="form-control" required placeholder="Masukkan nama lengkap Anda" autocomplete="name" />
+                <label for="name" class="form-label">Nama Lengkap <span class="req">*</span></label>
+                <input type="text" id="name" name="name" class="form-control" required placeholder="Nama lengkap sesuai identitas" autocomplete="name" />
             </div>
 
             <div class="form-group">
-                <label for="email">Email (Opsional)</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="nama@email.com" autocomplete="email" />
+                <label for="email" class="form-label">Alamat Email (Opsional)</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="contoh@domain.com" autocomplete="email" />
             </div>
 
             <div class="form-group">
-                <label for="phone">Nomor Telepon <span style="color:red">*</span></label>
+                <label for="phone" class="form-label">Nomor Telepon / WhatsApp <span class="req">*</span></label>
                 <input type="tel" id="phone" name="phone" class="form-control" required placeholder="08xxxxxxxxxx" autocomplete="tel" />
             </div>
 
             <div class="form-group">
-                <label for="asal_daerah">Asal Instansi / Daerah <span style="color:red">*</span></label>
-                <input type="text" id="asal_daerah" name="asal_daerah" class="form-control" required placeholder="Contoh: Pemkab Madiun, Surabaya" autocomplete="organization" />
+                <label for="asal_daerah" class="form-label">Asal Instansi / Daerah <span class="req">*</span></label>
+                <input type="text" id="asal_daerah" name="asal_daerah" class="form-control" required placeholder="Contoh: Bappeda, Pemprov Jatim, Media" autocomplete="organization" />
             </div>
 
             <div class="form-group">
-                <label id="purpose-label">Tujuan Kunjungan <span style="color:red">*</span></label>
-                <div class="purpose-grid" role="radiogroup" aria-labelledby="purpose-label">
+                <label class="form-label">Tujuan Bidang / Bagian <span class="req">*</span></label>
+                <div class="purpose-grid" role="radiogroup">
                     <div class="purpose-option">
                         <input type="radio" id="sekretariat" name="purpose" value="sekretariat" required />
-                        <label for="sekretariat">Sekretariat</label>
+                        <label class="purpose-label" for="sekretariat">
+                            <i class="fa-solid fa-briefcase"></i> Sekretariat
+                        </label>
                     </div>
                     <div class="purpose-option">
                         <input type="radio" id="aplikasi_informatika" name="purpose" value="aplikasi_informatika" required />
-                        <label for="aplikasi_informatika">Aplikasi Informatika</label>
-                    </div>
-                    <div class="purpose-option">
-                        <input type="radio" id="persandian_keamanan_informasi" name="purpose" value="persandian_keamanan_informasi" required />
-                        <label for="persandian_keamanan_informasi">Persandian & Keamanan</label>
+                        <label class="purpose-label" for="aplikasi_informatika">
+                            <i class="fa-solid fa-laptop-code"></i> Aplikasi Informatika
+                        </label>
                     </div>
                     <div class="purpose-option">
                         <input type="radio" id="informasi_komunikasi_publik" name="purpose" value="informasi_komunikasi_publik" required />
-                        <label for="informasi_komunikasi_publik">Komunikasi Publik</label>
+                        <label class="purpose-label" for="informasi_komunikasi_publik">
+                            <i class="fa-solid fa-bullhorn"></i> Komunikasi Publik
+                        </label>
+                    </div>
+                    <div class="purpose-option">
+                        <input type="radio" id="persandian_keamanan_informasi" name="purpose" value="persandian_keamanan_informasi" required />
+                        <label class="purpose-label" for="persandian_keamanan_informasi">
+                            <i class="fa-solid fa-shield-halved"></i> Persandian & Sandi
+                        </label>
                     </div>
                     <div class="purpose-option">
                         <input type="radio" id="statistik" name="purpose" value="statistik" required />
-                        <label for="statistik">Statistik</label>
+                        <label class="purpose-label" for="statistik">
+                            <i class="fa-solid fa-chart-pie"></i> Statistik Sektoral
+                        </label>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="notes">Keperluan Kunjungan</label>
-                <textarea id="notes" name="notes" rows="3" class="form-control" placeholder="Jelaskan keperluan kunjungan Anda..."></textarea>
+                <label for="notes" class="form-label">Keperluan / Keterangan Kunjungan</label>
+                <textarea id="notes" name="notes" rows="3" class="form-control" placeholder="Tuliskan ringkasan maksud dan keperluan kunjungan Anda..."></textarea>
             </div>
 
-            <!-- Camera Capture Section -->
-            <section class="camera-section">
-                <h3><i class="fas fa-camera mr-2"></i> Foto Pengunjung</h3>
-                <p class="camera-instructions">
-                    Silakan aktifkan kamera dan ambil foto selfie Anda sebelum mengirim data.
-                </p>
+            <!-- Kamera Selfie -->
+            <div class="camera-card">
+                <div class="camera-header">
+                    <div class="camera-title">
+                        <i class="fa-solid fa-camera text-primary"></i>
+                        <span>Swafoto / Foto Pengunjung</span>
+                    </div>
+                    <span class="small text-muted">Opsional / Diutamakan</span>
+                </div>
 
-                <div class="camera-container" id="cameraContainer">
+                <div class="camera-viewport" id="cameraViewport">
                     <video id="video" autoplay muted playsinline style="display:none;"></video>
-                    <canvas id="canvas"></canvas>
-                    <div id="cameraPlaceholder" style="color: #9CA3AF; text-align: center;">
-                        <i class="fas fa-camera text-4xl mb-2" style="font-size: 3rem;"></i>
-                        <p style="font-size: 0.9rem;">Kamera belum aktif</p>
+                    <canvas id="canvas" style="display:none;"></canvas>
+                    <div id="cameraPlaceholder" class="camera-placeholder">
+                        <i class="fa-solid fa-camera"></i>
+                        <p class="small mb-0">Klik tombol di bawah untuk mengaktifkan kamera</p>
                     </div>
                 </div>
 
-                <div class="photo-preview" id="photoPreview"></div>
+                <div class="photo-preview-box" id="photoPreviewBox">
+                    <img id="photoPreviewImg" src="" alt="Preview Foto Pengunjung">
+                </div>
 
-                <div class="camera-controls">
-                    <button type="button" id="startCameraBtn" class="btn btn-primary">
-                        <i class="fas fa-video mr-1"></i> Aktifkan Kamera
+                <div class="camera-actions">
+                    <button type="button" id="startCameraBtn" class="btn-custom btn-primary-custom">
+                        <i class="fa-solid fa-video"></i> Buka Kamera
                     </button>
-                    <button type="button" id="snapPhotoBtn" class="btn btn-success" style="display:none;">
-                        <i class="fas fa-camera-retro mr-1"></i> Ambil Foto (Cekrek)
+                    <button type="button" id="snapPhotoBtn" class="btn-custom btn-success-custom" style="display:none;">
+                        <i class="fa-solid fa-camera"></i> Ambil Foto
                     </button>
-                    <button type="button" id="retakePhotoBtn" class="btn btn-secondary" style="display:none;">
-                        <i class="fas fa-redo mr-1"></i> Ambil Ulang
+                    <button type="button" id="retakePhotoBtn" class="btn-custom btn-secondary-custom" style="display:none;">
+                        <i class="fa-solid fa-rotate-right"></i> Ambil Ulang
                     </button>
                 </div>
-            </section>
-
-            <div id="loading">
-                <div class="spinner"></div>
-                <p>Menyimpan data kunjungan Anda...</p>
             </div>
 
-            <button type="submit" class="btn-submit">
-                <i class="fas fa-paper-plane mr-2"></i> Kirim Data Kunjungan
+            <button type="submit" id="submitBtn" class="btn-submit-main">
+                <i class="fa-solid fa-paper-plane"></i> Kirim Data Kunjungan
             </button>
         </form>
     </div>
 
-    <script src="{{ asset('js/geolocation.js') }}"></script>
+    <!-- Modal Konfirmasi Sukses -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-card">
+            <div class="modal-icon-success">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="header-title" style="font-size: 1.45rem; margin-bottom: 8px;">Presensi Berhasil Disimpan</h3>
+            <p class="text-muted small mb-4" id="successModalMsg">Terima kasih atas kunjungan Anda di Diskominfo Kabupaten Madiun.</p>
+            <button type="button" class="btn-custom btn-primary-custom w-100" id="closeModalBtn">
+                Selesai / Isi Form Baru
+            </button>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const elements = {
-                video: document.getElementById('video'),
-                canvas: document.getElementById('canvas'),
-                cameraContainer: document.getElementById('cameraContainer'),
-                cameraPlaceholder: document.getElementById('cameraPlaceholder'),
-                startCameraBtn: document.getElementById('startCameraBtn'),
-                snapPhotoBtn: document.getElementById('snapPhotoBtn'),
-                retakePhotoBtn: document.getElementById('retakePhotoBtn'),
-                photoPreview: document.getElementById('photoPreview'),
-                visitorForm: document.getElementById('visitorForm'),
-                alertContainer: document.getElementById('alert-container'),
-                loadingIndicator: document.getElementById('loading'),
-                submitBtn: document.querySelector('.btn-submit')
-            };
+            let capturedPhotoBase64 = null;
+            let mediaStream = null;
 
-            const ctx = elements.canvas.getContext('2d');
-            let photoData = null;
-            let stream = null;
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+            const cameraViewport = document.getElementById('cameraViewport');
+            const photoPreviewBox = document.getElementById('photoPreviewBox');
+            const photoPreviewImg = document.getElementById('photoPreviewImg');
+            const startCameraBtn = document.getElementById('startCameraBtn');
+            const snapPhotoBtn = document.getElementById('snapPhotoBtn');
+            const retakePhotoBtn = document.getElementById('retakePhotoBtn');
+            const locationStatus = document.getElementById('location-status');
+            const alertContainer = document.getElementById('alert-container');
+            const visitorForm = document.getElementById('visitorForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const successModal = document.getElementById('successModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
 
-            function showAlert(message, type = 'error') {
-                const alertClass = type === 'success' ? 'alert-success' : 'alert-error';
-                elements.alertContainer.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                setTimeout(() => { elements.alertContainer.innerHTML = ''; }, 6000);
+            // 1. Geolocation Handling
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        document.getElementById('latitude').value = position.coords.latitude;
+                        document.getElementById('longitude').value = position.coords.longitude;
+                        locationStatus.className = 'alert-box alert-success-soft';
+                        locationStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> <span>Lokasi kunjungan berhasil diverifikasi.</span>';
+                        setTimeout(() => { locationStatus.style.display = 'none'; }, 4000);
+                    },
+                    function(error) {
+                        locationStatus.className = 'alert-box alert-info-soft';
+                        locationStatus.innerHTML = '<i class="fa-solid fa-info-circle"></i> <span>Lokasi GPS dilewati / tidak diizinkan. Form tetap dapat dikirim.</span>';
+                        setTimeout(() => { locationStatus.style.display = 'none'; }, 4000);
+                    },
+                    { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 }
+                );
+            } else {
+                locationStatus.style.display = 'none';
             }
 
-            function stopCamera() {
-                if (stream) {
-                    stream.getTracks().forEach(track => track.stop());
-                    stream = null;
-                }
-            }
-
-            // Start Camera
-            elements.startCameraBtn.addEventListener('click', async function() {
+            // 2. Camera Functions
+            startCameraBtn.addEventListener('click', async function() {
                 try {
-                    if (!navigator.mediaDevices?.getUserMedia) {
-                        throw new Error('Browser tidak mendukung akses kamera.');
-                    }
-
-                    stream = await navigator.mediaDevices.getUserMedia({
-                        video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+                    mediaStream = await navigator.mediaDevices.getUserMedia({
+                        video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' },
                         audio: false
                     });
-
-                    elements.video.srcObject = stream;
-                    elements.video.style.display = 'block';
-                    elements.cameraPlaceholder.style.display = 'none';
-                    await elements.video.play();
-
-                    elements.startCameraBtn.style.display = 'none';
-                    elements.snapPhotoBtn.style.display = 'inline-flex';
-                    elements.retakePhotoBtn.style.display = 'none';
-                    elements.photoPreview.innerHTML = '';
-                    photoData = null;
+                    video.srcObject = mediaStream;
+                    video.style.display = 'block';
+                    cameraPlaceholder.style.display = 'none';
+                    startCameraBtn.style.display = 'none';
+                    snapPhotoBtn.style.display = 'inline-flex';
                 } catch (err) {
-                    console.error('Camera error:', err);
-                    showAlert('Tidak dapat mengakses kamera. Pastikan izin kamera telah diberikan.', 'error');
+                    console.warn('Camera access error:', err);
+                    alertContainer.innerHTML = '<div class="alert-box alert-danger-soft"><i class="fa-solid fa-triangle-exclamation"></i> <span>Kamera tidak dapat diakses atau izin ditolak. Anda tetap dapat mengirim form tanpa foto.</span></div>';
                 }
             });
 
-            // Snap Photo (Cekrek)
-            elements.snapPhotoBtn.addEventListener('click', function() {
-                elements.canvas.width = elements.video.videoWidth || 640;
-                elements.canvas.height = elements.video.videoHeight || 480;
-                ctx.drawImage(elements.video, 0, 0, elements.canvas.width, elements.canvas.height);
-                photoData = elements.canvas.toDataURL('image/jpeg', 0.85);
+            snapPhotoBtn.addEventListener('click', function() {
+                canvas.width = video.videoWidth || 640;
+                canvas.height = video.videoHeight || 480;
+                const context = canvas.getContext('2d');
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                capturedPhotoBase64 = canvas.toDataURL('image/jpeg', 0.85);
 
-                elements.photoPreview.innerHTML = `<img src="${photoData}" alt="Foto Selfie Pengunjung">`;
-                elements.video.style.display = 'none';
-                elements.cameraPlaceholder.style.display = 'none';
-                elements.snapPhotoBtn.style.display = 'none';
-                elements.retakePhotoBtn.style.display = 'inline-flex';
+                // Stop camera stream
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(track => track.stop());
+                }
 
-                stopCamera();
+                video.style.display = 'none';
+                cameraViewport.style.display = 'none';
+                photoPreviewImg.src = capturedPhotoBase64;
+                photoPreviewBox.style.display = 'block';
+
+                snapPhotoBtn.style.display = 'none';
+                retakePhotoBtn.style.display = 'inline-flex';
             });
 
-            // Retake Photo
-            elements.retakePhotoBtn.addEventListener('click', function() {
-                elements.startCameraBtn.click();
+            retakePhotoBtn.addEventListener('click', async function() {
+                capturedPhotoBase64 = null;
+                photoPreviewBox.style.display = 'none';
+                cameraViewport.style.display = 'flex';
+                retakePhotoBtn.style.display = 'none';
+                startCameraBtn.style.display = 'inline-flex';
+                cameraPlaceholder.style.display = 'block';
             });
 
-            function toggleLoading(isLoading) {
-                elements.loadingIndicator.style.display = isLoading ? 'block' : 'none';
-                elements.submitBtn.disabled = isLoading;
-                elements.submitBtn.innerHTML = isLoading ? '<i class="fas fa-spinner fa-spin mr-2"></i> Menyimpan...' : '<i class="fas fa-paper-plane mr-2"></i> Kirim Data Kunjungan';
-            }
-
-            function resetFormState() {
-                elements.visitorForm.reset();
-                photoData = null;
-                elements.photoPreview.innerHTML = '';
-                elements.startCameraBtn.style.display = 'inline-flex';
-                elements.snapPhotoBtn.style.display = 'none';
-                elements.retakePhotoBtn.style.display = 'none';
-                elements.video.style.display = 'none';
-                elements.cameraPlaceholder.style.display = 'block';
-            }
-
-            // Submit Form
-            elements.visitorForm.addEventListener('submit', async function(e) {
+            // 3. Form Submission
+            visitorForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
+                alertContainer.innerHTML = '';
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
 
-                if (!photoData) {
-                    showAlert('Mohon ambil foto selfie terlebih dahulu dengan tombol "Ambil Foto (Cekrek)".', 'error');
-                    return;
-                }
-
-                toggleLoading(true);
-
-                const formData = new FormData(this);
-                const payload = Object.fromEntries(formData.entries());
-                payload.photo = photoData;
+                const formData = {
+                    name: document.getElementById('name').value.trim(),
+                    email: document.getElementById('email').value.trim() || null,
+                    phone: document.getElementById('phone').value.trim(),
+                    asal_daerah: document.getElementById('asal_daerah').value.trim(),
+                    purpose: document.querySelector('input[name="purpose"]:checked')?.value || '',
+                    notes: document.getElementById('notes').value.trim() || null,
+                    latitude: document.getElementById('latitude').value || null,
+                    longitude: document.getElementById('longitude').value || null,
+                    photo: capturedPhotoBase64 || null
+                };
 
                 try {
                     const response = await fetch('/api/visitors', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            'Accept': 'application/json'
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                         },
-                        body: JSON.stringify(payload)
+                        body: JSON.stringify(formData)
                     });
 
-                    const result = await response.json();
-                    if (!response.ok) {
-                        throw new Error(result.message || 'Gagal menyimpan data kunjungan.');
-                    }
+                    const data = await response.json();
 
-                    showAlert('Terima kasih! Data kunjungan Anda telah berhasil disimpan.', 'success');
-                    resetFormState();
-                } catch (error) {
-                    console.error('Submit error:', error);
-                    showAlert(error.message || 'Gagal terhubung ke server. Periksa koneksi Anda.', 'error');
+                    if (response.ok && data.success) {
+                        successModal.classList.add('active');
+                    } else {
+                        const errMsg = data.message || 'Terjadi kesalahan saat menyimpan data kunjungan.';
+                        alertContainer.innerHTML = `<div class="alert-box alert-danger-soft"><i class="fa-solid fa-circle-exclamation"></i> <span>${errMsg}</span></div>`;
+                    }
+                } catch (err) {
+                    console.error('Submit error:', err);
+                    alertContainer.innerHTML = '<div class="alert-box alert-danger-soft"><i class="fa-solid fa-triangle-exclamation"></i> <span>Gagal terhubung ke server. Periksa koneksi Anda dan coba lagi.</span></div>';
                 } finally {
-                    toggleLoading(false);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Data Kunjungan';
                 }
             });
 
-            window.addEventListener('beforeunload', stopCamera);
+            closeModalBtn.addEventListener('click', function() {
+                successModal.classList.remove('active');
+                visitorForm.reset();
+                capturedPhotoBase64 = null;
+                photoPreviewBox.style.display = 'none';
+                cameraViewport.style.display = 'flex';
+                cameraPlaceholder.style.display = 'block';
+                video.style.display = 'none';
+                startCameraBtn.style.display = 'inline-flex';
+                snapPhotoBtn.style.display = 'none';
+                retakePhotoBtn.style.display = 'none';
+            });
         });
     </script>
 </body>

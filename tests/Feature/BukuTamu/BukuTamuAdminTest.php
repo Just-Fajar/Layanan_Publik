@@ -74,6 +74,10 @@ class BukuTamuAdminTest extends TestCase
         $responseDashboard->assertStatus(200)
             ->assertViewIs('buku_tamu.admin.dashboard');
 
+        $responseVisitors = $this->actingAs($admin, 'admin')->get('/buku-tamu/admin/visitors');
+        $responseVisitors->assertStatus(200)
+            ->assertViewIs('buku_tamu.admin.visitors');
+
         $responseCalendar = $this->actingAs($admin, 'admin')->get('/buku-tamu/admin/dashboard/calendar');
         $responseCalendar->assertStatus(200)
             ->assertViewIs('buku_tamu.admin.calendar');
@@ -85,6 +89,9 @@ class BukuTamuAdminTest extends TestCase
 
         $response = $this->actingAs($superAdmin, 'admin')->get('/buku-tamu/admin/dashboard');
         $response->assertStatus(200);
+
+        $responseVisitors = $this->actingAs($superAdmin, 'admin')->get('/buku-tamu/admin/visitors');
+        $responseVisitors->assertStatus(200);
     }
 
     public function test_admin_from_other_module_cannot_access_buku_tamu_dashboard(): void
