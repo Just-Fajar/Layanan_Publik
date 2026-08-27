@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Esport\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTournamentRequest;
-use App\Http\Requests\UpdateTournamentRequest;
+use App\Http\Requests\Esport\StoreTournamentRequest;
+use App\Http\Requests\Esport\UpdateTournamentRequest;
 use App\Models\Tournament;
 use Illuminate\Support\Facades\Storage;
 

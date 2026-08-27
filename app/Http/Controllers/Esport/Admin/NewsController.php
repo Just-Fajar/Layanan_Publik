@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Esport\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreNewsRequest;
-use App\Http\Requests\UpdateNewsRequest;
+use App\Http\Requests\Esport\StoreNewsRequest;
+use App\Http\Requests\Esport\UpdateNewsRequest;
 use App\Models\News;
 use Illuminate\Support\Facades\Storage;
 
