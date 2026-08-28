@@ -14,9 +14,9 @@
 
     <div class="gaming-card rounded-3xl overflow-hidden shadow-2xl">
         <!-- Tournament Poster -->
-        @if($tournament->image)
+        @if($tournament->image_url ?? $tournament->image)
             <div class="relative w-full aspect-[21/9] bg-dark-950 overflow-hidden">
-                <img src="{{ asset('storage/'.$tournament->image) }}" alt="{{ $tournament->title }}" class="w-full h-full object-cover">
+                <img src="{{ $tournament->image_url ?? asset('storage/'.$tournament->image) }}" alt="{{ $tournament->title }}" class="w-full h-full object-cover">
             </div>
         @endif
 

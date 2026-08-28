@@ -52,8 +52,8 @@
             <article class="gaming-card rounded-2xl overflow-hidden flex flex-col justify-between group" data-aos="fade-up">
                 <div>
                     <div class="relative aspect-video bg-dark-950 overflow-hidden">
-                        @if($n->image)
-                            <img src="{{ asset('storage/'.$n->image) }}" alt="{{ $n->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        @if($n->image_url ?? $n->image)
+                            <img src="{{ $n->image_url ?? asset('storage/'.$n->image) }}" alt="{{ $n->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         @else
                             <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-dark-850 to-dark-800 text-slate-600">
                                 <i class="fa-solid fa-newspaper text-4xl opacity-30"></i>

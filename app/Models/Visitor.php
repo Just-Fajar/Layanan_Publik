@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
 class Visitor extends Model
 {
@@ -12,7 +11,7 @@ class Visitor extends Model
 
     protected $fillable = [
         'name', 'email', 'phone', 'asal_daerah', 'purpose', 'notes',
-        'photo_path', 'Institution', 'visit_date',
+        'photo_path', 'visit_date',
     ];
 
     protected $casts = ['visit_date' => 'datetime'];
@@ -26,8 +25,10 @@ class Visitor extends Model
             return null;
         }
 
-        // Pastikan storage link sudah dibuat
-        // php artisan storage:link
+        if (filter_var($this->photo_path, FILTER_VALIDATE_URL)) {
+            return $this->photo_path;
+        }
+
         return asset('storage/' . $this->photo_path);
     }
 

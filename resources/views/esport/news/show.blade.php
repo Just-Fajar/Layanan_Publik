@@ -30,9 +30,9 @@
         </h1>
 
         <!-- Image (if exists) -->
-        @if($news->image)
+        @if($news->image_url ?? $news->image)
             <div class="mb-8 rounded-2xl overflow-hidden bg-dark-950 aspect-video">
-                <img src="{{ asset('storage/'.$news->image) }}" alt="{{ $news->title }}" class="w-full h-full object-cover">
+                <img src="{{ $news->image_url ?? asset('storage/'.$news->image) }}" alt="{{ $news->title }}" class="w-full h-full object-cover">
             </div>
         @endif
 
