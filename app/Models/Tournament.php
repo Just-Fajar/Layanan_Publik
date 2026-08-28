@@ -18,7 +18,20 @@ class Tournament extends Model
         'date' => 'date',
     ];
 
-    protected $appends = ['name', 'start_date'];
+    protected $appends = ['name', 'start_date', 'image_url'];
+
+    public function getImageUrlAttribute(): ?string
+    {
+        if (! $this->image) {
+            return null;
+        }
+
+        if (filter_var($this->image, FILTER_VALIDATE_URL)) {
+            return $this->image;
+        }
+
+        return asset('storage/' . $this->image);
+    }
 
     public function registrations()
     {

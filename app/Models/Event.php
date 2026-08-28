@@ -89,6 +89,10 @@ class Event extends Model
             return null;
         }
 
+        if (filter_var($this->image, FILTER_VALIDATE_URL)) {
+            return $this->image;
+        }
+
         return asset('storage/' . $this->image);
     }
 

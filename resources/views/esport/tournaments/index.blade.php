@@ -61,8 +61,8 @@
                 <div>
                     <!-- Image Poster Container -->
                     <div class="relative aspect-video bg-dark-950 overflow-hidden">
-                        @if($t->image)
-                            <img src="{{ asset('storage/'.$t->image) }}" alt="{{ $t->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        @if($t->image_url ?? $t->image)
+                            <img src="{{ $t->image_url ?? asset('storage/'.$t->image) }}" alt="{{ $t->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         @else
                             <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-dark-850 to-dark-800 text-slate-600">
                                 <i class="fa-solid fa-trophy text-4xl opacity-30"></i>
