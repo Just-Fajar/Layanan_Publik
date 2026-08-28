@@ -73,7 +73,7 @@ class EsportSeeder extends Seeder
                 'date' => now()->subDays(10),
                 'location' => 'Aula Gedung Pemuda Caruban',
                 'description' => "Turnamen 1v1 game simulasi sepak bola digital komunitas eFootball Madiun.\n\nSelamat kepada para pemenang turnamen Season 1 yang telah menunjukkan sportivitas dan strategi luar biasa.",
-                'image' => 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1200&auto=format&fit=crop&q=80',
+                'image' => 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1200&auto=format&fit=crop&q=80',
                 'status' => 'finished',
                 'organizer_contact' => '081399887766 (Koordinator eFootball)',
             ],
