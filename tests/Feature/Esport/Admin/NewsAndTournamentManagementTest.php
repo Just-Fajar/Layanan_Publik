@@ -111,4 +111,65 @@ class NewsAndTournamentManagementTest extends TestCase
         $response->assertSee('Edit Tournament');
         $response->assertSee('Valorant Championship');
     }
+
+    /**
+     * Test admin can create news with uploaded image.
+     */
+    public function test_admin_can_create_news_with_uploaded_image(): void
+    {
+        \Illuminate\Support\Facades\Storage::fake('public');
+        $file = \Illuminate\Http\UploadedFile::fake()->image('article.jpg');
+
+        $response = $this->actingAs($this->esportAdmin, 'admin')
+            ->post(route('esport.admin.news.store'), [
+                'title' => 'Berita Peluncuran Turnamen',
+                'category' => 'Esport News',
+                'content' => 'Konten lengkap berita peluncuran turnamen resmi Madiun.',
+                'excerpt' => 'Ringkasan singkat berita.',
+                'image' => $file,
+                'is_featured' => true,
+            ]);
+
+        $response->assertRedirect(route('esport.admin.news.index'));
+        $this->assertDatabaseHas('news', [
+            'title' => 'Berita Peluncuran Turnamen',
+            'category' => 'Esport News',
+        ]);
+
+        $createdNews = News::where('title', 'Berita Peluncuran Turnamen')->first();
+        $this->assertNotNull($createdNews->image);
+        \Illuminate\Support\Facades\Storage::disk('public')->assertExists($createdNews->image);
+    }
+
+    /**
+     * Test admin can create tournament with uploaded image.
+     */
+    public function test_admin_can_create_tournament_with_uploaded_image(): void
+    {
+        \Illuminate\Support\Facades\Storage::fake('public');
+        $file = \Illuminate\Http\UploadedFile::fake()->image('tourney.png');
+
+        $response = $this->actingAs($this->esportAdmin, 'admin')
+            ->post(route('esport.admin.tournaments.store'), [
+                'title' => 'M-GEN Free Fire Championship',
+                'game' => 'free_fire',
+                'date' => now()->addDays(7)->format('Y-m-d'),
+                'time' => '10:00',
+                'location' => 'Online',
+                'prize_pool' => 5000000,
+                'status' => 'upcoming',
+                'description' => 'Turnamen Free Fire tingkat kabupaten.',
+                'image' => $file,
+            ]);
+
+        $response->assertRedirect(route('esport.admin.tournaments.index'));
+        $this->assertDatabaseHas('tournaments', [
+            'title' => 'M-GEN Free Fire Championship',
+            'game' => 'free_fire',
+        ]);
+
+        $createdTournament = Tournament::where('title', 'M-GEN Free Fire Championship')->first();
+        $this->assertNotNull($createdTournament->image);
+        \Illuminate\Support\Facades\Storage::disk('public')->assertExists($createdTournament->image);
+    }
 }

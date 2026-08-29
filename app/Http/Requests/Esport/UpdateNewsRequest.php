@@ -30,8 +30,8 @@ class UpdateNewsRequest extends FormRequest
             'slug' => ['nullable', 'string', 'max:255', Rule::unique('news', 'slug')->ignore($newsId)],
             'content' => ['sometimes', 'required', 'string'],
             'excerpt' => ['nullable', 'string', 'max:500'],
-            'category' => ['sometimes', 'required', Rule::in(array_keys(config('esport.news_categories')))],
-            'image' => ['nullable', 'string', 'max:5242880'], // 5MB base64
+            'category' => ['sometimes', 'required', Rule::in(array_keys(config('esport.news_categories') ?? config('esport.news.categories')))],
+            'image' => $this->hasFile('image') ? ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'] : ['nullable', 'string', 'max:5242880'],
             'published_at' => ['nullable', 'date'],
             'is_featured' => ['boolean'],
             'meta_title' => ['nullable', 'string', 'max:60'],

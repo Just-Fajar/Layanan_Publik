@@ -35,8 +35,8 @@ class StoreTournamentRequest extends FormRequest
             'registration_deadline' => ['nullable', 'date', 'before_or_equal:date'],
             'rules' => ['nullable', 'string', 'max:10000'],
             'contact_info' => ['nullable', 'string', 'max:500'],
-            'image' => ['nullable', 'string', 'max:5242880'], // 5MB base64
-            'status' => ['required', Rule::in(array_keys(config('esport.tournament_statuses')))],
+            'image' => $this->hasFile('image') ? ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'] : ['nullable', 'string', 'max:5242880'],
+            'status' => ['required', Rule::in(array_keys(config('esport.tournament_statuses') ?? config('esport.tournament.statuses')))],
         ];
     }
 
