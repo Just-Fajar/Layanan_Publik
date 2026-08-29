@@ -25,9 +25,13 @@ class HomepageTest extends TestCase
         $response->assertSee(route('calendar.index'));
         $response->assertSee(route('esport.home'));
 
-        // Check login portal links
-        $response->assertSee(route('admin.login'));
+        // Check user portal login links are present
         $response->assertSee(route('calendar.auth.login'));
         $response->assertSee(route('esport.auth.login'));
+
+        // Check admin login is hidden from public view
+        $response->assertDontSee(route('admin.login'));
+        $response->assertDontSee('Login Admin Terpadu');
+        $response->assertDontSee('Login Administrator');
     }
 }

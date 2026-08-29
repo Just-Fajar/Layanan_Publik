@@ -415,13 +415,6 @@
                                         <i class="fa-solid fa-trophy text-warning"></i> Akun Madiun Esport
                                     </a>
                                 </li>
-                                <li><hr class="dropdown-divider my-1"></li>
-                                <li><h6 class="dropdown-header text-uppercase text-muted" style="font-size: 0.72rem; font-weight: 700;">Administrator</h6></li>
-                                <li>
-                                    <a class="dropdown-item dropdown-item-custom d-flex align-items-center gap-2" href="{{ route('admin.login') }}">
-                                        <i class="fa-solid fa-lock text-danger"></i> Login Admin Terpadu
-                                    </a>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -591,7 +584,6 @@
                         <li><a href="{{ route('buku-tamu') }}"><i class="fa-solid fa-angle-right me-2 text-muted"></i> Buku Tamu Digital</a></li>
                         <li><a href="{{ route('calendar.index') }}"><i class="fa-solid fa-angle-right me-2 text-muted"></i> Kalender Event</a></li>
                         <li><a href="{{ route('esport.home') }}"><i class="fa-solid fa-angle-right me-2 text-muted"></i> Madiun Esport (M-GEN)</a></li>
-                        <li><a href="{{ route('admin.login') }}"><i class="fa-solid fa-angle-right me-2 text-muted"></i> Login Administrator</a></li>
                     </ul>
                 </div>
 
