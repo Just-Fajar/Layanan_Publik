@@ -47,18 +47,29 @@ Route::get('/buku-tamu', function () {
     return view('buku_tamu.visitor');
 })->name('buku-tamu');
 
-// Admin routes (Buku Tamu & Auth)
-Route::prefix('buku-tamu/admin')->group(function () {
+// Admin Authentication & Central Portal
+Route::prefix('admin')->group(function () {
     Route::get('/', [AuthController::class, 'showLogin'])->name('admin.login');
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('admin.login.form');
     Route::post('/login', [AuthController::class, 'login'])->name('admin.login.submit');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
-
-    Route::middleware(['admin.role:module,buku_tamu'])->group(function () {
-        Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('admin.dashboard');
-        Route::get('/visitors', [AuthController::class, 'visitors'])->name('admin.visitors');
-        Route::get('/dashboard/calendar', [AuthController::class, 'calendar'])->name('admin.calendar');
-    });
 });
+
+// Compatibility redirect for legacy buku-tamu admin login URL
+Route::get('/buku-tamu/admin', function () {
+    return redirect()->route('admin.login');
+});
+
+// Admin Buku Tamu Module (RBAC Protected)
+Route::prefix('admin/buku-tamu')
+    ->name('admin.')
+    ->middleware(['admin.role:module,buku_tamu'])
+    ->group(function () {
+        Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+        Route::get('/visitors', [AuthController::class, 'visitors'])->name('visitors');
+        Route::get('/calendar', [AuthController::class, 'calendar'])->name('calendar');
+        Route::get('/dashboard/calendar', [AuthController::class, 'calendar'])->name('calendar.legacy');
+    });
 
 /*
 |--------------------------------------------------------------------------
@@ -116,7 +127,7 @@ Route::prefix('esport/user')->name('esport.user.')->middleware('auth')->group(fu
 | Admin Esport (RBAC Protected)
 |--------------------------------------------------------------------------
 */
-Route::prefix('buku-tamu/admin/esport')
+Route::prefix('esport/admin')
     ->name('esport.admin.')
     ->middleware(['admin.role:module,esport'])
     ->group(function () {
@@ -202,7 +213,7 @@ Route::get('/calendar-view', [CalendarEventController::class, 'calendar'])->name
 | Admin Calendar Event (RBAC Protected)
 |--------------------------------------------------------------------------
 */
-Route::prefix('buku-tamu/admin/calendar')
+Route::prefix('calendar/admin')
     ->name('calendar.admin.')
     ->middleware(['admin.role:module,calendar'])
     ->group(function () {

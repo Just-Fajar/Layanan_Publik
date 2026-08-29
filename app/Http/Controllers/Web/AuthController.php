@@ -155,11 +155,11 @@ class AuthController extends Controller
         }
 
         if ($admin->canAccessModule('esport')) {
-            return route('esport.admin.tournaments.index');
+            return route('esport.admin.dashboard');
         }
 
         if ($admin->canAccessModule('calendar')) {
-            return route('admin.calendar');
+            return route('calendar.admin.dashboard');
         }
 
         return route('admin.dashboard');

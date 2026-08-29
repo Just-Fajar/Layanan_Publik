@@ -703,7 +703,7 @@
 
         async function logout() {
             try {
-                await fetch('/buku-tamu/admin/logout', {
+                await fetch('{{ route("admin.logout") }}', {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -712,7 +712,7 @@
             } catch (e) {}
             localStorage.removeItem('admin_token');
             localStorage.removeItem('admin_data');
-            window.location.href = '/buku-tamu/admin';
+            window.location.href = '{{ route("admin.login") }}';
         }
     </script>
 </body>

@@ -59,13 +59,13 @@ class AdminRegistrationManagementTest extends TestCase
      */
     public function test_guest_is_redirected_to_login(): void
     {
-        $this->get('/buku-tamu/admin/calendar/dashboard')
+        $this->get('/calendar/admin/dashboard')
             ->assertRedirect(route('admin.login'));
 
-        $this->get('/buku-tamu/admin/calendar/registrations')
+        $this->get('/calendar/admin/registrations')
             ->assertRedirect(route('admin.login'));
 
-        $this->get('/buku-tamu/admin/calendar/users')
+        $this->get('/calendar/admin/users')
             ->assertRedirect(route('admin.login'));
     }
 
@@ -75,15 +75,15 @@ class AdminRegistrationManagementTest extends TestCase
     public function test_buku_tamu_admin_is_forbidden(): void
     {
         $this->actingAs($this->bukuTamuAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/dashboard')
+            ->get('/calendar/admin/dashboard')
             ->assertStatus(403);
 
         $this->actingAs($this->bukuTamuAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/registrations')
+            ->get('/calendar/admin/registrations')
             ->assertStatus(403);
 
         $this->actingAs($this->bukuTamuAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/users')
+            ->get('/calendar/admin/users')
             ->assertStatus(403);
     }
 
@@ -93,7 +93,7 @@ class AdminRegistrationManagementTest extends TestCase
     public function test_calendar_admin_can_access_dashboard(): void
     {
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/dashboard');
+            ->get('/calendar/admin/dashboard');
 
         $response->assertStatus(200);
         $response->assertSee('Dashboard');
@@ -108,7 +108,7 @@ class AdminRegistrationManagementTest extends TestCase
     public function test_calendar_admin_can_view_registrations_index(): void
     {
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/registrations');
+            ->get('/calendar/admin/registrations');
 
         $response->assertStatus(200);
         $response->assertSee('Registration Management');
@@ -131,14 +131,14 @@ class AdminRegistrationManagementTest extends TestCase
 
         // Filter attended
         $responseAttended = $this->actingAs($this->calendarAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/registrations?status=attended');
+            ->get('/calendar/admin/registrations?status=attended');
 
         $responseAttended->assertStatus(200);
         $responseAttended->assertSee($attendedReg->user->name);
 
         // Filter cancelled
         $responseCancelled = $this->actingAs($this->calendarAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/registrations?status=cancelled');
+            ->get('/calendar/admin/registrations?status=cancelled');
 
         $responseCancelled->assertStatus(200);
         $responseCancelled->assertSee($cancelledReg->user->name);
@@ -150,7 +150,7 @@ class AdminRegistrationManagementTest extends TestCase
     public function test_calendar_admin_can_search_registrations(): void
     {
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/registrations?search=Budi');
+            ->get('/calendar/admin/registrations?search=Budi');
 
         $response->assertStatus(200);
         $response->assertSee('Budi Santoso');
@@ -162,7 +162,7 @@ class AdminRegistrationManagementTest extends TestCase
     public function test_calendar_admin_can_view_registration_detail(): void
     {
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/registrations/' . $this->registration->id);
+            ->get('/calendar/admin/registrations/' . $this->registration->id);
 
         $response->assertStatus(200);
         $response->assertSee('Registration Details');
@@ -176,7 +176,7 @@ class AdminRegistrationManagementTest extends TestCase
     public function test_calendar_admin_can_mark_attendance(): void
     {
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->post('/buku-tamu/admin/calendar/registrations/' . $this->registration->id . '/attend');
+            ->post('/calendar/admin/registrations/' . $this->registration->id . '/attend');
 
         $response->assertStatus(302);
         $response->assertSessionHas('success');
@@ -191,7 +191,7 @@ class AdminRegistrationManagementTest extends TestCase
     public function test_calendar_admin_can_cancel_registration(): void
     {
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->post('/buku-tamu/admin/calendar/registrations/' . $this->registration->id . '/cancel');
+            ->post('/calendar/admin/registrations/' . $this->registration->id . '/cancel');
 
         $response->assertStatus(302);
         $response->assertSessionHas('success');
@@ -205,7 +205,7 @@ class AdminRegistrationManagementTest extends TestCase
     public function test_calendar_admin_can_view_users_index(): void
     {
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/users');
+            ->get('/calendar/admin/users');
 
         $response->assertStatus(200);
         $response->assertSee('User Management');
@@ -218,7 +218,7 @@ class AdminRegistrationManagementTest extends TestCase
     public function test_calendar_admin_can_view_user_detail(): void
     {
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/users/' . $this->user->id);
+            ->get('/calendar/admin/users/' . $this->user->id);
 
         $response->assertStatus(200);
         $response->assertSee('User Details');
@@ -232,15 +232,15 @@ class AdminRegistrationManagementTest extends TestCase
     public function test_super_admin_can_access_calendar_admin_modules(): void
     {
         $this->actingAs($this->superAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/dashboard')
+            ->get('/calendar/admin/dashboard')
             ->assertStatus(200);
 
         $this->actingAs($this->superAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/registrations')
+            ->get('/calendar/admin/registrations')
             ->assertStatus(200);
 
         $this->actingAs($this->superAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/users')
+            ->get('/calendar/admin/users')
             ->assertStatus(200);
     }
 }

@@ -91,7 +91,7 @@ class EventRoutingTest extends TestCase
      */
     public function test_guest_is_redirected_when_accessing_admin_calendar(): void
     {
-        $response = $this->get('/buku-tamu/admin/calendar/events');
+        $response = $this->get('/calendar/admin/events');
 
         $response->assertRedirect(route('admin.login'));
     }
@@ -102,7 +102,7 @@ class EventRoutingTest extends TestCase
     public function test_buku_tamu_admin_is_forbidden_from_calendar_admin(): void
     {
         $response = $this->actingAs($this->bukuTamuAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/events');
+            ->get('/calendar/admin/events');
 
         $response->assertStatus(403);
     }
@@ -113,7 +113,7 @@ class EventRoutingTest extends TestCase
     public function test_calendar_admin_can_access_admin_events_index(): void
     {
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/events');
+            ->get('/calendar/admin/events');
 
         $response->assertStatus(200);
         $response->assertSee('Kelola Events');
@@ -125,7 +125,7 @@ class EventRoutingTest extends TestCase
     public function test_calendar_admin_can_view_create_event_form(): void
     {
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->get('/buku-tamu/admin/calendar/events/create');
+            ->get('/calendar/admin/events/create');
 
         $response->assertStatus(200);
         $response->assertSee('Tambah Event Baru');
@@ -147,7 +147,7 @@ class EventRoutingTest extends TestCase
         ];
 
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->post('/buku-tamu/admin/calendar/events', $eventData);
+            ->post('/calendar/admin/events', $eventData);
 
         $response->assertRedirect(route('calendar.admin.events.index'));
         $this->assertDatabaseHas('events', [
@@ -172,7 +172,7 @@ class EventRoutingTest extends TestCase
         ];
 
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->put('/buku-tamu/admin/calendar/events/' . $this->publishedEvent->id, $updatedData);
+            ->put('/calendar/admin/events/' . $this->publishedEvent->id, $updatedData);
 
         $response->assertRedirect(route('calendar.admin.events.index'));
         $this->assertDatabaseHas('events', [
@@ -187,7 +187,7 @@ class EventRoutingTest extends TestCase
     public function test_calendar_admin_can_delete_event(): void
     {
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->delete('/buku-tamu/admin/calendar/events/' . $this->draftEvent->id);
+            ->delete('/calendar/admin/events/' . $this->draftEvent->id);
 
         $response->assertRedirect(route('calendar.admin.events.index'));
         $this->assertSoftDeleted('events', [
@@ -204,7 +204,7 @@ class EventRoutingTest extends TestCase
         $event2 = Event::factory()->draft()->create();
 
         $response = $this->actingAs($this->calendarAdmin, 'admin')
-            ->post('/buku-tamu/admin/calendar/events/bulk', [
+            ->post('/calendar/admin/events/bulk', [
                 'action' => 'publish',
                 'event_ids' => [$event1->id, $event2->id],
             ]);

@@ -40,7 +40,7 @@ class AdminAuthenticationTest extends TestCase
             'remember' => false,
         ]);
 
-        $response->assertRedirect(route('esport.admin.tournaments.index'));
+        $response->assertRedirect(route('esport.admin.dashboard'));
         $this->assertAuthenticatedAs($this->admin, 'admin');
     }
 

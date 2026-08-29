@@ -414,7 +414,7 @@
                 <h1>Kalender Pengunjung</h1>
             </div>
             <nav class="nav-buttons">
-                <a href="/buku-tamu/admin/dashboard" class="btn btn-primary">Dashboard</a>
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-primary">Dashboard</a>
             </nav>
         </div>
     </header>

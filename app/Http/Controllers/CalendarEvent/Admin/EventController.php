@@ -41,7 +41,7 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        $this->authorize('create', Event::class);
+        $this->authorizeForUser(auth('admin')->user(), 'create', Event::class);
 
         $data = $request->validated();
 
@@ -70,7 +70,7 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        $this->authorize('update', $event);
+        $this->authorizeForUser(auth('admin')->user(), 'update', $event);
 
         $categories = config('calendar_event.categories');
 
@@ -82,7 +82,7 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event)
     {
-        $this->authorize('update', $event);
+        $this->authorizeForUser(auth('admin')->user(), 'update', $event);
 
         $data = $request->validated();
 
@@ -108,7 +108,7 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        $this->authorize('delete', $event);
+        $this->authorizeForUser(auth('admin')->user(), 'delete', $event);
 
         // Delete image if exists
         if ($event->image) {

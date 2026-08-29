@@ -28,12 +28,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('esport.admin.*') ? 'active' : '' }}" href="{{ route('esport.admin.tournaments.index') }}">
+                        <a class="nav-link {{ request()->routeIs('esport.admin.*') ? 'active' : '' }}" href="{{ route('esport.admin.dashboard') }}">
                             <i class="fas fa-gamepad"></i> Esport
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('calendar.admin.*') ? 'active' : '' }}" href="{{ route('calendar.admin.events.index') }}">
+                        <a class="nav-link {{ request()->routeIs('calendar.admin.*') ? 'active' : '' }}" href="{{ route('calendar.admin.dashboard') }}">
                             <i class="fas fa-calendar-alt"></i> Calendar Event
                         </a>
                     </li>

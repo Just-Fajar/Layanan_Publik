@@ -44,7 +44,7 @@ class AdminAuthenticationFlowTest extends TestCase
      */
     public function test_admin_can_view_login_page(): void
     {
-        $response = $this->get('/buku-tamu/admin');
+        $response = $this->get(route('admin.login'));
 
         $response->assertStatus(200);
         $response->assertViewIs('buku_tamu.admin.login');
@@ -56,7 +56,7 @@ class AdminAuthenticationFlowTest extends TestCase
     public function test_authenticated_admin_is_redirected_away_from_login(): void
     {
         $response = $this->actingAs($this->bukuTamuAdmin, 'admin')
-            ->get('/buku-tamu/admin');
+            ->get(route('admin.login'));
 
         $response->assertRedirect(route('admin.dashboard'));
     }
@@ -66,7 +66,7 @@ class AdminAuthenticationFlowTest extends TestCase
      */
     public function test_admin_can_login_with_valid_username(): void
     {
-        $response = $this->post('/buku-tamu/admin/login', [
+        $response = $this->post(route('admin.login.submit'), [
             'login' => 'superadmin',
             'password' => 'password123',
         ]);
@@ -80,7 +80,7 @@ class AdminAuthenticationFlowTest extends TestCase
      */
     public function test_admin_can_login_with_valid_email(): void
     {
-        $response = $this->post('/buku-tamu/admin/login', [
+        $response = $this->post(route('admin.login.submit'), [
             'login' => 'admin_bukutamu@kominfo.go.id',
             'password' => 'password123',
         ]);
@@ -94,12 +94,12 @@ class AdminAuthenticationFlowTest extends TestCase
      */
     public function test_esport_admin_login_redirects_to_esport_dashboard(): void
     {
-        $response = $this->post('/buku-tamu/admin/login', [
+        $response = $this->post(route('admin.login.submit'), [
             'username' => 'admin_esport',
             'password' => 'password123',
         ]);
 
-        $response->assertRedirect(route('esport.admin.tournaments.index'));
+        $response->assertRedirect(route('esport.admin.dashboard'));
         $this->assertAuthenticatedAs($this->esportAdmin, 'admin');
     }
 
@@ -108,12 +108,12 @@ class AdminAuthenticationFlowTest extends TestCase
      */
     public function test_admin_cannot_login_with_incorrect_password(): void
     {
-        $response = $this->from('/buku-tamu/admin')->post('/buku-tamu/admin/login', [
+        $response = $this->from(route('admin.login'))->post(route('admin.login.submit'), [
             'login' => 'superadmin',
             'password' => 'wrong-password',
         ]);
 
-        $response->assertRedirect('/buku-tamu/admin');
+        $response->assertRedirect(route('admin.login'));
         $response->assertSessionHasErrors('login');
         $this->assertGuest('admin');
     }
@@ -123,7 +123,7 @@ class AdminAuthenticationFlowTest extends TestCase
      */
     public function test_ajax_login_returns_json_on_success(): void
     {
-        $response = $this->postJson('/buku-tamu/admin/login', [
+        $response = $this->postJson(route('admin.login.submit'), [
             'username' => 'superadmin',
             'password' => 'password123',
         ]);
@@ -144,7 +144,7 @@ class AdminAuthenticationFlowTest extends TestCase
      */
     public function test_ajax_login_returns_401_on_failure(): void
     {
-        $response = $this->postJson('/buku-tamu/admin/login', [
+        $response = $this->postJson(route('admin.login.submit'), [
             'username' => 'superadmin',
             'password' => 'wrong-password',
         ]);
@@ -163,7 +163,7 @@ class AdminAuthenticationFlowTest extends TestCase
     public function test_admin_can_logout(): void
     {
         $response = $this->actingAs($this->superAdmin, 'admin')
-            ->post('/buku-tamu/admin/logout');
+            ->post(route('admin.logout'));
 
         $response->assertRedirect(route('admin.login'));
         $this->assertGuest('admin');

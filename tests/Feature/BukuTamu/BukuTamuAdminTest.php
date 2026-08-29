@@ -12,7 +12,7 @@ class BukuTamuAdminTest extends TestCase
 
     public function test_login_page_can_be_rendered(): void
     {
-        $response = $this->get('/buku-tamu/admin');
+        $response = $this->get(route('admin.login'));
 
         $response->assertStatus(200)
             ->assertViewIs('buku_tamu.admin.login');
@@ -25,12 +25,12 @@ class BukuTamuAdminTest extends TestCase
             'password' => bcrypt('password123'),
         ]);
 
-        $response = $this->post('/buku-tamu/admin/login', [
+        $response = $this->post(route('admin.login.submit'), [
             'login' => 'admin_bukutamu',
             'password' => 'password123',
         ]);
 
-        $response->assertRedirect('/buku-tamu/admin/dashboard');
+        $response->assertRedirect(route('admin.dashboard'));
         $this->assertAuthenticatedAs($admin, 'admin');
     }
 
@@ -41,12 +41,12 @@ class BukuTamuAdminTest extends TestCase
             'password' => bcrypt('password123'),
         ]);
 
-        $response = $this->post('/buku-tamu/admin/login', [
+        $response = $this->post(route('admin.login.submit'), [
             'login' => 'bukutamu@madiunkab.go.id',
             'password' => 'password123',
         ]);
 
-        $response->assertRedirect('/buku-tamu/admin/dashboard');
+        $response->assertRedirect(route('admin.dashboard'));
         $this->assertAuthenticatedAs($admin, 'admin');
     }
 
@@ -57,7 +57,7 @@ class BukuTamuAdminTest extends TestCase
             'password' => bcrypt('password123'),
         ]);
 
-        $response = $this->post('/buku-tamu/admin/login', [
+        $response = $this->post(route('admin.login.submit'), [
             'login' => 'admin_bukutamu',
             'password' => 'wrong_password',
         ]);
@@ -70,15 +70,15 @@ class BukuTamuAdminTest extends TestCase
     {
         $admin = Admin::factory()->bukuTamu()->create();
 
-        $responseDashboard = $this->actingAs($admin, 'admin')->get('/buku-tamu/admin/dashboard');
+        $responseDashboard = $this->actingAs($admin, 'admin')->get(route('admin.dashboard'));
         $responseDashboard->assertStatus(200)
             ->assertViewIs('buku_tamu.admin.dashboard');
 
-        $responseVisitors = $this->actingAs($admin, 'admin')->get('/buku-tamu/admin/visitors');
+        $responseVisitors = $this->actingAs($admin, 'admin')->get(route('admin.visitors'));
         $responseVisitors->assertStatus(200)
             ->assertViewIs('buku_tamu.admin.visitors');
 
-        $responseCalendar = $this->actingAs($admin, 'admin')->get('/buku-tamu/admin/dashboard/calendar');
+        $responseCalendar = $this->actingAs($admin, 'admin')->get(route('admin.calendar'));
         $responseCalendar->assertStatus(200)
             ->assertViewIs('buku_tamu.admin.calendar');
     }
@@ -87,10 +87,10 @@ class BukuTamuAdminTest extends TestCase
     {
         $superAdmin = Admin::factory()->superAdmin()->create();
 
-        $response = $this->actingAs($superAdmin, 'admin')->get('/buku-tamu/admin/dashboard');
+        $response = $this->actingAs($superAdmin, 'admin')->get(route('admin.dashboard'));
         $response->assertStatus(200);
 
-        $responseVisitors = $this->actingAs($superAdmin, 'admin')->get('/buku-tamu/admin/visitors');
+        $responseVisitors = $this->actingAs($superAdmin, 'admin')->get(route('admin.visitors'));
         $responseVisitors->assertStatus(200);
     }
 
@@ -98,23 +98,23 @@ class BukuTamuAdminTest extends TestCase
     {
         $esportAdmin = Admin::factory()->esport()->create();
 
-        $response = $this->actingAs($esportAdmin, 'admin')->get('/buku-tamu/admin/dashboard');
+        $response = $this->actingAs($esportAdmin, 'admin')->get(route('admin.dashboard'));
         $response->assertStatus(403);
     }
 
     public function test_unauthenticated_user_cannot_access_buku_tamu_dashboard(): void
     {
-        $response = $this->get('/buku-tamu/admin/dashboard');
-        $response->assertRedirect('/buku-tamu/admin');
+        $response = $this->get(route('admin.dashboard'));
+        $response->assertRedirect(route('admin.login'));
     }
 
     public function test_buku_tamu_admin_can_logout(): void
     {
         $admin = Admin::factory()->bukuTamu()->create();
 
-        $response = $this->actingAs($admin, 'admin')->post('/buku-tamu/admin/logout');
+        $response = $this->actingAs($admin, 'admin')->post(route('admin.logout'));
 
-        $response->assertRedirect('/buku-tamu/admin');
+        $response->assertRedirect(route('admin.login'));
         $this->assertGuest('admin');
     }
 

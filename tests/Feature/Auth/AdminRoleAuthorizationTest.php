@@ -30,7 +30,7 @@ class AdminRoleAuthorizationTest extends TestCase
      */
     public function test_guest_is_redirected_to_admin_login(): void
     {
-        $response = $this->get('/buku-tamu/admin/dashboard');
+        $response = $this->get(route('admin.dashboard'));
 
         $response->assertRedirect(route('admin.login'));
     }
@@ -40,7 +40,7 @@ class AdminRoleAuthorizationTest extends TestCase
      */
     public function test_guest_is_redirected_when_accessing_esport_admin(): void
     {
-        $response = $this->get('/buku-tamu/admin/esport/tournaments');
+        $response = $this->get(route('esport.admin.tournaments.index'));
 
         $response->assertRedirect(route('admin.login'));
     }
@@ -51,7 +51,7 @@ class AdminRoleAuthorizationTest extends TestCase
     public function test_buku_tamu_admin_can_access_buku_tamu_dashboard(): void
     {
         $response = $this->actingAs($this->bukuTamuAdmin, 'admin')
-            ->get('/buku-tamu/admin/dashboard');
+            ->get(route('admin.dashboard'));
 
         $response->assertStatus(200);
     }
@@ -62,7 +62,7 @@ class AdminRoleAuthorizationTest extends TestCase
     public function test_buku_tamu_admin_cannot_access_esport_admin_panel(): void
     {
         $response = $this->actingAs($this->bukuTamuAdmin, 'admin')
-            ->get('/buku-tamu/admin/esport/tournaments');
+            ->get(route('esport.admin.tournaments.index'));
 
         $response->assertStatus(403);
     }
@@ -73,7 +73,7 @@ class AdminRoleAuthorizationTest extends TestCase
     public function test_esport_admin_can_access_esport_admin_panel(): void
     {
         $response = $this->actingAs($this->esportAdmin, 'admin')
-            ->get('/buku-tamu/admin/esport/tournaments');
+            ->get(route('esport.admin.tournaments.index'));
 
         $response->assertStatus(200);
     }
@@ -84,7 +84,7 @@ class AdminRoleAuthorizationTest extends TestCase
     public function test_esport_admin_cannot_access_buku_tamu_dashboard(): void
     {
         $response = $this->actingAs($this->esportAdmin, 'admin')
-            ->get('/buku-tamu/admin/dashboard');
+            ->get(route('admin.dashboard'));
 
         $response->assertStatus(403);
     }
@@ -95,11 +95,11 @@ class AdminRoleAuthorizationTest extends TestCase
     public function test_super_admin_can_access_all_admin_modules(): void
     {
         $bukuTamuResponse = $this->actingAs($this->superAdmin, 'admin')
-            ->get('/buku-tamu/admin/dashboard');
+            ->get(route('admin.dashboard'));
         $bukuTamuResponse->assertStatus(200);
 
         $esportResponse = $this->actingAs($this->superAdmin, 'admin')
-            ->get('/buku-tamu/admin/esport/tournaments');
+            ->get(route('esport.admin.tournaments.index'));
         $esportResponse->assertStatus(200);
     }
 }
