@@ -28,7 +28,7 @@ class CheckAdminRoleTest extends TestCase
     {
         Auth::shouldReceive('guard->check')->once()->andReturn(false);
 
-        $request = Request::create('/buku-tamu/admin/dashboard', 'GET');
+        $request = Request::create('/admin/buku-tamu/dashboard', 'GET');
         $response = $this->middleware->handle($request, function () {});
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
@@ -42,7 +42,7 @@ class CheckAdminRoleTest extends TestCase
     {
         Auth::shouldReceive('guard->check')->once()->andReturn(false);
 
-        $request = Request::create('/buku-tamu/admin/dashboard', 'GET', [], [], [], [
+        $request = Request::create('/admin/buku-tamu/dashboard', 'GET', [], [], [], [
             'HTTP_ACCEPT' => 'application/json',
         ]);
         $response = $this->middleware->handle($request, function () {});
@@ -60,7 +60,7 @@ class CheckAdminRoleTest extends TestCase
         Auth::shouldReceive('guard->check')->once()->andReturn(true);
         Auth::shouldReceive('guard->user')->once()->andReturn($admin);
 
-        $request = Request::create('/buku-tamu/admin/dashboard', 'GET');
+        $request = Request::create('/admin/buku-tamu/dashboard', 'GET');
         $passed = false;
 
         $this->middleware->handle($request, function () use (&$passed) {
@@ -81,7 +81,7 @@ class CheckAdminRoleTest extends TestCase
         Auth::shouldReceive('guard->check')->once()->andReturn(true);
         Auth::shouldReceive('guard->user')->once()->andReturn($admin);
 
-        $request = Request::create('/buku-tamu/admin/esport/tournaments', 'GET');
+        $request = Request::create('/esport/admin/tournaments', 'GET');
         $passed = false;
 
         $this->middleware->handle($request, function () use (&$passed) {
@@ -102,7 +102,7 @@ class CheckAdminRoleTest extends TestCase
         Auth::shouldReceive('guard->check')->once()->andReturn(true);
         Auth::shouldReceive('guard->user')->once()->andReturn($admin);
 
-        $request = Request::create('/buku-tamu/admin/esport/tournaments', 'GET');
+        $request = Request::create('/esport/admin/tournaments', 'GET');
 
         $this->expectException(HttpException::class);
         $this->expectExceptionMessage('Akses ditolak. Anda tidak memiliki izin untuk mengakses modul esport.');
@@ -119,7 +119,7 @@ class CheckAdminRoleTest extends TestCase
         Auth::shouldReceive('guard->check')->once()->andReturn(true);
         Auth::shouldReceive('guard->user')->once()->andReturn($admin);
 
-        $request = Request::create('/buku-tamu/admin/esport/tournaments', 'GET');
+        $request = Request::create('/esport/admin/tournaments', 'GET');
         $passed = false;
 
         $this->middleware->handle($request, function () use (&$passed) {
@@ -161,7 +161,7 @@ class CheckAdminRoleTest extends TestCase
         Auth::shouldReceive('guard->check')->once()->andReturn(true);
         Auth::shouldReceive('guard->user')->once()->andReturn($admin);
 
-        $request = Request::create('/buku-tamu/admin/esport/tournaments', 'GET', [], [], [], [
+        $request = Request::create('/esport/admin/tournaments', 'GET', [], [], [], [
             'HTTP_ACCEPT' => 'application/json',
         ]);
 
