@@ -252,9 +252,10 @@
                             $purposeClass = "purpose-" . $visitor->purpose;
                             $purposeText = [
                                 "sekretariat" => "Sekretariat",
-                                "aplikasi_informatika" => "Aplikasi Informatika",
-                                "informasi_komunikasi_publik" => "Informasi dan Komunikasi Publik",
-                                "statistik" => "Statistik"
+                                "aplikasi_informatika" => "Aplikasi Informatika (Aptika)",
+                                "informasi_komunikasi_publik" => "Informasi & Komunikasi Publik (IKP)",
+                                "statistik" => "Statistik Sektoral",
+                                "persandian_keamanan_informasi" => "Persandian & Keamanan Informasi"
                             ][$visitor->purpose] ?? ucfirst(str_replace('_',' ',$visitor->purpose));
                         @endphp
                         <span class="purpose-badge {{ $purposeClass }}">{{ $purposeText }}</span>

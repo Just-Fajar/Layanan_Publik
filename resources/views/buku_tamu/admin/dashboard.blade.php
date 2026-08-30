@@ -535,17 +535,17 @@
     <script>
         const token = localStorage.getItem('admin_token');
         const adminData = JSON.parse(localStorage.getItem('admin_data') || '{}');
-        if (!token) window.location.href = '/buku-tamu/admin';
+        if (!token) window.location.href = '{{ route("admin.login") }}';
 
         let purposeChart;
         let monthlyChart;
 
         const purposeLabels = {
             sekretariat: 'Sekretariat',
-            aplikasi_informatika: 'Aplikasi Informatika',
-            informasi_komunikasi_publik: 'Komunikasi Publik',
-            statistik: 'Statistik',
-            persandian_keamanan_informasi: 'Persandian & Sandi'
+            aplikasi_informatika: 'Aplikasi Informatika (Aptika)',
+            informasi_komunikasi_publik: 'Informasi & Komunikasi Publik (IKP)',
+            statistik: 'Statistik Sektoral',
+            persandian_keamanan_informasi: 'Persandian & Keamanan Informasi'
         };
 
         const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', '\'': '&#39;' }[m]));
