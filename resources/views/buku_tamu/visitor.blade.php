@@ -480,26 +480,15 @@ font-size: 2rem;
             <p class="header-subtitle">Silakan lengkapi data kunjungan Anda di bawah ini secara lengkap.</p>
         </div>
 
-        @if(session('success'))
-            <div class="alert-box alert-success-soft">
-                <i class="fa-solid fa-circle-check"></i>
-                <span>{{ session('success') }}</span>
-            </div>
-        @endif
+        <div id="alert-container"></div>
+        <div id="location-status" class="alert-box alert-info-soft" style="display:none;">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Memverifikasi status lokasi kunjungan...</span>
+        </div>
 
-        @if($errors->any())
-            <div class="alert-box alert-danger-soft">
-                <i class="fa-solid fa-circle-exclamation"></i>
-                <div>
-                    @foreach($errors->all() as $err)
-                        <div>{{ $err }}</div>
-                    @endforeach
-                </div>
-            </div>
-        @endif
-
-        <form id="visitorForm" action="{{ route('visitor.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <form id="visitorForm">
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
 
             <div class="form-group">
                 <label for="name" class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
