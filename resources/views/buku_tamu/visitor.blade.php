@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Formulir Presensi Buku Tamu Digital resmi Dinas Komunikasi dan Informatika Pemerintah Kabupaten Madiun.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Buku Tamu Digital - Diskominfo Kabupaten Madiun">
+    <meta property="og:description" content="Formulir Presensi Buku Tamu Digital resmi Dinas Komunikasi dan Informatika Pemerintah Kabupaten Madiun.">
+    <meta property="og:image" content="{{ asset('images/logo-buku.png') }}">
     <title>Buku Tamu Digital - Diskominfo Kabupaten Madiun</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo-buku.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/logo-buku.png') }}">
@@ -17,8 +23,8 @@
         :root {
             --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --primary: #0284c7;
-            --primary-hover: #0369a1;
+            --primary: #0369a1;
+            --primary-hover: #075985;
             --primary-light: #f0f9ff;
             --primary-border: #bae6fd;
             --slate-dark: #0f172a;
@@ -473,9 +479,9 @@ font-size: 2rem;
         </div>
     </div>
 
-    <div class="form-container">
+    <main class="form-container">
         <div class="header-box">
-            <img src="{{ asset('images/logo-diskominfo.png') }}" alt="Logo Diskominfo" class="header-logo">
+            <img src="{{ asset('images/logo-diskominfo.png') }}" alt="Logo Diskominfo" class="header-logo" width="160" height="46">
             <h1 class="header-title">Buku Tamu Digital</h1>
             <p class="header-subtitle">Silakan lengkapi data kunjungan Anda di bawah ini secara lengkap.</p>
         </div>
@@ -592,7 +598,7 @@ font-size: 2rem;
                 <i class="fa-solid fa-paper-plane"></i> Kirim Data Kunjungan
             </button>
         </form>
-    </div>
+    </main>
 
     <!-- Modal Konfirmasi Sukses -->
     <div class="modal-overlay" id="successModal">

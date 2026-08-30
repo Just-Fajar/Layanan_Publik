@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="@yield('meta_description', 'Katalog agenda resmi dan kalender kegiatan pemerintah Kabupaten Madiun: seminar, festival budaya, sosialisasi publik, dan event daerah.')">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@yield('title', 'Kalender Event Daerah - Diskominfo Kabupaten Madiun')">
+    <meta property="og:description" content="@yield('meta_description', 'Katalog agenda resmi dan kalender kegiatan pemerintah Kabupaten Madiun.')">
+    <meta property="og:image" content="{{ asset('images/logo-web-event-madiun.jpg') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Kalender Event Daerah - Diskominfo Kabupaten Madiun')</title>
     <link rel="icon" type="image/jpeg" href="{{ asset('images/logo-web-event-madiun.jpg') }}">
@@ -28,11 +34,11 @@
                             50: '#f0f9ff',
                             100: '#e0f2fe',
                             200: '#bae6fd',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                            900: '#082f49',
                         },
                         dark: {
                             900: '#0f172a',
@@ -96,11 +102,11 @@
 
                 <!-- Center: Navigation Links (Calendar Module ONLY) -->
                 <nav class="hidden md:flex items-center space-x-1">
-                    <a href="{{ route('calendar.index') }}" class="px-3.5 py-2 rounded-lg font-heading text-sm font-semibold transition {{ request()->routeIs('calendar.index') ? 'bg-brand-50 text-brand-600 font-bold' : 'text-slate-600 hover:text-brand-600 hover:bg-slate-50' }}">
+                    <a href="{{ route('calendar.index') }}" class="px-3.5 py-2 rounded-lg font-heading text-sm font-semibold transition {{ request()->routeIs('calendar.index') ? 'bg-brand-50 text-brand-700 font-bold' : 'text-slate-600 hover:text-brand-700 hover:bg-slate-50' }}">
                         <i class="fa-solid fa-list-ul mr-1.5 opacity-80"></i> Daftar Event
                     </a>
 
-                    <a href="{{ route('calendar.view') }}" class="px-3.5 py-2 rounded-lg font-heading text-sm font-semibold transition {{ request()->routeIs('calendar.view') ? 'bg-brand-50 text-brand-600 font-bold' : 'text-slate-600 hover:text-brand-600 hover:bg-slate-50' }}">
+                    <a href="{{ route('calendar.view') }}" class="px-3.5 py-2 rounded-lg font-heading text-sm font-semibold transition {{ request()->routeIs('calendar.view') ? 'bg-brand-50 text-brand-700 font-bold' : 'text-slate-600 hover:text-brand-700 hover:bg-slate-50' }}">
                         <i class="fa-regular fa-calendar-check mr-1.5 opacity-80"></i> Kalender Jadwal
                     </a>
 
@@ -153,17 +159,17 @@
                         </div>
                     @else
                         <!-- Guest Auth Buttons -->
-                        <a href="{{ route('calendar.auth.login') }}" class="px-4 py-2 rounded-xl text-sm font-heading font-semibold text-slate-700 hover:text-brand-600 hover:bg-slate-100 transition">
+                        <a href="{{ route('calendar.auth.login') }}" class="px-4 py-2 rounded-xl text-sm font-heading font-semibold text-slate-700 hover:text-brand-700 hover:bg-slate-100 transition">
                             Masuk
                         </a>
-                        <a href="{{ route('calendar.auth.register') }}" class="px-4 py-2 rounded-xl text-sm font-heading font-bold text-white bg-brand-600 hover:bg-brand-700 transition shadow-sm shadow-brand-500/20">
+                        <a href="{{ route('calendar.auth.register') }}" class="px-4 py-2 rounded-xl text-sm font-heading font-bold text-white bg-brand-700 hover:bg-brand-800 transition shadow-sm shadow-brand-500/20">
                             Daftar Akun
                         </a>
                     @endauth
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100" onclick="toggleMobileMenu()" aria-label="Toggle navigation">
+                <button class="md:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100" onclick="toggleMobileMenu()" aria-label="Buka Menu Navigasi">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
             </div>
@@ -266,8 +272,8 @@
                 </div>
             </div>
 
-            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-                <p>&copy; {{ date('Y') }} Dinas Komunikasi dan Informatika Kabupaten Madiun. Seluruh hak cipta dilindungi.</p>
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+                <p class="text-slate-400">&copy; {{ date('Y') }} Dinas Komunikasi dan Informatika Kabupaten Madiun. Seluruh hak cipta dilindungi.</p>
                 <div class="flex items-center gap-3">
                     <a href="https://www.instagram.com/kominfokabmadiun/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="Instagram"><i class="fa-brands fa-instagram text-base"></i></a>
                     <a href="https://www.youtube.com/@diskominfokabupatenmadiun717" target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="YouTube"><i class="fa-brands fa-youtube text-base"></i></a>

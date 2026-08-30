@@ -1,6 +1,7 @@
 @extends('esport.layouts.app')
 
 @section('title', 'M-GEN Esport - Arena Kompetisi & Komunitas Gamers Kabupaten Madiun')
+@section('meta_description', 'Pusat kompetisi resmi M-GEN Esport binaan Diskominfo Kabupaten Madiun: ikuti pendaftaran turnamen, berita, dan komunitas atlet game.')
 
 @section('content')
 <!-- Hero Section -->
