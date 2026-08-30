@@ -438,11 +438,11 @@
             <div id="calendarGrid" class="calendar-grid" hidden></div>
 
             <div class="legend">
+                <div class="legend-item"><span class="legend-dot dot-aplikasi_informatika"></span><span>Aplikasi Informatika (Aptika)</span></div>
+                <div class="legend-item"><span class="legend-dot dot-informasi_komunikasi_publik"></span><span>Informasi & Komunikasi Publik (IKP)</span></div>
+                <div class="legend-item"><span class="legend-dot dot-statistik"></span><span>Statistik Sektoral</span></div>
+                <div class="legend-item"><span class="legend-dot dot-persandian_keamanan_informasi"></span><span>Persandian & Keamanan Informasi</span></div>
                 <div class="legend-item"><span class="legend-dot dot-sekretariat"></span><span>Sekretariat</span></div>
-                <div class="legend-item"><span class="legend-dot dot-aplikasi_informatika"></span><span>Aplikasi Informatika</span></div>
-                <div class="legend-item"><span class="legend-dot dot-persandian_keamanan_informasi"></span><span>Persandian dan Keamanan Informasi</span></div>
-                <div class="legend-item"><span class="legend-dot dot-informasi_komunikasi_publik"></span><span>Informasi dan Komunikasi Publik</span></div>
-                <div class="legend-item"><span class="legend-dot dot-statistik"></span><span>Statistik</span></div>
             </div>
         </section>
     </main>
@@ -464,10 +464,10 @@
             const DAY_HEADERS = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
             const PURPOSE_LABELS = {
                 sekretariat: 'Sekretariat',
-                aplikasi_informatika: 'Aplikasi Informatika',
-                persandian_keamanan_informasi: 'Persandian dan Keamanan Informasi',
-                informasi_komunikasi_publik: 'Informasi dan Komunikasi Publik',
-                statistik: 'Statistik'
+                aplikasi_informatika: 'Aplikasi Informatika (Aptika)',
+                informasi_komunikasi_publik: 'Informasi & Komunikasi Publik (IKP)',
+                statistik: 'Statistik Sektoral',
+                persandian_keamanan_informasi: 'Persandian & Keamanan Informasi'
             };
 
             const monthYearFormatter = new Intl.DateTimeFormat('id-ID', { month: 'long', year: 'numeric' });

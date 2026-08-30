@@ -365,6 +365,93 @@
         .badge-statistik { background: #ecfdf5; color: #047857; }
         .badge-persandian_keamanan_informasi { background: #fdf2f8; color: #be185d; }
 
+        /* ===== Official Institution Profile Card ===== */
+        .institution-profile-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border: 1px solid #bae6fd;
+            border-radius: 14px;
+            padding: 24px;
+            margin-top: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        .institution-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0f2fe;
+        }
+
+        .institution-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 9999px;
+        }
+
+        .institution-tagline {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .institution-title-box h4 {
+            font-family: var(--font-heading);
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .institution-title-box p {
+            font-size: 0.88rem;
+            color: #64748b;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .institution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .institution-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+
+        .institution-item strong {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 2px;
+        }
+
+        .institution-item span {
+            font-size: 0.86rem;
+            font-weight: 500;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+
         @media (max-width: 1024px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
@@ -529,23 +616,63 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Official Institution Profile Card -->
+            <div class="institution-profile-card">
+                <div class="institution-header">
+                    <div class="institution-badge">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>Pusat Pemerintahan Caruban</span>
+                    </div>
+                    <span class="institution-tagline">Madiun Bersahaja &bull; Smart Regency</span>
+                </div>
+                <div class="institution-body">
+                    <div class="institution-title-box">
+                        <h4>Dinas Komunikasi dan Informatika Pemerintah Kabupaten Madiun</h4>
+                        <p>Pusat Integrasi Layanan Publik, Sistem Pemerintahan Berbasis Elektronik (SPBE), Satu Data Sektoral, dan Keamanan Informasi Daerah.</p>
+                    </div>
+                    <div class="institution-grid">
+                        <div class="institution-item">
+                            <div class="institution-icon"><i class="fa-solid fa-location-dot text-danger"></i></div>
+                            <div>
+                                <strong>Alamat Kantor</strong>
+                                <span>Jl. Alun-Alun Utara No. 1-3, Caruban, Kab. Madiun, Jawa Timur 63156</span>
+                            </div>
+                        </div>
+                        <div class="institution-item">
+                            <div class="institution-icon"><i class="fa-solid fa-envelope text-primary"></i></div>
+                            <div>
+                                <strong>Email Resmi</strong>
+                                <span>diskominfo@madiunkab.go.id</span>
+                            </div>
+                        </div>
+                        <div class="institution-item">
+                            <div class="institution-icon"><i class="fa-solid fa-clock text-warning"></i></div>
+                            <div>
+                                <strong>Jam Pelayanan</strong>
+                                <span>Senin &ndash; Kamis: 07.30 &ndash; 15.15 WIB | Jumat: 07.00 &ndash; 14.30 WIB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
     <script>
         const token = localStorage.getItem('admin_token');
         const adminData = JSON.parse(localStorage.getItem('admin_data') || '{}');
-        if (!token) window.location.href = '/buku-tamu/admin';
+        if (!token) window.location.href = '{{ route("admin.login") }}';
 
         let purposeChart;
         let monthlyChart;
 
         const purposeLabels = {
             sekretariat: 'Sekretariat',
-            aplikasi_informatika: 'Aplikasi Informatika',
-            informasi_komunikasi_publik: 'Komunikasi Publik',
-            statistik: 'Statistik',
-            persandian_keamanan_informasi: 'Persandian & Sandi'
+            aplikasi_informatika: 'Aplikasi Informatika (Aptika)',
+            informasi_komunikasi_publik: 'Informasi & Komunikasi Publik (IKP)',
+            statistik: 'Statistik Sektoral',
+            persandian_keamanan_informasi: 'Persandian & Keamanan Informasi'
         };
 
         const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', '\'': '&#39;' }[m]));

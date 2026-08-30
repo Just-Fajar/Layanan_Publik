@@ -510,11 +510,11 @@
                 
                 <select id="purposeFilter" class="filter-select">
                     <option value="">Semua Bidang</option>
+                    <option value="aplikasi_informatika">Aplikasi Informatika (Aptika)</option>
+                    <option value="informasi_komunikasi_publik">Informasi & Komunikasi Publik (IKP)</option>
+                    <option value="statistik">Statistik Sektoral</option>
+                    <option value="persandian_keamanan_informasi">Persandian & Keamanan Informasi</option>
                     <option value="sekretariat">Sekretariat</option>
-                    <option value="aplikasi_informatika">Aplikasi Informatika</option>
-                    <option value="persandian_keamanan_informasi">Persandian & Keamanan</option>
-                    <option value="informasi_komunikasi_publik">Komunikasi Publik</option>
-                    <option value="statistik">Statistik</option>
                 </select>
 
                 <input type="date" class="filter-select" id="dateFilter">
@@ -589,11 +589,11 @@
                         <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:6px;">Filter Bidang</label>
                         <select id="exportPurpose" class="filter-select" style="width:100%;">
                             <option value="">Semua Bidang</option>
+                            <option value="aplikasi_informatika">Aplikasi Informatika (Aptika)</option>
+                            <option value="informasi_komunikasi_publik">Informasi & Komunikasi Publik (IKP)</option>
+                            <option value="statistik">Statistik Sektoral</option>
+                            <option value="persandian_keamanan_informasi">Persandian & Keamanan Informasi</option>
                             <option value="sekretariat">Sekretariat</option>
-                            <option value="aplikasi_informatika">Aplikasi Informatika</option>
-                            <option value="persandian_keamanan_informasi">Persandian & Keamanan</option>
-                            <option value="informasi_komunikasi_publik">Komunikasi Publik</option>
-                            <option value="statistik">Statistik</option>
                         </select>
                     </div>
                     <div>
@@ -736,10 +736,10 @@
 
         const purposeLabels = {
             sekretariat: 'Sekretariat',
-            aplikasi_informatika: 'Aplikasi Informatika',
-            informasi_komunikasi_publik: 'Komunikasi Publik',
-            statistik: 'Statistik',
-            persandian_keamanan_informasi: 'Persandian & Sandi'
+            aplikasi_informatika: 'Aplikasi Informatika (Aptika)',
+            informasi_komunikasi_publik: 'Informasi & Komunikasi Publik (IKP)',
+            statistik: 'Statistik Sektoral',
+            persandian_keamanan_informasi: 'Persandian & Keamanan Informasi'
         };
 
         const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', '\'': '&#39;' }[m]));
