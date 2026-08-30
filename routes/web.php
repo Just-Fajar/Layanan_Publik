@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BukuTamu\PageController as BukuTamuPageController;
 use App\Http\Controllers\CalendarEvent\Admin\DashboardController as CalendarAdminDashboard;
 use App\Http\Controllers\CalendarEvent\Admin\EventController as CalendarAdminEvent;
 use App\Http\Controllers\CalendarEvent\Admin\RegistrationManagementController as CalendarAdminRegistration;
@@ -23,6 +24,7 @@ use App\Http\Controllers\Esport\TournamentController as EsportTournament;
 use App\Http\Controllers\Esport\User\DashboardController as EsportUserDashboard;
 use App\Http\Controllers\Esport\User\ProfileController as EsportUserProfile;
 use App\Http\Controllers\Esport\User\TournamentRegistrationController as EsportUserTournamentRegistration;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Web\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,14 +40,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Homepage route
-Route::get('/', function () {
-    return view('homepage.homepage');
-})->name('homepage');
+Route::get('/', [HomeController::class, 'index'])->name('homepage');
 
 // Buku Tamu route
-Route::get('/buku-tamu', function () {
-    return view('buku_tamu.visitor');
-})->name('buku-tamu');
+Route::get('/buku-tamu', [BukuTamuPageController::class, 'visitor'])->name('buku-tamu');
 
 // Admin Authentication & Central Portal
 Route::prefix('admin')->group(function () {
