@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Portal integrasi layanan publik dan informasi resmi Diskominfo Kabupaten Madiun: Buku Tamu Digital, Kalender Event Daerah, dan Madiun Esport.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Portal Layanan Publik Diskominfo Kabupaten Madiun">
+    <meta property="og:description" content="Integrasi layanan digital dan informasi publik terpadu Diskominfo Kabupaten Madiun.">
+    <meta property="og:image" content="{{ asset('images/logo-diskominfo.png') }}">
     <title>Portal Layanan Publik Diskominfo Kabupaten Madiun</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo-diskominfo.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/logo-diskominfo.png') }}">
@@ -19,8 +25,8 @@
         :root {
             --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --brand-primary: #0284c7;
-            --brand-primary-hover: #0369a1;
+            --brand-primary: #0369a1;
+            --brand-primary-hover: #075985;
             --brand-dark: #0f172a;
             --brand-slate: #334155;
             --brand-muted: #64748b;
@@ -64,7 +70,7 @@
             font-family: var(--font-heading);
             font-weight: 600;
             font-size: 0.93rem;
-            color: #475569 !important;
+            color: #334155 !important;
             padding: 8px 16px !important;
             border-radius: 8px;
             transition: all 0.2s ease;
@@ -79,7 +85,7 @@
         }
 
         .nav-link-custom.active {
-            color: var(--brand-primary) !important;
+            color: #0369a1 !important;
             background-color: #e0f2fe;
         }
 
@@ -115,28 +121,29 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background-color: #f0f9ff;
+            background: #f0f9ff;
             border: 1px solid #bae6fd;
-            color: #0284c7;
-            font-size: 0.85rem;
-            font-weight: 600;
+            color: #0369a1;
             padding: 6px 14px;
             border-radius: 9999px;
+            font-size: 0.84rem;
+            font-weight: 700;
             margin-bottom: 20px;
         }
 
         .hero-title {
             font-size: 2.75rem;
-            line-height: 1.22;
+            line-height: 1.2;
             letter-spacing: -0.02em;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .hero-desc {
             font-size: 1.05rem;
-            line-height: 1.75;
+            line-height: 1.7;
             color: #475569;
-            margin-bottom: 28px;
+            max-width: 600px;
+            margin-bottom: 30px;
         }
 
         .hero-logo-box {
@@ -145,65 +152,71 @@
         }
 
         .hero-logo-box img {
-            max-width: 270px;
-            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.08));
+            max-height: 340px;
+            width: auto;
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.08));
+            animation: float 4s ease-in-out infinite;
         }
 
-        /* ===== Section Title ===== */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* ===== Services Section ===== */
+        .services-section {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+
         .section-header {
             margin-bottom: 48px;
         }
 
         .section-tag {
+            display: inline-block;
             font-size: 0.82rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--brand-primary);
-            margin-bottom: 6px;
-            display: block;
+            letter-spacing: 0.08em;
+            color: #0369a1;
+            margin-bottom: 8px;
         }
 
         .section-title {
-            font-size: 2rem;
+            font-size: 2.1rem;
             letter-spacing: -0.01em;
+            margin-bottom: 12px;
         }
 
         .section-subtitle {
-            color: var(--brand-muted);
             font-size: 1rem;
-            max-width: 620px;
+            color: #475569;
+            max-width: 580px;
             margin: 0 auto;
         }
 
-        /* ===== Layanan Unggulan Cards ===== */
-        .services-section {
-            padding: 80px 0;
-            background-color: #ffffff;
-        }
-
         .service-card {
+            display: block;
             background: #ffffff;
             border: 1px solid var(--brand-border);
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 32px 28px;
             height: 100%;
-            display: flex;
-            flex-direction: column;
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
         }
 
         .service-card:hover {
-            transform: translateY(-4px);
-            border-color: #38bdf8;
-            box-shadow: 0 20px 30px -10px rgba(2, 132, 199, 0.12);
+            transform: translateY(-6px);
+            border-color: #7dd3fc;
+            box-shadow: 0 20px 35px -10px rgba(2, 132, 199, 0.12);
         }
 
         .service-icon-box {
-            width: 58px;
-            height: 58px;
+            width: 60px;
+            height: 60px;
             border-radius: 14px;
             background: #f0f9ff;
             border: 1px solid #e0f2fe;
@@ -215,40 +228,32 @@
         }
 
         .service-card:hover .service-icon-box {
-            transform: scale(1.06);
+            transform: scale(1.08);
+            background: #e0f2fe;
         }
 
-        .service-card h4 {
-            font-size: 1.25rem;
+        .service-title {
+            font-size: 1.2rem;
             margin-bottom: 10px;
-            transition: color 0.2s;
-        }
-
-        .service-card:hover h4 {
-            color: var(--brand-primary);
+            color: var(--brand-dark);
         }
 
         .service-card p {
             font-size: 0.92rem;
-            line-height: 1.65;
-            color: #64748b;
-            margin-bottom: 24px;
-            flex-grow: 1;
+            line-height: 1.6;
+            color: #475569;
+            margin-bottom: 20px;
         }
 
         .service-link {
             font-family: var(--font-heading);
             font-size: 0.9rem;
             font-weight: 700;
-            color: var(--brand-primary);
+            color: #0369a1;
             display: inline-flex;
             align-items: center;
             gap: 6px;
             transition: gap 0.2s;
-        }
-
-        .service-card:hover .service-link {
-            gap: 10px;
         }
 
         /* ===== Tupoksi Grid Cards ===== */
@@ -284,32 +289,33 @@
             margin-bottom: 16px;
         }
 
-        .tupoksi-icon.blue { background-color: #eff6ff; color: #2563eb; }
-        .tupoksi-icon.emerald { background-color: #ecfdf5; color: #059669; }
-        .tupoksi-icon.amber { background-color: #fffbeb; color: #d97706; }
-        .tupoksi-icon.purple { background-color: #faf5ff; color: #7c3aed; }
+        .tupoksi-icon.blue { background-color: #eff6ff; color: #1d4ed8; }
+        .tupoksi-icon.emerald { background-color: #ecfdf5; color: #047857; }
+        .tupoksi-icon.amber { background-color: #fffbeb; color: #b45309; }
+        .tupoksi-icon.purple { background-color: #faf5ff; color: #6d28d9; }
 
-        .tupoksi-card h5 {
+        .tupoksi-title {
             font-size: 1.05rem;
             margin-bottom: 10px;
+            color: var(--brand-dark);
         }
 
         .tupoksi-card p {
             font-size: 0.88rem;
             line-height: 1.65;
-            color: #64748b;
+            color: #475569;
             margin-bottom: 0;
         }
 
         /* ===== Footer ===== */
         .site-footer {
             background-color: #0b1329;
-            color: #94a3b8;
+            color: #cbd5e1;
             padding: 60px 0 24px;
             font-size: 0.92rem;
         }
 
-        .site-footer h6 {
+        .site-footer .footer-title {
             color: #f8fafc;
             font-size: 0.95rem;
             margin-bottom: 18px;
@@ -317,13 +323,17 @@
         }
 
         .site-footer a {
-            color: #94a3b8;
+            color: #cbd5e1;
             text-decoration: none;
             transition: color 0.2s ease;
         }
 
         .site-footer a:hover {
             color: #38bdf8;
+        }
+
+        .site-footer .text-muted {
+            color: #94a3b8 !important;
         }
 
         .social-btn {
@@ -432,8 +442,8 @@
     <header class="site-navbar fixed-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg p-0">
-                <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('homepage') }}">
-                    <img src="{{ asset('images/logo-diskominfo.png') }}" alt="Diskominfo Kabupaten Madiun">
+                <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('homepage') }}" aria-label="Beranda Portal Layanan Publik Diskominfo Kabupaten Madiun">
+                    <img src="{{ asset('images/logo-diskominfo.png') }}" alt="Diskominfo Kabupaten Madiun" width="160" height="46">
                 </a>
 
                 <button class="navbar-toggler border-0 shadow-none p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
@@ -515,7 +525,7 @@
                     </div>
                     <div class="col-lg-5 text-center mt-5 mt-lg-0" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
                         <div class="hero-logo-box">
-                            <img src="{{ asset('images/123.png') }}" alt="Lambang Kabupaten Madiun">
+                            <img src="{{ asset('images/123.png') }}" alt="Lambang Kabupaten Madiun" width="280" height="340">
                         </div>
                     </div>
                 </div>
@@ -536,9 +546,9 @@
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <a href="{{ route('buku-tamu') }}" class="service-card">
                             <div class="service-icon-box">
-                                <img src="{{ asset('images/logo-buku.png') }}" alt="Buku Tamu Digital" width="36" height="36">
+                                <img src="{{ asset('images/logo-buku.png') }}" alt="Buku Tamu Digital" width="36" height="36" loading="lazy">
                             </div>
-                            <h4>Buku Tamu Digital</h4>
+                            <h3 class="service-title">Buku Tamu Digital</h3>
                             <p>Presensi tamu dan pengunjung dinas mandiri dengan swafoto kamera dan pencatatan keperluan kunjungan digital secara terstruktur.</p>
                             <span class="service-link">
                                 Akses Buku Tamu <i class="fa-solid fa-arrow-right"></i>
@@ -550,9 +560,9 @@
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                         <a href="{{ route('calendar.index') }}" class="service-card">
                             <div class="service-icon-box">
-                                <img src="{{ asset('images/logo-web-event-madiun.jpg') }}" alt="Kalender Event" width="36" height="36" class="rounded">
+                                <img src="{{ asset('images/logo-web-event-madiun.jpg') }}" alt="Kalender Event" width="36" height="36" class="rounded" loading="lazy">
                             </div>
-                            <h4>Kalender Event Daerah</h4>
+                            <h3 class="service-title">Kalender Event Daerah</h3>
                             <p>Informasi jadwal agenda kegiatan, seminar, sosialisasi, pendaftaran tiket pengunjung, serta QR presensi kegiatan daerah.</p>
                             <span class="service-link">
                                 Lihat Kalender Event <i class="fa-solid fa-arrow-right"></i>
@@ -564,9 +574,9 @@
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
                         <a href="{{ route('esport.home') }}" class="service-card">
                             <div class="service-icon-box">
-                                <img src="{{ asset('images/logo-mgen.png') }}" alt="Madiun Esport" width="36" height="36">
+                                <img src="{{ asset('images/logo-mgen.png') }}" alt="Madiun Esport" width="36" height="36" loading="lazy">
                             </div>
-                            <h4>Madiun Esport (M-GEN)</h4>
+                            <h3 class="service-title">Madiun Esport (M-GEN)</h3>
                             <p>Platform turnamen game kompetitif resmi Diskominfo Kabupaten Madiun, pendaftaran tim esport, dan informasi berita terkini.</p>
                             <span class="service-link">
                                 Masuk Portal Esport <i class="fa-solid fa-arrow-right"></i>
@@ -592,7 +602,7 @@
                             <div class="tupoksi-icon blue">
                                 <i class="fa-solid fa-briefcase"></i>
                             </div>
-                            <h5>Sekretariat</h5>
+                            <h3 class="tupoksi-title">Sekretariat</h3>
                             <p>Perencanaan, koordinasi, serta pengendalian administrasi umum, kepegawaian, perlengkapan aset, penyusunan program, dan akuntabilitas keuangan dinas.</p>
                         </div>
                     </div>
@@ -602,7 +612,7 @@
                             <div class="tupoksi-icon emerald">
                                 <i class="fa-solid fa-laptop-code"></i>
                             </div>
-                            <h5>Aplikasi & Informatika</h5>
+                            <h3 class="tupoksi-title">Aplikasi & Informatika</h3>
                             <p>Pengelolaan infrastruktur teknologi informasi, pengembangan sistem informasi dan aplikasi terintegrasi, serta penyelenggaraan SPBE pemerintah daerah.</p>
                         </div>
                     </div>
@@ -612,7 +622,7 @@
                             <div class="tupoksi-icon amber">
                                 <i class="fa-solid fa-bullhorn"></i>
                             </div>
-                            <h5>Komunikasi & Informasi Publik</h5>
+                            <h3 class="tupoksi-title">Komunikasi & Informasi Publik</h3>
                             <p>Pengelolaan saluran komunikasi publik, diseminasi informasi kebijakan daerah, kemitraan media massa, serta pelayanan informasi publik (PPID).</p>
                         </div>
                     </div>
@@ -622,7 +632,7 @@
                             <div class="tupoksi-icon purple">
                                 <i class="fa-solid fa-chart-pie"></i>
                             </div>
-                            <h5>Statistik & Persandian</h5>
+                            <h3 class="tupoksi-title">Statistik & Persandian</h3>
                             <p>Penyelenggaraan statistik sektoral daerah, tata kelola satu data, pengamanan informasi persandian, dan keamanan siber instansi pemerintah.</p>
                         </div>
                     </div>
@@ -636,7 +646,7 @@
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6">
-                    <h6 class="fw-bold">Diskominfo Kabupaten Madiun</h6>
+                    <h4 class="footer-title fw-bold">Diskominfo Kabupaten Madiun</h4>
                     <p class="mb-2">
                         Jl. Mastrip No.23, Mojorejo, Kec. Taman,<br>
                         Kota Madiun, Jawa Timur 63139.
@@ -646,7 +656,7 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <h6 class="fw-bold">Tautan Layanan</h6>
+                    <h4 class="footer-title fw-bold">Tautan Layanan</h4>
                     <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
                         <li><a href="{{ route('buku-tamu') }}"><i class="fa-solid fa-angle-right me-2 text-muted"></i> Buku Tamu Digital</a></li>
                         <li><a href="{{ route('calendar.index') }}"><i class="fa-solid fa-angle-right me-2 text-muted"></i> Kalender Event</a></li>
@@ -655,19 +665,19 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <h6 class="fw-bold">Jam Pelayanan</h6>
+                    <h4 class="footer-title fw-bold">Jam Pelayanan</h4>
                     <p class="mb-1"><i class="fa-regular fa-clock me-2 text-muted"></i> Senin – Kamis: 07.30 – 15.15 WIB</p>
                     <p class="mb-1"><i class="fa-regular fa-clock me-2 text-muted"></i> Jumat: 07.00 – 14.30 WIB</p>
                     <p class="small text-muted mb-0">Sabtu, Minggu & Hari Libur: Tutup</p>
                 </div>
 
                 <div class="col-lg-2 col-md-6 text-lg-end">
-                    <h6 class="fw-bold">Kanal Resmi</h6>
+                    <h4 class="footer-title fw-bold">Kanal Resmi</h4>
                     <div class="d-flex justify-content-lg-end justify-content-start gap-2">
-                        <a href="https://www.instagram.com/kominfokabmadiun/" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <a href="https://www.instagram.com/kominfokabmadiun/" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Instagram Diskominfo Madiun">
                             <i class="fa-brands fa-instagram"></i>
                         </a>
-                        <a href="https://www.youtube.com/@diskominfokabupatenmadiun717" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                        <a href="https://www.youtube.com/@diskominfokabupatenmadiun717" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="YouTube Diskominfo Madiun">
                             <i class="fa-brands fa-youtube"></i>
                         </a>
                         <a href="https://madiunkab.go.id/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Website Pemkab Madiun">

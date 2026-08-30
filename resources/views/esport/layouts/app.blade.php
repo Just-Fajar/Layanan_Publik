@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="@yield('meta_description', 'Portal resmi M-GEN Esport binaan Diskominfo Kabupaten Madiun: info turnamen game, pendaftaran tim, berita esports, dan komunitas gamers.')">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@yield('title', 'M-GEN Esport - Diskominfo Kabupaten Madiun')">
+    <meta property="og:description" content="@yield('meta_description', 'Portal resmi M-GEN Esport binaan Diskominfo Kabupaten Madiun.')">
+    <meta property="og:image" content="{{ asset('images/logo-mgen.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'M-GEN Esport - Diskominfo Kabupaten Madiun')</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo-mgen.png') }}">
@@ -286,8 +292,8 @@
                 </div>
             </div>
 
-            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-                <p>&copy; {{ date('Y') }} M-GEN Diskominfo Kabupaten Madiun. Seluruh hak cipta dilindungi.</p>
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+                <p class="text-slate-400">&copy; {{ date('Y') }} M-GEN Diskominfo Kabupaten Madiun. Seluruh hak cipta dilindungi.</p>
                 <div class="flex items-center gap-3">
                     <a href="https://www.instagram.com/kominfokabmadiun/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="Instagram"><i class="fa-brands fa-instagram text-base"></i></a>
                     <a href="https://www.youtube.com/@diskominfokabupatenmadiun717" target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="YouTube"><i class="fa-brands fa-youtube text-base"></i></a>
