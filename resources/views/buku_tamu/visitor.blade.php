@@ -429,19 +429,33 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+font-size: 2rem;
             margin-bottom: 16px;
         }
 
         @media (max-width: 640px) {
+            body {
+                padding: 16px 12px;
+            }
+            .top-nav {
+                margin-bottom: 14px;
+            }
             .form-container {
-                padding: 24px 18px;
+                padding: 24px 16px;
+                border-radius: 16px;
             }
             .header-title {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
             .purpose-grid {
                 grid-template-columns: 1fr;
+            }
+            .camera-actions {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .camera-actions .btn-custom {
+                width: 100%;
             }
         }
     </style>
@@ -450,76 +464,89 @@
 <body>
     <div class="top-nav">
         <a href="{{ route('homepage') }}" class="back-link">
-            <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Kembali ke Beranda</span>
         </a>
+        <div class="header-badge" style="margin-bottom:0;">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Diskominfo Madiun</span>
+        </div>
     </div>
 
     <div class="form-container">
-        <header class="header-box">
-            <img class="header-logo" src="{{ asset('images/logo-diskominfo.png') }}" alt="Diskominfo Kabupaten Madiun">
-            <br>
-            <div class="header-badge">
-                <i class="fa-solid fa-clipboard-user"></i> Presensi Tamu
-            </div>
+        <div class="header-box">
+            <img src="{{ asset('images/logo-diskominfo.png') }}" alt="Logo Diskominfo" class="header-logo">
             <h1 class="header-title">Buku Tamu Digital</h1>
-            <p class="header-desc">Selamat datang di Dinas Komunikasi dan Informatika Kabupaten Madiun. Mohon lengkapi formulir kunjungan Anda di bawah ini.</p>
-        </header>
-
-        <div id="alert-container"></div>
-        <div id="location-status" class="alert-box alert-info-soft">
-            <i class="fa-solid fa-location-dot"></i>
-            <span>Memverifikasi status lokasi kunjungan...</span>
+            <p class="header-subtitle">Silakan lengkapi data kunjungan Anda di bawah ini secara lengkap.</p>
         </div>
 
-        <form id="visitorForm">
-            <input type="hidden" id="latitude" name="latitude">
-            <input type="hidden" id="longitude" name="longitude">
+        @if(session('success'))
+            <div class="alert-box alert-success-soft">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert-box alert-danger-soft">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <div>
+                    @foreach($errors->all() as $err)
+                        <div>{{ $err }}</div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        <form id="visitorForm" action="{{ route('visitor.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
 
             <div class="form-group">
-                <label for="name" class="form-label">Nama Lengkap <span class="req">*</span></label>
-                <input type="text" id="name" name="name" class="form-control" required placeholder="Nama lengkap sesuai identitas" autocomplete="name" />
+                <label for="name" class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Contoh: Budi Santoso" value="{{ old('name') }}" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email" class="form-label">Alamat Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="nama@instansi.go.id" value="{{ old('email') }}">
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="form-label">Nomor WhatsApp / HP <span class="text-danger">*</span></label>
+                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="08xxxxxxxxxx" value="{{ old('phone') }}" required>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="email" class="form-label">Alamat Email (Opsional)</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="contoh@domain.com" autocomplete="email" />
+                <label for="asal_daerah" class="form-label">Asal Daerah / Instansi <span class="text-danger">*</span></label>
+                <input type="text" id="asal_daerah" name="asal_daerah" class="form-control" placeholder="Contoh: Bappeda Kab. Madiun / Universitas Sebelas Maret" value="{{ old('asal_daerah') }}" required>
             </div>
 
             <div class="form-group">
-                <label for="phone" class="form-label">Nomor Telepon / WhatsApp <span class="req">*</span></label>
-                <input type="tel" id="phone" name="phone" class="form-control" required placeholder="08xxxxxxxxxx" autocomplete="tel" />
-            </div>
-
-            <div class="form-group">
-                <label for="asal_daerah" class="form-label">Asal Instansi / Daerah <span class="req">*</span></label>
-                <input type="text" id="asal_daerah" name="asal_daerah" class="form-control" required placeholder="Contoh: Bappeda, Pemprov Jatim, Media" autocomplete="organization" />
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Tujuan Bidang / Bagian <span class="req">*</span></label>
-                <div class="purpose-grid" role="radiogroup">
+                <label class="form-label">Tujuan Kunjungan Bidang <span class="text-danger">*</span></label>
+                <div class="purpose-grid">
                     <div class="purpose-option">
                         <input type="radio" id="sekretariat" name="purpose" value="sekretariat" required />
                         <label class="purpose-label" for="sekretariat">
-                            <i class="fa-solid fa-briefcase"></i> Sekretariat
+                            <i class="fa-solid fa-folder-tree"></i> Sekretariat
                         </label>
                     </div>
                     <div class="purpose-option">
                         <input type="radio" id="aplikasi_informatika" name="purpose" value="aplikasi_informatika" required />
                         <label class="purpose-label" for="aplikasi_informatika">
-                            <i class="fa-solid fa-laptop-code"></i> Aplikasi Informatika
+                            <i class="fa-solid fa-laptop-code"></i> Aplikasi Informatika (Aptika)
                         </label>
                     </div>
                     <div class="purpose-option">
                         <input type="radio" id="informasi_komunikasi_publik" name="purpose" value="informasi_komunikasi_publik" required />
                         <label class="purpose-label" for="informasi_komunikasi_publik">
-                            <i class="fa-solid fa-bullhorn"></i> Komunikasi Publik
+                            <i class="fa-solid fa-bullhorn"></i> Informasi & Komunikasi Publik (IKP)
                         </label>
                     </div>
                     <div class="purpose-option">
                         <input type="radio" id="persandian_keamanan_informasi" name="purpose" value="persandian_keamanan_informasi" required />
                         <label class="purpose-label" for="persandian_keamanan_informasi">
-                            <i class="fa-solid fa-shield-halved"></i> Persandian & Sandi
+                            <i class="fa-solid fa-shield-halved"></i> Persandian & Keamanan Informasi
                         </label>
                     </div>
                     <div class="purpose-option">
