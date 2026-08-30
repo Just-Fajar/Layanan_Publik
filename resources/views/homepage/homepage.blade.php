@@ -348,12 +348,79 @@
             margin: 40px 0 24px;
         }
 
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background: #ffffff;
+                border: 1px solid var(--brand-border);
+                border-radius: 16px;
+                padding: 16px;
+                margin-top: 12px;
+                box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+            }
+            .navbar-nav {
+                margin-bottom: 12px !important;
+            }
+            .nav-link-custom {
+                padding: 10px 14px !important;
+                width: 100%;
+            }
+            .dropdown-menu-custom {
+                position: static !important;
+                transform: none !important;
+                float: none;
+                width: 100%;
+                margin-top: 8px;
+                box-shadow: none;
+                background: #f8fafc;
+            }
+            .hero-section {
+                padding-top: calc(var(--header-h) + 24px);
+                padding-bottom: 48px;
+                text-align: center;
+            }
+            .hero-desc {
+                margin: 0 auto 24px;
+            }
+            .hero-badge {
+                margin: 0 auto 16px;
+            }
+            .hero-buttons-wrapper {
+                justify-content: center !important;
+            }
+            .hero-logo-box {
+                margin-top: 36px;
+            }
+            .hero-logo-box img {
+                max-height: 240px;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 2.1rem;
+                font-size: clamp(1.8rem, 6vw, 2.3rem);
             }
             .section-title {
-                font-size: 1.7rem;
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .navbar-brand img {
+                max-height: 38px;
+            }
+            .hero-title {
+                font-size: 1.65rem;
+                line-height: 1.25;
+            }
+            .hero-desc {
+                font-size: 0.92rem;
+            }
+            .hero-logo-box img {
+                max-height: 180px;
+            }
+            .btn-hero {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -398,8 +465,8 @@
                     </ul>
 
                     <div class="d-flex align-items-center gap-2">
-                        <div class="dropdown">
-                            <button class="btn btn-outline-primary dropdown-toggle d-flex align-items-center gap-2 px-3 py-2 rounded-3" type="button" id="portalMenuBtn" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 600; font-size: 0.9rem;">
+                        <div class="dropdown w-100">
+                            <button class="btn btn-outline-primary dropdown-toggle d-flex align-items-center justify-content-center gap-2 px-3 py-2 rounded-3 w-100" type="button" id="portalMenuBtn" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 600; font-size: 0.9rem;">
                                 <i class="fa-solid fa-arrow-right-to-bracket"></i>
                                 <span>Akses Portal</span>
                             </button>
@@ -437,11 +504,11 @@
                         <p class="hero-desc">
                             Menghubungkan masyarakat dengan layanan pemerintahan yang transparan, modern, dan efisien. Akses presensi kunjungan dinas, agenda kegiatan daerah, hingga kompetisi esports dalam satu gerbang digital.
                         </p>
-                        <div class="d-flex flex-wrap gap-3">
-                            <a href="#layanan-unggulan" class="btn btn-primary px-4 py-2 rounded-3 d-inline-flex align-items-center gap-2" style="font-weight: 600; background-color: var(--brand-primary); border-color: var(--brand-primary);">
+                        <div class="d-flex flex-wrap gap-3 hero-buttons-wrapper">
+                            <a href="#layanan-unggulan" class="btn btn-primary btn-hero px-4 py-2 rounded-3 d-inline-flex align-items-center gap-2" style="font-weight: 600; background-color: var(--brand-primary); border-color: var(--brand-primary);">
                                 <i class="fa-solid fa-compass"></i> Jelajahi Layanan
                             </a>
-                            <a href="{{ route('buku-tamu') }}" class="btn btn-outline-secondary px-4 py-2 rounded-3 d-inline-flex align-items-center gap-2" style="font-weight: 600;">
+                            <a href="{{ route('buku-tamu') }}" class="btn btn-outline-secondary btn-hero px-4 py-2 rounded-3 d-inline-flex align-items-center gap-2" style="font-weight: 600;">
                                 <i class="fa-solid fa-pen-to-square"></i> Isi Buku Tamu
                             </a>
                         </div>
