@@ -17,6 +17,123 @@ Seluruh modul publik telah dioptimasi dan memenuhi standar tertinggi Google Ligh
 
 ---
 
+## Galeri Pratinjau Antarmuka (Screenshots)
+
+### 1. Portal Utama
+Beranda terpadu yang memuat profil instansi, pusat akses modul, dan pengumuman dinas:
+![Portal Beranda Utama](docs/screenshots/01-portal/01-portal-beranda.png)
+
+---
+
+### 2. Modul Buku Tamu Digital
+Pencatatan presensi pengunjung berbasis kamera swafoto real-time dan deteksi lokasi GPS:
+![Formulir Presensi Pengunjung](docs/screenshots/02-buku-tamu/01-buku-tamu-form-publik.png)
+
+<details>
+<summary><b>Tampilkan Tangkapan Layar Lengkap Modul Buku Tamu (Admin & Rekap)</b></summary>
+
+#### Login Admin Terpadu
+![Login Admin](docs/screenshots/02-buku-tamu/02-admin-login.png)
+
+#### Dashboard Statistik Kunjungan
+![Dashboard Admin Buku Tamu](docs/screenshots/02-buku-tamu/03-buku-tamu-admin-dashboard.png)
+
+#### Kalender Kunjungan Tamu Dinas
+![Kalender Kunjungan](docs/screenshots/02-buku-tamu/04-buku-tamu-admin-calendar.png)
+
+#### Data Pengunjung & Ekspor Laporan PDF
+![Data Pengunjung](docs/screenshots/02-buku-tamu/05-buku-tamu-admin-visitors.png)
+
+</details>
+
+---
+
+### 3. Modul Kalender Event Daerah
+Publikasi agenda kegiatan dinas, registrasi peserta, dan verifikasi presensi berbasis QR Code:
+![Katalog Event Publik](docs/screenshots/03-calendar/01-calendar-katalog-publik.png)
+
+<details>
+<summary><b>Tampilkan Tangkapan Layar Lengkap Modul Kalender Event (Jadwal, Tiket, & Admin)</b></summary>
+
+#### Kalender Agenda Bulanan
+![Kalender Bulanan](docs/screenshots/03-calendar/02-calendar-jadwal-bulanan.png)
+
+#### Detail Informasi & Registrasi Event
+![Detail Event](docs/screenshots/03-calendar/03-calendar-detail-event.png)
+
+#### Autentikasi Peserta Event
+![Autentikasi Peserta](docs/screenshots/03-calendar/04-calendar-auth-user.png)
+
+#### Dashboard Peserta Event
+![Dashboard Peserta](docs/screenshots/03-calendar/05-calendar-user-dashboard.png)
+
+#### Tiket Digital & Barcode Presensi
+![Tiket QR Code](docs/screenshots/03-calendar/06-calendar-user-ticket-qr.png)
+
+#### Manajemen Event oleh Administrator
+![Admin Manajemen Event](docs/screenshots/03-calendar/07-calendar-admin-management.png)
+
+</details>
+
+---
+
+### 4. Modul Madiun Esport (M-GEN)
+Portal komunitas game kompetitif, registrasi turnamen, kabar berita, dan manajemen tim atlet:
+![Beranda Madiun Esport](docs/screenshots/04-esport/01-esport-beranda.png)
+
+<details>
+<summary><b>Tampilkan Tangkapan Layar Lengkap Modul Esport (Turnamen, Berita, & Portal Atlet)</b></summary>
+
+#### Katalog Turnamen Game
+![Daftar Turnamen](docs/screenshots/04-esport/02-esport-daftar-turnamen.png)
+
+#### Detail Regulasi Turnamen & Pendaftaran Tim
+![Detail Turnamen](docs/screenshots/04-esport/03-esport-detail-turnamen.png)
+
+#### Kabar & Berita Esport Terkini
+![Kabar Berita](docs/screenshots/04-esport/04-esport-kabar-berita.png)
+
+#### Baca Artikel Berita
+![Detail Berita](docs/screenshots/04-esport/05-esport-detail-berita.png)
+
+#### Autentikasi Pengguna & Atlet Gamer
+![Autentikasi Gamer](docs/screenshots/04-esport/06-esport-auth-user.png)
+
+#### Dashboard Atlet & Tim Esport
+![Dashboard Atlet](docs/screenshots/04-esport/07-esport-user-dashboard.png)
+
+#### Status Pendaftaran Turnamen
+![Status Pendaftaran](docs/screenshots/04-esport/08-esport-user-tournaments.png)
+
+#### Manajemen Turnamen oleh Administrator
+![Admin Manajemen Turnamen](docs/screenshots/04-esport/09-esport-admin-tournaments.png)
+
+</details>
+
+---
+
+### 5. Halaman Penanganan Kesalahan (Custom Error Pages)
+Antarmuka penanganan kesalahan sistem bertema resmi Diskominfo yang responsif dan animatif tanpa emoji:
+
+<details>
+<summary><b>Tampilkan Tangkapan Layar Halaman Error (404, 403, 500, 503)</b></summary>
+
+#### Error 404: Halaman Tidak Ditemukan
+![Error 404](docs/screenshots/05-errors/01-error-404.png)
+
+#### Error 403: Akses Dibatasi
+![Error 403](docs/screenshots/05-errors/02-error-403.png)
+
+#### Error 500: Gangguan Server Backend
+![Error 500](docs/screenshots/05-errors/03-error-500.png)
+
+#### Error 503: Pemeliharaan Sistem (Maintenance Mode)
+![Error 503](docs/screenshots/05-errors/04-error-503.png)
+
+</details>
+
+---
+
 ## Modul Utama dan Akses Rute
 
 ### 1. Portal Utama

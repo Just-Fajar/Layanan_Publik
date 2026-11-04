@@ -250,3 +250,11 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+if (app()->environment('local', 'testing')) {
+    Route::get('/dev/errors/{code}', function ($code) {
+        abort_if(! in_array($code, ['403', '404', '500', '503']), 404);
+
+        return view("errors.{$code}");
+    })->name('dev.errors');
+}

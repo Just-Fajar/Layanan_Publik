@@ -325,6 +325,7 @@
                     if (response.ok && result.success) {
                         if (result.data?.admin) {
                             localStorage.setItem('admin_data', JSON.stringify(result.data.admin));
+                            localStorage.setItem('admin_token', result.data?.token || 'authenticated');
                         }
                         showAlert('Login berhasil! Mengarahkan ke dashboard...', 'success');
                         setTimeout(() => {
