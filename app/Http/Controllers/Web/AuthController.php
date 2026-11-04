@@ -70,6 +70,7 @@ class AuthController extends Controller
                     'message' => 'Login berhasil!',
                     'data' => [
                         'redirect' => $redirectUrl,
+                        'token' => base64_encode($admin->id . ':' . now()->timestamp),
                         'admin' => [
                             'id' => $admin->id,
                             'name' => $admin->name,
